@@ -6,7 +6,7 @@ import re
 import shutil
 from datetime import datetime
 
-from ytauto import config, footage, history, render, topics, upload, voice, writer
+from ytauto import config, footage, history, llm, render, topics, upload, voice, writer
 
 log = logging.getLogger("ytauto")
 
@@ -15,8 +15,11 @@ def make_video(kind, do_upload=True, script_only=False):
     fmt = config.FORMATS[kind]
     video_format = topics.pick_format(kind)
 
-    log.info("Researching a %s topic (format: %s)", kind, video_format)
-    brief = topics.research_topic(kind, video_format)
+    if kind == "short":
+        brief = topics.short_brief(video_format)
+    else:
+        log.info("Researching a long-video topic (format: %s)", video_format)
+        brief = topics.research_topic(kind, video_format)
 
     log.info("Writing script")
     script = writer.write_script(kind, video_format, brief)
@@ -91,6 +94,7 @@ def main():
         if not args.script_only and not shutil.which(tool):
             raise SystemExit(f"{tool} is not installed")
     make_video(args.kind, do_upload=not args.no_upload, script_only=args.script_only)
+    log.info("Claude cost for this video: $%.3f", llm.spent_usd)
 
 
 if __name__ == "__main__":

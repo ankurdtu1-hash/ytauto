@@ -45,10 +45,31 @@ def pick_format(kind):
     return random.choice(choices)
 
 
-def research_topic(kind, video_format):
-    trends = google_trends_india()
-    trends_text = "\n".join(f"- {t}" for t in trends) or "(unavailable today)"
+def _context():
+    trends = "\n".join(f"- {t}" for t in google_trends_india()) or "(unavailable today)"
     past = "\n".join(f"- {t}" for t in history.recent_titles()) or "(none yet)"
+    return trends, past
+
+
+def short_brief(video_format):
+    """Shorts skip paid web search: Claude picks an evergreen, well-documented fact itself."""
+    trends, past = _context()
+    return f"""No web research for this Short. Choose ONE topic yourself, in the format "{video_format}".
+
+- Pick a fact about {config.CHANNEL_NICHE} that is well established and widely documented,
+  that you are certain is correct, and that would surprise an Indian viewer. Prefer facts that relate
+  to things Indians use every day (phones, UPI, internet, trains, weather, food science, space missions).
+- If a Google Trends India item below fits the niche and you know solid facts about it, you may use it:
+{trends}
+- Skip politics, religion, tragedies, crime, celebrity gossip, medical or financial advice, and anything
+  that may have changed recently (prices, rankings, "latest" records) since you cannot check it.
+- Do not repeat or closely resemble any past video:
+{past}
+- In the description's "Sources:" line, name the kind of source (e.g. NASA, ISRO, IEEE) instead of URLs."""
+
+
+def research_topic(kind, video_format):
+    trends_text, past = _context()
     length = "a 50-second YouTube Short" if kind == "short" else "a 7-8 minute YouTube video"
 
     prompt = f"""Today is {date.today():%d %B %Y}. You are the researcher for a Hindi YouTube channel called "{config.CHANNEL_NAME}".

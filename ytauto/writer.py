@@ -29,7 +29,7 @@ SCHEMA = {
 SYSTEM = f"""You write scripts for "{config.CHANNEL_NAME}", a Hindi YouTube channel ({config.CHANNEL_NICHE}).
 The voice is a friendly, curious narrator talking to a friend: simple everyday Hindi (Devanagari script),
 with common English words (phone, internet, AI, battery) kept in English the way people actually speak.
-Every claim must come from the research brief; never invent numbers. Each video should feel hand-made:
+Every claim must come from the research brief or, when there is no research, be a well-established fact you are certain of; never invent numbers. Each video should feel hand-made:
 a strong hook, a clear payoff, and an original angle rather than a generic list."""
 
 
@@ -47,7 +47,7 @@ def write_script(kind, video_format, brief):
             "and a natural call to subscribe."
         )
 
-    prompt = f"""Write a Hindi YouTube {kind} in the format "{video_format}" from this research brief:
+    prompt = f"""Write a Hindi YouTube {kind} in the format "{video_format}" based on this brief:
 
 {brief}
 
@@ -66,4 +66,4 @@ Metadata rules:
 - tags: 12-18 search phrases in Hindi, Hinglish and English.
 - hashtags: 3-5 hashtags starting with #{' and include #Shorts' if kind == 'short' else ''}.
 - thumbnail_text: 2-4 bold Hindi words for the thumbnail."""
-    return llm.structured(prompt, SCHEMA, system=SYSTEM)
+    return llm.structured(prompt, SCHEMA, system=SYSTEM, effort="low" if kind == "short" else "medium")

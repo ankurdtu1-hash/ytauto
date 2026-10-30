@@ -38,7 +38,7 @@ FORMATS = {
         "orientation": "portrait",
         "words": "110 to 140 words (about 45-55 seconds)",
         "scenes": "6 to 9",
-        "font_size": 84,
+        "font_size": 96,
         "words_per_caption": 3,
     },
     "long": {
