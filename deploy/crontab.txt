@@ -1,0 +1,6 @@
+# ytauto schedule (server time = Asia/Kolkata)
+# Short every day at 17:30, long video every Sunday at 08:00 (rendering takes a while).
+30 17 * * * cd __DIR__ && .venv/bin/python run.py short >> logs/short.log 2>&1 # ytauto
+0 8 * * 0 cd __DIR__ && .venv/bin/python run.py long >> logs/long.log 2>&1 # ytauto
+# Delete finished videos older than 14 days to save disk space.
+0 3 * * * find __DIR__/output -mindepth 1 -maxdepth 1 -mtime +14 -exec rm -rf {} + # ytauto
