@@ -34,7 +34,7 @@ def make_video(kind, do_upload=True, script_only=False):
         log.info("Script saved in %s", workdir)
         return workdir
 
-    scene_videos, scene_audios, events, used_ids = [], [], [], set()
+    scene_videos, scene_audios, events, used_ids = [], [], [], footage.load_used()
     offset = 0.0
     for i, scene in enumerate(script["scenes"]):
         log.info("Scene %d/%d", i + 1, len(script["scenes"]))
@@ -77,6 +77,7 @@ def make_video(kind, do_upload=True, script_only=False):
         video_id = upload.upload(final, script, kind, thumb)
         log.info("Uploaded: https://youtu.be/%s", video_id)
 
+    footage.save_used(used_ids)
     history.add({"kind": kind, "format": video_format, "title": script["title"], "video_id": video_id,
                  "folder": workdir.name})
     return workdir

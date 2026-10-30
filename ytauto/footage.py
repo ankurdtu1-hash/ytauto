@@ -1,10 +1,27 @@
 """Free stock footage from Pixabay."""
+import json
+
 import requests
 
 from . import config
 
 SEARCH_URL = "https://pixabay.com/api/videos/"
 FALLBACK_QUERIES = ["technology", "city timelapse", "nature landscape", "space stars"]
+BLOCKED_TAGS = ("green screen", "greenscreen", "chroma", "blue screen", "watermark")
+USED_FILE = config.DATA_DIR / "used_clips.json"
+TOP_HITS = 8  # beyond this Pixabay results drift off-topic
+
+
+def load_used():
+    """Clip ids used in earlier videos, so the channel never repeats footage."""
+    if USED_FILE.exists():
+        return set(json.loads(USED_FILE.read_text(encoding="utf-8")))
+    return set()
+
+
+def save_used(used_ids):
+    config.DATA_DIR.mkdir(parents=True, exist_ok=True)
+    USED_FILE.write_text(json.dumps(sorted(used_ids)[-3000:]), encoding="utf-8")
 
 
 def _search(query):
@@ -19,31 +36,27 @@ def _search(query):
 
 def _best_file(video, fmt):
     files = [f for f in video["videos"].values() if f.get("url") and f.get("width")]
-    # Prefer clips whose orientation matches the output so cropping keeps most of the frame.
-    portrait = fmt["orientation"] == "portrait"
-    if files and (files[0]["height"] > files[0]["width"]) != portrait:
-        return None
-    big_enough = [f for f in files if max(f["width"], f["height"]) >= max(fmt["width"], fmt["height"]) * 0.66]
+    target = max(fmt["width"], fmt["height"]) * 0.66
+    big_enough = [f for f in files if max(f["width"], f["height"]) >= target]
     if big_enough:
         return min(big_enough, key=lambda f: f["width"] * f["height"])
     return max(files, key=lambda f: f["width"] * f["height"], default=None)
 
 
 def _candidates(query, fmt):
-    hits = _search(query)
+    """Most relevant hits first; among them, clips matching the output orientation first."""
+    portrait = fmt["orientation"] == "portrait"
+    hits = [v for v in _search(query)[:TOP_HITS] if not any(t in v.get("tags", "").lower() for t in BLOCKED_TAGS)]
     files = [(v["id"], _best_file(v, fmt)) for v in hits]
-    matching = [(i, f) for i, f in files if f]
-    if matching:
-        return matching
-    # Few vertical clips exist; for Shorts fall back to landscape clips (centre-cropped).
-    return [(v["id"], max(v["videos"].values(), key=lambda f: f.get("width", 0))) for v in hits]
+    files = [(i, f) for i, f in files if f]
+    return sorted(files, key=lambda x: (x[1]["height"] > x[1]["width"]) != portrait)
 
 
 def fetch_clip(query, out_path, fmt, used_ids):
-    """Download one clip matching query that this video has not used yet. Returns True on success."""
+    """Download one clip matching query that has not been used before. Returns True on success."""
     for q in [query, *FALLBACK_QUERIES]:
         for video_id, file in _candidates(q, fmt):
-            if video_id in used_ids or not file.get("url"):
+            if video_id in used_ids:
                 continue
             with requests.get(file["url"], stream=True, timeout=120) as r:
                 r.raise_for_status()
