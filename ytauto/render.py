@@ -18,13 +18,25 @@ def duration(path):
     return float(out.stdout.strip())
 
 
-def frame_aligned(seconds, pause=0.3):
+def frame_aligned(seconds, pause=0.08):
     """Scene length rounded up to whole frames so audio and video stay in sync."""
     return math.ceil((seconds + pause) * config.FPS) / config.FPS
 
 
-def scene_video(src, dst, seconds, fmt):
+def scene_video(src, dst, seconds, fmt, is_photo=False):
     w, h = fmt["width"], fmt["height"]
+    if is_photo:
+        # Slow Ken Burns zoom so a still photo still feels like motion. Upscale first to avoid zoom jitter.
+        frames = math.ceil(seconds * config.FPS)
+        _run([
+            "-i", str(src), "-t", f"{seconds:.3f}",
+            "-vf", (f"scale={w * 2}:{h * 2}:force_original_aspect_ratio=increase,crop={w * 2}:{h * 2},"
+                    f"zoompan=z='min(zoom+0.0012,1.18)':d={frames}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
+                    f":s={w}x{h}:fps={config.FPS},setsar=1,scale=out_range=tv:out_color_matrix=bt709,format=yuv420p"),
+            "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
+            "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(dst),
+        ])
+        return
     _run([
         "-stream_loop", "-1", "-i", str(src), "-t", f"{seconds:.3f}",
         "-vf", f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},fps={config.FPS},setsar=1,format=yuv420p",

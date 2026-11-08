@@ -22,7 +22,7 @@ CHANNEL_NICHE = os.getenv(
 )
 
 TTS_VOICE = os.getenv("TTS_VOICE", "hi-IN-MadhurNeural")
-TTS_RATE = os.getenv("TTS_RATE", "+8%")
+TTS_RATE = os.getenv("TTS_RATE", "+30%")  # about 1.2x the earlier pace
 
 UPLOAD_PRIVACY = os.getenv("UPLOAD_PRIVACY", "private")
 YOUTUBE_CATEGORY_ID = os.getenv("YOUTUBE_CATEGORY_ID", "27")
@@ -37,7 +37,7 @@ FORMATS = {
         "height": 1920,
         "orientation": "portrait",
         "words": "90 to 110 words (about 35-45 seconds)",
-        "scenes": "6 to 9",
+        "scenes": "10 to 14",
         "font_size": 96,
         "words_per_caption": 3,
     },
@@ -46,7 +46,7 @@ FORMATS = {
         "height": 1080,
         "orientation": "landscape",
         "words": "900 to 1100 words (about 7-8 minutes)",
-        "scenes": "35 to 45",
+        "scenes": "70 to 90",
         "font_size": 58,
         "words_per_caption": 6,
     },

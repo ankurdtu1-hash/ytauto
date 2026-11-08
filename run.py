@@ -25,7 +25,7 @@ def make_video(kind, do_upload=True, script_only=False):
     script = writer.write_script(kind, video_format, brief)
     log.info("Title: %s", script["title"])
 
-    slug = re.sub(r"[^a-z0-9]+", "-", script["scenes"][0]["footage_query"].lower()).strip("-")[:30]
+    slug = re.sub(r"[^a-z0-9]+", "-", script["scenes"][0]["footage_queries"][0].lower()).strip("-")[:30]
     workdir = config.OUTPUT_DIR / f"{datetime.now():%Y%m%d-%H%M}_{kind}_{slug}"
     workdir.mkdir(parents=True, exist_ok=True)
     (workdir / "brief.txt").write_text(brief, encoding="utf-8")
@@ -42,12 +42,10 @@ def make_video(kind, do_upload=True, script_only=False):
         words = voice.speak(scene["narration"], mp3)
         length = render.frame_aligned(render.duration(mp3))
 
-        raw = workdir / f"raw_{i:03d}.mp4"
-        if not footage.fetch_clip(scene["footage_query"], raw, fmt, used_ids):
-            raise RuntimeError(f"No stock footage found for scene {i}")
+        raw, is_photo = footage.fetch_visual(scene["footage_queries"], workdir / f"raw_{i:03d}", fmt, used_ids)
         scene_videos.append(workdir / f"scene_{i:03d}.mp4")
         scene_audios.append(workdir / f"voice_{i:03d}.wav")
-        render.scene_video(raw, scene_videos[-1], length, fmt)
+        render.scene_video(raw, scene_videos[-1], length, fmt, is_photo)
         render.scene_audio(mp3, scene_audios[-1], length)
 
         events += render.captions(words, scene["narration"], offset, length, fmt["words_per_caption"])
