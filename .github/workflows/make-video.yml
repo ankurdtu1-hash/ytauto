@@ -2,8 +2,8 @@ name: make-video
 
 on:
   schedule:
-    - cron: "0 12 * * *"    # Short every day, 17:30 IST
-    - cron: "30 2 * * 0"    # Long video every Sunday, 08:00 IST
+    - cron: "17 6 * * *"    # Short daily. GitHub starts scheduled runs 5-9 h late, so this lands ~17:00-21:00 IST
+    - cron: "47 1 * * 0"    # Long video every Sunday (lands Sunday afternoon IST)
   workflow_dispatch:
     inputs:
       kind:
@@ -47,7 +47,7 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "kind=${{ inputs.kind }}" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event.schedule }}" = "30 2 * * 0" ]; then
+          elif [ "${{ github.event.schedule }}" = "47 1 * * 0" ]; then
             echo "kind=long" >> "$GITHUB_OUTPUT"
           else
             echo "kind=short" >> "$GITHUB_OUTPUT"
@@ -86,4 +86,4 @@ jobs:
           git config user.email "ytauto-bot@users.noreply.github.com"
           git add data/
           git diff --cached --quiet || git commit -m "history: ${{ steps.kind.outputs.kind }} video"
-          git push
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
