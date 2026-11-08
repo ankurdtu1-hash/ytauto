@@ -82,7 +82,7 @@ Metadata rules (optimise click-through rate):
 - title: Hindi/Hinglish, under 60 characters, front-load the most surprising word, create a curiosity gap,
   but stay honest.
 - description: first line repeats the hook; then 2-4 Hindi lines summarising the video; then a "Sources:" line;
-  then this disclosure on its own line: "इस वीडियो में AI voice और stock footage (Pixabay) का इस्तेमाल किया गया है।"
+  then this disclosure on its own line: "इस वीडियो में AI voice और stock footage (Pixabay, NASA, Openverse) का इस्तेमाल किया गया है।"
 - tags: 12-18 search phrases people actually type, in Hindi, Hinglish and English.
 - hashtags: 3-5 hashtags starting with #{' and include #Shorts' if kind == 'short' else ''}.
 - thumbnail_text: 2-4 bold Hindi words that tease the payoff without giving it away."""

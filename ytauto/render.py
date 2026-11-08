@@ -1,6 +1,7 @@
 """Assemble scenes, voice, captions and music into the final video with FFmpeg."""
 import math
 import random
+import re
 import subprocess
 
 from . import config
@@ -16,6 +17,27 @@ def duration(path):
         capture_output=True, text=True, check=True,
     )
     return float(out.stdout.strip())
+
+
+def _mean_luma(path, at):
+    seek = ["-ss", f"{at:.2f}"] if at else []  # seeking a single still image skips its only frame
+    out = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-loglevel", "error", *seek, "-i", str(path), "-frames:v", "1",
+         "-vf", "scale=64:-2,signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=-", "-f", "null", "-"],
+        capture_output=True, text=True,
+    )
+    m = re.search(r"YAVG=([\d.]+)", out.stdout)
+    return float(m.group(1)) if m else None
+
+
+def looks_ok(path, is_photo):
+    """Reject near-black or blown-out white visuals (fade-ins, light flashes, dark intros)."""
+    points = [0] if is_photo else [0.3, min(2.0, max(duration(path) / 2, 0.3))]
+    for at in points:
+        luma = _mean_luma(path, at)
+        if luma is None or not 35 <= luma <= 215:
+            return False
+    return True
 
 
 def frame_aligned(seconds, pause=0.08):

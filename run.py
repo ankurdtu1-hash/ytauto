@@ -11,6 +11,26 @@ from ytauto import config, footage, history, llm, render, topics, upload, voice,
 log = logging.getLogger("ytauto")
 
 
+def pick_visual(queries, out_base, fmt, used_ids, credits, max_tries=15):
+    """Best-matching visual that also passes the brightness check. Returns (path, is_photo)."""
+    for n, cand in enumerate(footage.candidates(queries, fmt, used_ids)):
+        if n >= max_tries:
+            break
+        path = footage.download(cand, out_base)
+        if not path:
+            continue
+        is_photo = cand["kind"] == "photo"
+        if not render.looks_ok(path, is_photo):
+            log.info("Skipped %s (too dark or too bright)", cand["id"])
+            path.unlink()
+            continue
+        used_ids.add(cand["id"])
+        if cand["credit"] and cand["credit"] not in credits:
+            credits.append(cand["credit"])
+        return path, is_photo
+    raise RuntimeError(f"No usable visual for {queries}")
+
+
 def make_video(kind, do_upload=True, script_only=False):
     fmt = config.FORMATS[kind]
     video_format = topics.pick_format(kind)
@@ -34,7 +54,7 @@ def make_video(kind, do_upload=True, script_only=False):
         log.info("Script saved in %s", workdir)
         return workdir
 
-    scene_videos, scene_audios, events, used_ids = [], [], [], footage.load_used()
+    scene_videos, scene_audios, events, used_ids, credits = [], [], [], footage.load_used(), []
     offset = 0.0
     for i, scene in enumerate(script["scenes"]):
         log.info("Scene %d/%d", i + 1, len(script["scenes"]))
@@ -42,7 +62,7 @@ def make_video(kind, do_upload=True, script_only=False):
         words = voice.speak(scene["narration"], mp3)
         length = render.frame_aligned(render.duration(mp3))
 
-        raw, is_photo = footage.fetch_visual(scene["footage_queries"], workdir / f"raw_{i:03d}", fmt, used_ids)
+        raw, is_photo = pick_visual(scene["footage_queries"], workdir / f"raw_{i:03d}", fmt, used_ids, credits)
         scene_videos.append(workdir / f"scene_{i:03d}.mp4")
         scene_audios.append(workdir / f"voice_{i:03d}.wav")
         render.scene_video(raw, scene_videos[-1], length, fmt, is_photo)
@@ -69,6 +89,8 @@ def make_video(kind, do_upload=True, script_only=False):
         for p in workdir.glob(pattern):
             p.unlink()
 
+    script["credits"] = credits
+    (workdir / "script.json").write_text(json.dumps(script, ensure_ascii=False, indent=2), encoding="utf-8")
     video_id = None
     if do_upload:
         log.info("Uploading to YouTube (%s)", config.UPLOAD_PRIVACY)

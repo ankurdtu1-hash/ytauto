@@ -22,6 +22,8 @@ def _youtube():
 
 def upload(video_path, script, kind, thumbnail_path=None):
     hashtags = " ".join(script["hashtags"])
+    credits = script.get("credits") or []
+    credit_text = ("\n\nVisual credits:\n" + "\n".join(credits)) if credits else ""
     title = script["title"]
     if kind == "short" and "#shorts" not in title.lower():
         title = f"{title} #Shorts"
@@ -29,7 +31,7 @@ def upload(video_path, script, kind, thumbnail_path=None):
     body = {
         "snippet": {
             "title": title[:100],
-            "description": f"{script['description']}\n\n{hashtags}"[:5000],
+            "description": f"{script['description']}{credit_text}\n\n{hashtags}"[:5000],
             "tags": script["tags"],
             "categoryId": config.YOUTUBE_CATEGORY_ID,
             "defaultLanguage": "hi",
