@@ -6,6 +6,7 @@ Sources:
 - Openverse photos (Creative Commons from Wikimedia, Flickr, ...; commercial-use licences only,
   attribution collected and added to the video description)
 """
+import base64
 import json
 import logging
 import re
@@ -73,7 +74,8 @@ def _pixabay_videos(query, fmt):
         big = [f for f in files if max(f["width"], f["height"]) >= target]
         f = min(big, key=lambda f: f["width"] * f["height"]) if big else max(files, key=lambda f: f["width"], default=None)
         if f:
-            out.append({"id": f"v{v['id']}", "kind": "video", "url": f["url"], "rank": rank,
+            thumb = next((r.get("thumbnail") for r in v["videos"].values() if r.get("thumbnail")), None)
+            out.append({"id": f"v{v['id']}", "kind": "video", "url": f["url"], "rank": rank, "thumb": thumb,
                         "score": _relevance(query, v.get("tags", "")), "credit": None,
                         "portrait": f["height"] > f["width"]})
     return out
@@ -84,6 +86,7 @@ def _pixabay_photos(query, fmt):
     data = _get_json("pixabay", "https://pixabay.com/api/", key=config.PIXABAY_API_KEY, q=query[:100],
                      image_type="photo", orientation=orientation, per_page=20, safesearch="true") or {}
     return [{"id": f"p{p['id']}", "kind": "photo", "url": p.get("largeImageURL") or p["webformatURL"],
+             "thumb": p.get("previewURL") or p.get("webformatURL"),
              "rank": rank, "score": _relevance(query, p.get("tags", "")), "credit": None,
              "portrait": fmt["orientation"] == "portrait"}
             for rank, p in enumerate(data.get("hits", []))]
@@ -95,7 +98,8 @@ def _nasa(query, media_type):
     for rank, item in enumerate(data.get("collection", {}).get("items", [])[:10]):
         meta = (item.get("data") or [{}])[0]
         text = " ".join([meta.get("title", ""), " ".join(meta.get("keywords", []) or [])])
-        out.append({"id": f"n{meta.get('nasa_id')}", "kind": "video" if media_type == "video" else "photo",
+        thumb = next((l.get("href") for l in item.get("links") or [] if l.get("render") == "image"), None)
+        out.append({"id": f"n{meta.get('nasa_id')}", "kind": "video" if media_type == "video" else "photo", "thumb": thumb,
                     "nasa_id": meta.get("nasa_id"), "url": None, "rank": rank, "score": _relevance(query, text),
                     "credit": "NASA", "portrait": False})
     return out
@@ -120,7 +124,7 @@ def _openverse(query, fmt):
         if (r.get("width") or 0) < 800:  # too small to look sharp at 1080p
             continue
         text = " ".join([r.get("title") or "", " ".join(t.get("name", "") for t in r.get("tags") or [])])
-        out.append({"id": f"o{r['id']}", "kind": "photo", "url": r.get("url"), "rank": rank,
+        out.append({"id": f"o{r['id']}", "kind": "photo", "url": r.get("url"), "rank": rank, "thumb": r.get("thumbnail"),
                     "score": _relevance(query, text), "credit": (r.get("attribution") or "").split(" To view")[0] or None,
                     "portrait": fmt["orientation"] == "portrait"})
     return out
@@ -149,6 +153,33 @@ def candidates(queries, fmt, used_ids):
         for c in fresh(_pixabay_videos(q, fmt), 0):
             seen.add(c["id"])
             yield c
+
+
+def shortlist(queries, fmt, used_ids, videos=3, photos=3):
+    """A small, mixed set of the best candidates for one scene, for Claude to choose from by looking."""
+    vids, pics = [], []
+    for c in candidates(queries, fmt, used_ids):
+        bucket = vids if c["kind"] == "video" else pics
+        if len(bucket) < (videos if bucket is vids else photos):
+            bucket.append(c)
+        if len(vids) >= videos and len(pics) >= photos:
+            break
+    return vids + pics
+
+
+def thumbnail_b64(candidate):
+    """(media_type, base64) of a candidate's small preview image, or None."""
+    if not candidate.get("thumb"):
+        return None
+    try:
+        r = requests.get(candidate["thumb"], timeout=15, headers={"User-Agent": "ytauto/1.0"})
+        r.raise_for_status()
+    except requests.RequestException:
+        return None
+    media = r.headers.get("content-type", "image/jpeg").split(";")[0]
+    if media not in ("image/jpeg", "image/png", "image/webp", "image/gif") or len(r.content) > 400_000:
+        return None
+    return media, base64.b64encode(r.content).decode()
 
 
 def download(candidate, out_base):

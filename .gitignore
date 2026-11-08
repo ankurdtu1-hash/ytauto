@@ -2,6 +2,7 @@
 .env
 client_secret*.json
 token.json
+token_*.json
 
 # generated
 output/

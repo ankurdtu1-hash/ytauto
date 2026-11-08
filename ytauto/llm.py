@@ -70,7 +70,7 @@ def research(prompt, max_searches=3):
 
 
 def structured(prompt, schema, system=None, effort="medium"):
-    """JSON answer that is guaranteed to match `schema`."""
+    """JSON answer that is guaranteed to match `schema`. `prompt` is text or a list of content blocks."""
     kwargs = {"output_config": {"effort": effort, "format": {"type": "json_schema", "schema": schema}}}
     if system:
         kwargs["system"] = system

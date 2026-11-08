@@ -6,16 +6,27 @@ import re
 import shutil
 from datetime import datetime
 
-from ytauto import config, footage, history, llm, render, topics, upload, voice, writer
+from ytauto import config, footage, history, llm, picker, render, topics, upload, voice, writer
 
 log = logging.getLogger("ytauto")
 
 
-def pick_visual(queries, out_base, fmt, used_ids, credits, max_tries=15):
-    """Best-matching visual that also passes the brightness check. Returns (path, is_photo)."""
-    for n, cand in enumerate(footage.candidates(queries, fmt, used_ids)):
-        if n >= max_tries:
+def pick_visual(preferred, queries, out_base, fmt, used_ids, credits, max_tries=15):
+    """First usable visual: Claude's picks first, then tag ranking; must pass the brightness check.
+
+    Returns (path, is_photo).
+    """
+    def ordered():
+        yield from preferred
+        yield from footage.candidates(queries, fmt, used_ids)
+
+    tried = set()
+    for cand in ordered():
+        if len(tried) >= max_tries:
             break
+        if cand["id"] in tried or cand["id"] in used_ids:
+            continue
+        tried.add(cand["id"])
         path = footage.download(cand, out_base)
         if not path:
             continue
@@ -35,7 +46,9 @@ def make_video(kind, do_upload=True, script_only=False):
     fmt = config.FORMATS[kind]
     video_format = topics.pick_format(kind)
 
-    if kind == "short":
+    if config.TOPIC_MODE == "trending":
+        brief = topics.trending_brief(video_format)
+    elif kind == "short":
         brief = topics.short_brief(video_format)
     else:
         log.info("Researching a long-video topic (format: %s)", video_format)
@@ -55,6 +68,11 @@ def make_video(kind, do_upload=True, script_only=False):
         return workdir
 
     scene_videos, scene_audios, events, used_ids, credits = [], [], [], footage.load_used(), []
+    scenes = script["scenes"]
+    log.info("Shortlisting visuals for %d scenes", len(scenes))
+    shortlists = [footage.shortlist(s["footage_queries"], fmt, used_ids) for s in scenes]
+    for start in range(0, len(scenes), 20):  # Claude looks at the previews, 20 scenes per request
+        shortlists[start:start + 20] = picker.choose(scenes[start:start + 20], shortlists[start:start + 20])
     offset = 0.0
     for i, scene in enumerate(script["scenes"]):
         log.info("Scene %d/%d", i + 1, len(script["scenes"]))
@@ -62,7 +80,8 @@ def make_video(kind, do_upload=True, script_only=False):
         words = voice.speak(scene["narration"], mp3)
         length = render.frame_aligned(render.duration(mp3))
 
-        raw, is_photo = pick_visual(scene["footage_queries"], workdir / f"raw_{i:03d}", fmt, used_ids, credits)
+        raw, is_photo = pick_visual(shortlists[i], scene["footage_queries"], workdir / f"raw_{i:03d}",
+                                    fmt, used_ids, credits)
         scene_videos.append(workdir / f"scene_{i:03d}.mp4")
         scene_audios.append(workdir / f"voice_{i:03d}.wav")
         render.scene_video(raw, scene_videos[-1], length, fmt, is_photo)

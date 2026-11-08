@@ -6,22 +6,42 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(ROOT / ".env")
 
+# One codebase, several channels. CHANNEL_PROFILE picks which one this run is for.
+PROFILES = {
+    "main": {
+        "name": "TechSeekho AI",
+        "niche": "Hindi facts and explainers about AI, technology, gadgets, the internet and science, "
+                 "for curious Indian viewers",
+        "voice": "hi-IN-MadhurNeural",
+        "topic_mode": "evergreen",
+        "data_dir": "data",
+    },
+    "trending": {
+        "name": "Trending Kya Hai",
+        "niche": "India's trending topics explained in 40 seconds in Hindi: cricket and sports, movies and OTT, "
+                 "tech and gadget launches, science and space, festivals and viral internet trends",
+        "voice": "hi-IN-SwaraNeural",
+        "topic_mode": "trending",
+        "data_dir": "data/trending",
+    },
+}
+PROFILE = os.getenv("CHANNEL_PROFILE", "main")
+_profile = PROFILES[PROFILE]
+TOPIC_MODE = _profile["topic_mode"]
+
 OUTPUT_DIR = ROOT / "output"
-DATA_DIR = ROOT / "data"
+DATA_DIR = ROOT / _profile["data_dir"]
 MUSIC_DIR = ROOT / "assets" / "music"
 CLIENT_SECRET_FILE = ROOT / "client_secret.json"
-TOKEN_FILE = ROOT / "token.json"
+TOKEN_FILE = ROOT / os.getenv("TOKEN_FILE", "token.json")
 
 MODEL = os.getenv("ANTHROPIC_MODEL", "claude-opus-5-5")
 PIXABAY_API_KEY = os.getenv("PIXABAY_API_KEY", "")
 
-CHANNEL_NAME = os.getenv("CHANNEL_NAME", "TechSeekho AI")
-CHANNEL_NICHE = os.getenv(
-    "CHANNEL_NICHE",
-    "Hindi facts and explainers about AI, technology, gadgets, the internet and science, for curious Indian viewers",
-)
+CHANNEL_NAME = os.getenv("CHANNEL_NAME") or _profile["name"]
+CHANNEL_NICHE = os.getenv("CHANNEL_NICHE") or _profile["niche"]
 
-TTS_VOICE = os.getenv("TTS_VOICE", "hi-IN-MadhurNeural")
+TTS_VOICE = os.getenv("TTS_VOICE") or _profile["voice"]
 TTS_RATE = os.getenv("TTS_RATE", "+30%")  # about 1.2x the earlier pace
 
 UPLOAD_PRIVACY = os.getenv("UPLOAD_PRIVACY", "private")
@@ -36,8 +56,8 @@ FORMATS = {
         "width": 1080,
         "height": 1920,
         "orientation": "portrait",
-        "words": "80 to 100 words — HARD MAXIMUM 100 words, count them (about 35-40 seconds)",
-        "scenes": "9 to 12",
+        "words": "70 to 85 words — never more than 90 (about 35-40 seconds)",
+        "scenes": "8 to 10",
         "font_size": 96,
         "words_per_caption": 3,
     },
