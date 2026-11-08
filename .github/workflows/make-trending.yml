@@ -3,7 +3,7 @@ name: make-trending
 # Second channel: Shorts about what India is searching right now.
 on:
   schedule:
-    - cron: "37 3 * * *"    # daily; GitHub starts 5-9 h late, so this lands ~14:00-18:00 IST
+    - cron: "37 3 2-30/2 * *"  # even days (TechSeekho Shorts run on odd days); lands ~14:00-18:00 IST
   workflow_dispatch:
     inputs:
       upload:
