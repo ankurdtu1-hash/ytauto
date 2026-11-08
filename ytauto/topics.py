@@ -65,7 +65,7 @@ def _traffic(text):
     return float(m.group(1)) * {"": 1, "K": 1_000, "M": 1_000_000}[m.group(2)]
 
 
-def _article_text(url, max_words=320):
+def _article_text(url, max_words=180):
     """Readable paragraph text from a news article (free, no API). Empty if the site blocks us."""
     try:
         resp = requests.get(url, timeout=12, headers={"User-Agent": "Mozilla/5.0 (ytauto news reader)"})
@@ -77,7 +77,7 @@ def _article_text(url, max_words=320):
     return " ".join(words[:max_words])
 
 
-def trending_items(limit=8):
+def trending_items(limit=6):
     """Top Google Trends India searches right now, each with its news headlines and one article excerpt."""
     resp = requests.get(TRENDS_RSS, timeout=20)
     resp.raise_for_status()
