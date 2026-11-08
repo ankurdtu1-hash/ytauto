@@ -80,7 +80,8 @@ Script rules:
 
 Metadata rules (optimise click-through rate):
 - title: Hindi/Hinglish, under 60 characters, front-load the most surprising word, create a curiosity gap,
-  but stay honest.
+  but stay honest. Never promise photos, videos, leaks, "exclusive" or "unseen" footage: the video only
+  shows stock visuals.
 - description: first line repeats the hook; then 2-4 Hindi lines summarising the video; then a "Sources:" line;
   then this disclosure on its own line: "इस वीडियो में AI voice और stock footage (Pixabay, NASA, Openverse) का इस्तेमाल किया गया है।"
 - tags: 12-18 search phrases people actually type, in Hindi, Hinglish and English.

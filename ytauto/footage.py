@@ -7,11 +7,13 @@ Sources:
   attribution collected and added to the video description)
 """
 import base64
+import io
 import json
 import logging
 import re
 
 import requests
+from PIL import Image
 
 from . import config
 
@@ -176,10 +178,14 @@ def thumbnail_b64(candidate):
         r.raise_for_status()
     except requests.RequestException:
         return None
-    media = r.headers.get("content-type", "image/jpeg").split(";")[0]
-    if media not in ("image/jpeg", "image/png", "image/webp", "image/gif") or len(r.content) > 400_000:
+    try:  # shrink to a small preview: cheap to send and within the many-image size limit
+        img = Image.open(io.BytesIO(r.content)).convert("RGB")
+        img.thumbnail((320, 320))
+        buf = io.BytesIO()
+        img.save(buf, "JPEG", quality=80)
+    except (OSError, ValueError):
         return None
-    return media, base64.b64encode(r.content).decode()
+    return "image/jpeg", base64.b64encode(buf.getvalue()).decode()
 
 
 def download(candidate, out_base):
