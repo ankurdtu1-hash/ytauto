@@ -5,7 +5,8 @@ Sources:
 - NASA Image Library photos (public domain; great for space topics)
 - Openverse photos (Creative Commons from Wikimedia, Flickr, ...; commercial-use licences only,
   attribution collected and added to the video description)
-- Wikimedia Commons photos of named people, places and events (only CC0 / CC BY / CC BY-SA / public domain,
+- Wikimedia Commons photos of named people, places and events (only CC0 / CC BY / CC BY-SA / public domain /
+  GODL-India,
   attribution added to the description). Never Google Images, posters, film stills or news photos: those
   are copyrighted.
 """
@@ -137,7 +138,7 @@ def _openverse(query, fmt):
     return out
 
 
-FREE_LICENSE = re.compile(r"^(cc0|cc[- ]by(-sa)?( \d\.\d)?|cc[- ]by(-sa)? \d\.\d [a-z]+|public domain|pd.*)$", re.I)
+FREE_LICENSE = re.compile(r"^(cc0|cc[- ]by(-sa)?( \d\.\d)?|cc[- ]by(-sa)? \d\.\d [a-z]+|public domain|pd.*|godl-india)$", re.I)
 
 
 def _plain(text):
