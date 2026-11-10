@@ -45,14 +45,21 @@ def frame_aligned(seconds, pause=0.08):
     return math.ceil((seconds + pause) * config.FPS) / config.FPS
 
 
-def scene_video(src, dst, seconds, fmt, is_photo=False):
+def scene_video(src, dst, seconds, fmt, is_photo=False, fit=False):
     w, h = fmt["width"], fmt["height"]
     if is_photo:
         # Slow Ken Burns zoom so a still photo still feels like motion. Upscale first to avoid zoom jitter.
+        # fit=True (photos of people): show the whole photo over a blurred copy, so heads are never cropped.
         frames = math.ceil(seconds * config.FPS)
+        if fit:
+            base = (f"split[a][b];[a]scale={w * 2}:{h * 2}:force_original_aspect_ratio=increase,crop={w * 2}:{h * 2},"
+                    f"boxblur=40:4,eq=brightness=-0.12[bg];[b]scale={w * 2}:{h * 2}:force_original_aspect_ratio=decrease[fg];"
+                    f"[bg][fg]overlay=(W-w)/2:(H-h)/2,")
+        else:
+            base = f"scale={w * 2}:{h * 2}:force_original_aspect_ratio=increase,crop={w * 2}:{h * 2},"
         _run([
             "-i", str(src), "-t", f"{seconds:.3f}",
-            "-vf", (f"scale={w * 2}:{h * 2}:force_original_aspect_ratio=increase,crop={w * 2}:{h * 2},"
+            "-vf", (base +
                     f"zoompan=z='min(zoom+0.0012,1.18)':d={frames}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
                     f":s={w}x{h}:fps={config.FPS},setsar=1,scale=out_range=tv:out_color_matrix=bt709,format=yuv420p"),
             "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",

@@ -14,7 +14,7 @@ log = logging.getLogger("ytauto")
 def pick_visual(preferred, queries, out_base, fmt, used_ids, credits, max_tries=15):
     """First usable visual: Claude's picks first, then tag ranking; must pass the brightness check.
 
-    Returns (path, is_photo).
+    Returns (path, is_photo, fit).
     """
     def ordered():
         yield from preferred
@@ -38,7 +38,7 @@ def pick_visual(preferred, queries, out_base, fmt, used_ids, credits, max_tries=
         used_ids.add(cand["id"])
         if cand["credit"] and cand["credit"] not in credits:
             credits.append(cand["credit"])
-        return path, is_photo
+        return path, is_photo, bool(cand.get("fit"))
     raise RuntimeError(f"No usable visual for {queries}")
 
 
@@ -80,11 +80,11 @@ def make_video(kind, do_upload=True, script_only=False):
         words = voice.speak(scene["narration"], mp3)
         length = render.frame_aligned(render.duration(mp3))
 
-        raw, is_photo = pick_visual(shortlists[i], scene["footage_queries"], workdir / f"raw_{i:03d}",
+        raw, is_photo, fit = pick_visual(shortlists[i], scene["footage_queries"], workdir / f"raw_{i:03d}",
                                     fmt, used_ids, credits)
         scene_videos.append(workdir / f"scene_{i:03d}.mp4")
         scene_audios.append(workdir / f"voice_{i:03d}.wav")
-        render.scene_video(raw, scene_videos[-1], length, fmt, is_photo)
+        render.scene_video(raw, scene_videos[-1], length, fmt, is_photo, fit)
         render.scene_audio(mp3, scene_audios[-1], length)
 
         events += render.captions(words, scene["narration"], offset, length, fmt["words_per_caption"])

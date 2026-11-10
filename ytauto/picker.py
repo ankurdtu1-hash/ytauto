@@ -29,6 +29,9 @@ said, so a viewer with the sound off still understands it.
 
 Rules:
 - Prefer a visual that literally shows the subject of the sentence over a vaguely related mood shot.
+- When the sentence names a real person, place or event, a real photo of exactly that subject beats any
+  stock shot. Only pick it if you are confident it shows that person or place (check the face, setting
+  and era); a photo of the wrong person is worse than a generic shot.
 - Never pick religious symbols, flags, political imagery, gore, visible logos or watermarks, or text in a
   foreign language.
 - Avoid near-duplicate visuals across neighbouring scenes.

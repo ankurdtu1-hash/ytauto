@@ -5,11 +5,15 @@ Sources:
 - NASA Image Library photos (public domain; great for space topics)
 - Openverse photos (Creative Commons from Wikimedia, Flickr, ...; commercial-use licences only,
   attribution collected and added to the video description)
+- Wikimedia Commons photos of named people, places and events (only CC0 / CC BY / CC BY-SA / public domain,
+  attribution added to the description). Never Google Images, posters, film stills or news photos: those
+  are copyrighted.
 """
 import base64
 import io
 import json
 import logging
+import html
 import re
 
 import requests
@@ -23,6 +27,7 @@ FALLBACK_QUERIES = ["technology", "city timelapse", "nature landscape", "space s
 BLOCKED_TAGS = ("green screen", "greenscreen", "chroma", "blue screen", "watermark", "logo")
 STOPWORDS = {"a", "an", "the", "of", "in", "on", "and", "with", "to", "for", "at", "closeup", "close", "up", "view"}
 USED_FILE = config.DATA_DIR / "used_clips.json"
+UA = {"User-Agent": "ytauto/1.0 (https://ankurdtu1-hash.github.io; Hindi YouTube video maker)"}
 _disabled = set()  # sources that rate-limited us during this run
 
 
@@ -51,7 +56,7 @@ def _get_json(source, url, **params):
     if source in _disabled:
         return None
     try:
-        resp = requests.get(url, params=params, timeout=30, headers={"User-Agent": "ytauto/1.0"})
+        resp = requests.get(url, params=params, timeout=30, headers=UA)
         if resp.status_code == 429:
             log.warning("%s rate limit reached; skipping it for the rest of this video", source)
             _disabled.add(source)
@@ -132,6 +137,43 @@ def _openverse(query, fmt):
     return out
 
 
+FREE_LICENSE = re.compile(r"^(cc0|cc[- ]by(-sa)?( \d\.\d)?|cc[- ]by(-sa)? \d\.\d [a-z]+|public domain|pd.*)$", re.I)
+
+
+def _plain(text):
+    return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", text or "")).split())
+
+
+def _commons(query, fmt):
+    """Freely licensed photos from Wikimedia Commons: real photos of actors, players, places, launches."""
+    data = _get_json("commons", "https://commons.wikimedia.org/w/api.php", action="query", format="json",
+                     generator="search", gsrsearch=f"{query[:90]} filetype:bitmap", gsrnamespace=6, gsrlimit=15,
+                     prop="imageinfo", iiprop="url|size|extmetadata", iiurlwidth=1600,
+                     iiextmetadatafilter="LicenseShortName|Artist|ImageDescription|Categories") or {}
+    pages = sorted(data.get("query", {}).get("pages", {}).values(), key=lambda p: p.get("index", 99))
+    out = []
+    for rank, page in enumerate(pages):
+        info = (page.get("imageinfo") or [{}])[0]
+        meta = info.get("extmetadata", {})
+        lic = _plain(meta.get("LicenseShortName", {}).get("value"))
+        if not FREE_LICENSE.match(lic) or re.search(r"\b(nc|nd)\b", lic, re.I):
+            continue  # only licences that allow commercial use and editing
+        if min(info.get("width", 0), info.get("height", 0)) < 380 or not info.get("thumburl"):
+            continue
+        title = page.get("title", "").removeprefix("File:").rsplit(".", 1)[0]
+        if re.search(r"signature|autograph|logo|poster|map|flag|coat of arms|emblem", title, re.I):
+            continue
+        text = " ".join([title, _plain(meta.get("ImageDescription", {}).get("value")),
+                         meta.get("Categories", {}).get("value", "")])
+        artist = _plain(meta.get("Artist", {}).get("value"))[:80] or "unknown author"
+        out.append({"id": f"w{page['pageid']}", "kind": "photo", "url": info["thumburl"], "rank": rank,
+                    "thumb": info["thumburl"].replace("/1600px-", "/320px-"),
+                    "score": (rel + 1) if (rel := _relevance(query, text)) > 0 else rel,  # real photo of the subject beats stock
+                    "credit": f'"{title}" by {artist}, {lic}, via Wikimedia Commons', "fit": True,
+                    "portrait": info.get("height", 0) > info.get("width", 0)})
+    return out
+
+
 # ---------- ranking ----------
 
 def candidates(queries, fmt, used_ids):
@@ -148,7 +190,7 @@ def candidates(queries, fmt, used_ids):
         for c in fresh(_pixabay_videos(q, fmt), 1):
             seen.add(c["id"])
             yield c
-        for c in fresh(_pixabay_photos(q, fmt) + _openverse(q, fmt) + _nasa(q, "image"), 1):
+        for c in fresh(_commons(q, fmt) + _pixabay_photos(q, fmt) + _openverse(q, fmt) + _nasa(q, "image"), 1):
             seen.add(c["id"])
             yield c
     for q in [*queries, *FALLBACK_QUERIES]:
@@ -174,7 +216,7 @@ def thumbnail_b64(candidate):
     if not candidate.get("thumb"):
         return None
     try:
-        r = requests.get(candidate["thumb"], timeout=15, headers={"User-Agent": "ytauto/1.0"})
+        r = requests.get(candidate["thumb"], timeout=15, headers=UA)
         r.raise_for_status()
     except requests.RequestException:
         return None
@@ -194,7 +236,7 @@ def download(candidate, out_base):
         return None
     path = out_base.with_suffix(".mp4" if candidate["kind"] == "video" else ".jpg")
     try:
-        with requests.get(url, stream=True, timeout=180, headers={"User-Agent": "ytauto/1.0"}) as r:
+        with requests.get(url, stream=True, timeout=180, headers=UA) as r:
             r.raise_for_status()
             with open(path, "wb") as f:
                 for chunk in r.iter_content(1 << 20):
