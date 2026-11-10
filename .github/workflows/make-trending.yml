@@ -52,7 +52,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.upload }}" = "false" ]; then
             flag="--no-upload"
           fi
-          python run.py short $flag
+          python run.py short $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --once-a-day )
 
       - name: Keep the finished video for 3 days
         if: always()
