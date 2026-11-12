@@ -1,6 +1,6 @@
 """Remembers past topics so the channel never repeats itself."""
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 from . import config
 
@@ -26,3 +26,24 @@ def recent_titles(n=60):
 
 def recent_formats(kind, n=5):
     return [i.get("format") for i in load() if i["kind"] == kind][-n:]
+
+
+IST = timezone(timedelta(hours=5, minutes=30))
+
+
+def next_slot(min_lead_minutes=20):
+    """Earliest publish slot (India time) at least min_lead_minutes away that no earlier video has taken.
+    Returns an RFC 3339 UTC string for YouTube's publishAt, or None if no slots are configured."""
+    if not config.PUBLISH_SLOTS:
+        return None
+    taken = {i["publish_at"] for i in load() if i.get("publish_at")}
+    earliest = datetime.now(timezone.utc) + timedelta(minutes=min_lead_minutes)
+    day = earliest.astimezone(IST).date()
+    for d in range(30):
+        for slot in sorted(config.PUBLISH_SLOTS):
+            h, m = map(int, slot.split(":"))
+            t = datetime(day.year, day.month, day.day, h, m, tzinfo=IST) + timedelta(days=d)
+            iso = t.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            if t >= earliest and iso not in taken:
+                return iso
+    return None

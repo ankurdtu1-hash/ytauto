@@ -20,7 +20,7 @@ def _youtube():
     return build("youtube", "v3", credentials=creds, cache_discovery=False)
 
 
-def upload(video_path, script, kind, thumbnail_path=None):
+def upload(video_path, script, kind, thumbnail_path=None, publish_at=None):
     hashtags = " ".join(script["hashtags"])
     credits = script.get("credits") or []
     credit_text = ("\n\nVisual credits:\n" + "\n".join(credits)) if credits else ""
@@ -44,6 +44,10 @@ def upload(video_path, script, kind, thumbnail_path=None):
             "containsSyntheticMedia": True,
         },
     }
+
+    if publish_at:  # YouTube keeps it private and makes it public by itself at this time
+        body["status"]["privacyStatus"] = "private"
+        body["status"]["publishAt"] = publish_at
 
     youtube = _youtube()
     request = youtube.videos().insert(

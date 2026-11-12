@@ -119,15 +119,16 @@ def make_video(kind, do_upload=True, script_only=False):
 
     script["credits"] = credits
     (workdir / "script.json").write_text(json.dumps(script, ensure_ascii=False, indent=2), encoding="utf-8")
-    video_id = None
+    video_id = publish_at = None
     if do_upload:
-        log.info("Uploading to YouTube (%s)", config.UPLOAD_PRIVACY)
-        video_id = upload.upload(final, script, kind, thumb)
+        publish_at = history.next_slot() if config.UPLOAD_PRIVACY == "public" else None
+        log.info("Uploading to YouTube (%s)", f"goes public {publish_at}" if publish_at else config.UPLOAD_PRIVACY)
+        video_id = upload.upload(final, script, kind, thumb, publish_at=publish_at)
         log.info("Uploaded: https://youtu.be/%s", video_id)
 
     footage.save_used(used_ids)
     history.add({"kind": kind, "format": video_format, "title": script["title"], "video_id": video_id,
-                 "folder": workdir.name})
+                 "folder": workdir.name, **({"publish_at": publish_at} if video_id and publish_at else {})})
     return workdir
 
 

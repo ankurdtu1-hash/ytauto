@@ -15,6 +15,7 @@ PROFILES = {
         "voice": "hi-IN-MadhurNeural",
         "topic_mode": "evergreen",
         "data_dir": "data",
+        "publish_slots": "11:00,20:30",  # IST times the Shorts go public
         "art_style": "clean glossy 3D render, soft studio lighting, vivid blue and orange colours, high detail",
     },
     "trending": {
@@ -24,6 +25,7 @@ PROFILES = {
         "voice": "hi-IN-SwaraNeural",
         "topic_mode": "trending",
         "data_dir": "data/trending",
+        "publish_slots": "08:30,13:30,19:00",
         "art_style": "vibrant cinematic digital illustration, dramatic lighting, rich colours, high detail",
     },
 }
@@ -50,6 +52,9 @@ TTS_VOICE = os.getenv("TTS_VOICE") or _profile["voice"]
 TTS_RATE = os.getenv("TTS_RATE", "+30%")  # about 1.2x the earlier pace
 
 UPLOAD_PRIVACY = os.getenv("UPLOAD_PRIVACY", "private")
+# Each video goes public at the next free one of these India-time slots (YouTube scheduled publish),
+# so Shorts are spread through the day even when GitHub starts several runs close together.
+PUBLISH_SLOTS = [s.strip() for s in (os.getenv("PUBLISH_SLOTS") or _profile["publish_slots"]).split(",") if s.strip()]
 YOUTUBE_CATEGORY_ID = os.getenv("YOUTUBE_CATEGORY_ID", "27")
 
 SUBTITLE_FONT = os.getenv("SUBTITLE_FONT", "Noto Sans Devanagari")
