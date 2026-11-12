@@ -3,7 +3,7 @@ name: make-trending
 # Second channel: Shorts about what India is searching right now.
 on:
   schedule:
-    - cron: "37 3 * * *"  # daily; lands ~14:00-18:00 IST
+    - cron: "7 0,6,12 * * *"  # 3 Shorts a day (GitHub starts runs a few hours late; --daily-limit 3 guards extras)
   workflow_dispatch:
     inputs:
       upload:
@@ -30,6 +30,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
           cache: pip
 
       - name: Install FFmpeg and Hindi fonts
@@ -63,7 +64,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.upload }}" = "false" ]; then
             flag="--no-upload"
           fi
-          python run.py short $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --once-a-day )
+          python run.py short $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --daily-limit 3 )
 
       - name: Keep the finished video for 3 days
         if: always()

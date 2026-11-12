@@ -2,7 +2,7 @@ name: make-video
 
 on:
   schedule:
-    - cron: "17 6 */3 * *"  # Short every 3 days. GitHub starts scheduled runs 5-9 h late, so this lands ~17:00-21:00 IST
+    - cron: "17 6 * * *"  # 1 Short a day. GitHub starts scheduled runs 5-9 h late, so this lands ~17:00-21:00 IST
   workflow_dispatch:
     inputs:
       kind:
@@ -32,6 +32,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
           cache: pip
 
       - name: Install FFmpeg and Hindi fonts
@@ -73,7 +74,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.upload }}" = "false" ]; then
             flag="--no-upload"
           fi
-          python run.py "${{ steps.kind.outputs.kind }}" $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --once-a-day )
+          python run.py "${{ steps.kind.outputs.kind }}" $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --daily-limit 1 )
 
       - name: Keep the finished video for 3 days
         if: always()

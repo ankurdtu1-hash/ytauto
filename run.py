@@ -136,14 +136,14 @@ def main():
     parser.add_argument("kind", choices=["short", "long"])
     parser.add_argument("--no-upload", action="store_true", help="make the video but do not upload")
     parser.add_argument("--script-only", action="store_true", help="only research and write the script")
-    parser.add_argument("--once-a-day", action="store_true", help="skip if this channel already uploaded one today")
+    parser.add_argument("--daily-limit", type=int, default=0, help="skip if this channel already uploaded this many today")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     today = datetime.now().date().isoformat()
-    if args.once_a_day and any(i.get("video_id") and i["kind"] == args.kind and i["date"].startswith(today)
-                               for i in history.load()):
-        log.info("Already uploaded a %s today; skipping this scheduled run", args.kind)
+    done_today = sum(1 for i in history.load() if i.get("video_id") and i["kind"] == args.kind and i["date"].startswith(today))
+    if args.daily_limit and done_today >= args.daily_limit:
+        log.info("Already uploaded %d %s video(s) today; skipping this scheduled run", done_today, args.kind)
         return
     for tool in ("ffmpeg", "ffprobe"):
         if not args.script_only and not shutil.which(tool):
