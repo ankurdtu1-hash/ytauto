@@ -5,6 +5,7 @@ Claude also handles the rare web-search research step. Costs are logged per run.
 import json
 import logging
 import os
+import time
 
 import anthropic
 import requests
@@ -76,7 +77,7 @@ def research(prompt, max_searches=3):
 
 GEMINI_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 GEMINI_MODELS = [m for m in dict.fromkeys([os.getenv("GEMINI_MODEL", ""), "gemini-3.5-flash", "gemini-flash-latest",
-                                           "gemini-2.5-flash"]) if m]
+                                           "gemini-3.1-flash-lite"]) if m]
 
 
 def _gemini_parts(prompt):
@@ -98,12 +99,14 @@ def _gemini_structured(prompt, schema, system):
     if system:
         body["systemInstruction"] = {"parts": [{"text": system}]}
     last = None
-    for model in GEMINI_MODELS:
+    for model in [m for m in GEMINI_MODELS for _ in range(3)]:  # each model up to 3 tries: free tier is often "busy"
         try:
+            if last and " 503 " in f" {last} ":
+                time.sleep(20)
             r = requests.post(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
                               headers={"x-goog-api-key": GEMINI_KEY}, json=body, timeout=150)
-            if r.status_code in (404, 429, 500, 503):  # model missing, free quota used up, or busy: try the next
-                last = f"{model}: HTTP {r.status_code} {r.text[:200]}"
+            if r.status_code in (404, 429, 500, 503):  # model missing, free quota used up, or busy: try again/next
+                last = f"{model}: HTTP {r.status_code} {r.text[:120]}"
                 log.warning("Gemini %s", last)
                 continue
             r.raise_for_status()
