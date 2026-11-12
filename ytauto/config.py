@@ -55,6 +55,8 @@ UPLOAD_PRIVACY = os.getenv("UPLOAD_PRIVACY", "private")
 # Each video goes public at the next free one of these India-time slots (YouTube scheduled publish),
 # so Shorts are spread through the day even when GitHub starts several runs close together.
 PUBLISH_SLOTS = [s.strip() for s in (os.getenv("PUBLISH_SLOTS") or _profile["publish_slots"]).split(",") if s.strip()]
+if os.getenv("PUBLISH_NOW", "").lower() == "true":  # manual runs: public right away
+    PUBLISH_SLOTS = []
 YOUTUBE_CATEGORY_ID = os.getenv("YOUTUBE_CATEGORY_ID", "27")
 
 SUBTITLE_FONT = os.getenv("SUBTITLE_FONT", "Noto Sans Devanagari")
