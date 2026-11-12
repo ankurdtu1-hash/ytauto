@@ -1,0 +1,33 @@
+name: voice-samples
+
+on:
+  workflow_dispatch:
+
+jobs:
+  samples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Edge voices
+        continue-on-error: true
+        run: pip install -q edge-tts && python tools/voice_samples.py edge
+      - name: Kokoro (open source, Apache 2.0)
+        continue-on-error: true
+        run: |
+          sudo apt-get install -y -qq espeak-ng >/dev/null
+          pip install -q "kokoro>=0.9.4" soundfile "misaki[hi]" || pip install -q "kokoro>=0.9.4" soundfile
+          python tools/voice_samples.py kokoro
+      - name: Indic Parler-TTS (AI4Bharat, Apache 2.0)
+        continue-on-error: true
+        run: |
+          pip install -q --extra-index-url https://download.pytorch.org/whl/cpu torch soundfile git+https://github.com/huggingface/parler-tts.git
+          python tools/voice_samples.py parler
+      - uses: actions/upload-artifact@v4
+        with:
+          name: voice-samples
+          path: voice_samples/
+          retention-days: 3
