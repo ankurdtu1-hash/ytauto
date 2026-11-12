@@ -16,8 +16,9 @@ SCHEMA = {
                 "properties": {
                     "narration": {"type": "string"},
                     "footage_queries": {"type": "array", "items": {"type": "string"}},
+                    "image_prompt": {"type": "string"},
                 },
-                "required": ["narration", "footage_queries"],
+                "required": ["narration", "footage_queries", "image_prompt"],
                 "additionalProperties": False,
             },
         },
@@ -53,7 +54,10 @@ VISUALS = """- footage_queries: 3 English stock-footage searches for THIS senten
   When the sentence is about a real, named person (actor, cricketer, scientist), place or event, the FIRST
   query must be just that exact full name in English, e.g. ["Ranbir Kapoor", "film shooting set", "cinema audience"].
   Those are searched in freely licensed photo libraries (Wikimedia Commons); the other two stay generic as a backup.
-  Never ask for movie posters, film stills, trailers, match broadcasts or news photos: they are copyrighted."""
+  Never ask for movie posters, film stills, trailers, match broadcasts or news photos: they are copyrighted.
+- image_prompt: one English sentence (max 35 words) describing an illustration that shows THIS sentence,
+  for an AI image generator. Concrete scene, subject, setting, mood. Generic people only: never a real
+  person's name or likeness, no text, letters, numbers, logos, flags or religious symbols in the image."""
 
 
 def write_script(kind, video_format, brief):
@@ -90,7 +94,7 @@ Metadata rules (optimise click-through rate):
   but stay honest. Never promise photos, videos, leaks, "exclusive" or "unseen" footage: the video only
   shows stock visuals.
 - description: first line repeats the hook; then 2-4 Hindi lines summarising the video; then a "Sources:" line;
-  then this disclosure on its own line: "इस वीडियो में AI voice और stock footage (Pixabay, NASA, Openverse, Wikimedia Commons) का इस्तेमाल किया गया है।"
+  then this disclosure on its own line: "इस वीडियो में AI voice, AI images और stock footage (Pixabay, NASA, Openverse, Wikimedia Commons) का इस्तेमाल किया गया है।"
 - tags: 12-18 search phrases people actually type, in Hindi, Hinglish and English.
 - hashtags: 3-5 hashtags starting with #{' and include #Shorts' if kind == 'short' else ''}.
 - thumbnail_text: 2-4 bold Hindi words that tease the payoff without giving it away."""

@@ -1,5 +1,6 @@
 """Make one video end to end:  python run.py short|long [--no-upload] [--script-only]"""
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import json
 import logging
 import re
@@ -35,7 +36,8 @@ def pick_visual(preferred, queries, out_base, fmt, used_ids, credits, max_tries=
             log.info("Skipped %s (too dark or too bright)", cand["id"])
             path.unlink()
             continue
-        used_ids.add(cand["id"])
+        if not cand.get("ai"):
+            used_ids.add(cand["id"])
         if cand["credit"] and cand["credit"] not in credits:
             credits.append(cand["credit"])
         return path, is_photo, bool(cand.get("fit"))
@@ -71,6 +73,13 @@ def make_video(kind, do_upload=True, script_only=False):
     scenes = script["scenes"]
     log.info("Shortlisting visuals for %d scenes", len(scenes))
     shortlists = [footage.shortlist(s["footage_queries"], fmt, used_ids) for s in scenes]
+    with ThreadPoolExecutor(3) as pool:  # free AI illustrations (Cloudflare), one per scene
+        ai = list(pool.map(lambda i: footage.ai_image(scenes[i].get("image_prompt"), workdir / f"ai_{i:03d}.jpg"),
+                           range(len(scenes))))
+    for sl, cand in zip(shortlists, ai):
+        if cand:
+            sl.append(cand)
+    log.info("AI illustrations made for %d of %d scenes", sum(1 for c in ai if c), len(scenes))
     for start in range(0, len(scenes), 20):  # Claude looks at the previews, 20 scenes per request
         shortlists[start:start + 20] = picker.choose(scenes[start:start + 20], shortlists[start:start + 20])
     offset = 0.0

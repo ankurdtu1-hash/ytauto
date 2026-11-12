@@ -29,6 +29,9 @@ said, so a viewer with the sound off still understands it.
 
 Rules:
 - Prefer a visual that literally shows the subject of the sentence over a vaguely related mood shot.
+- Each scene may include one "AI illustration" made for that exact sentence. Pick it when no real photo or
+  stock clip clearly shows the subject; prefer real photos/clips when they fit equally well. Skip an AI
+  illustration with garbled text, extra fingers or distorted faces.
 - When the sentence names a real person, place or event, a real photo of exactly that subject beats any
   stock shot. Only pick it if you are confident it shows that person or place (check the face, setting
   and era); a photo of the wrong person is worse than a generic shot.
@@ -49,7 +52,8 @@ def choose(scenes, shortlists):
         content.append({"type": "text", "text": f"\nScene {i}: {scene['narration']}"})
         for k, (cand, img) in enumerate(zip(sl, th)):
             if img:
-                content.append({"type": "text", "text": f"Scene {i} option {k} ({cand['kind']}):"})
+                label = "AI illustration" if cand.get("ai") else cand["kind"]
+                content.append({"type": "text", "text": f"Scene {i} option {k} ({label}):"})
                 content.append({"type": "image", "source": {"type": "base64", "media_type": img[0], "data": img[1]}})
 
     try:
@@ -63,5 +67,8 @@ def choose(scenes, shortlists):
         i, k = p["scene"], p["option"]
         if 0 <= i < len(ordered) and 0 <= k < len(ordered[i]):
             ordered[i].insert(0, ordered[i].pop(k))
+        elif 0 <= i < len(ordered) and k < 0:  # nothing fits: the scene's AI illustration is the best bet
+            ai = [c for c in ordered[i] if c.get("ai")]
+            ordered[i] = ai + [c for c in ordered[i] if not c.get("ai")]
     log.info("Visual picker chose for %d of %d scenes", sum(1 for p in picks if p["option"] >= 0), len(scenes))
     return ordered

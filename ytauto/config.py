@@ -15,6 +15,7 @@ PROFILES = {
         "voice": "hi-IN-MadhurNeural",
         "topic_mode": "evergreen",
         "data_dir": "data",
+        "art_style": "clean glossy 3D render, soft studio lighting, vivid blue and orange colours, high detail",
     },
     "trending": {
         "name": "Trending Kya Hai",
@@ -23,6 +24,7 @@ PROFILES = {
         "voice": "hi-IN-SwaraNeural",
         "topic_mode": "trending",
         "data_dir": "data/trending",
+        "art_style": "vibrant cinematic digital illustration, dramatic lighting, rich colours, high detail",
     },
 }
 PROFILE = os.getenv("CHANNEL_PROFILE", "main")
@@ -37,6 +39,9 @@ TOKEN_FILE = ROOT / os.getenv("TOKEN_FILE", "token.json")
 
 MODEL = os.getenv("ANTHROPIC_MODEL", "claude-opus-5-5")
 PIXABAY_API_KEY = os.getenv("PIXABAY_API_KEY", "")
+CF_ACCOUNT_ID = os.getenv("CLOUDFLARE_ACCOUNT_ID", "").strip()
+CF_API_TOKEN = os.getenv("CLOUDFLARE_API_TOKEN", "").strip()
+ART_STYLE = _profile["art_style"]
 
 CHANNEL_NAME = os.getenv("CHANNEL_NAME") or _profile["name"]
 CHANNEL_NICHE = os.getenv("CHANNEL_NICHE") or _profile["niche"]

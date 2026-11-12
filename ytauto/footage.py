@@ -175,6 +175,30 @@ def _commons(query, fmt):
     return out
 
 
+def ai_image(prompt, out_path):
+    """Free AI illustration from Cloudflare Workers AI (FLUX.1 schnell, Apache 2.0). Candidate dict or None."""
+    if not (config.CF_ACCOUNT_ID and config.CF_API_TOKEN) or not prompt or "cloudflare" in _disabled:
+        return None
+    full = (f"{prompt}. Style: {config.ART_STYLE}. Vertical composition with the subject centred. "
+            "No text, no letters, no logos, no watermark.")
+    try:
+        r = requests.post(f"https://api.cloudflare.com/client/v4/accounts/{config.CF_ACCOUNT_ID}"
+                          "/ai/run/@cf/black-forest-labs/flux-1-schnell",
+                          headers={"Authorization": f"Bearer {config.CF_API_TOKEN}"},
+                          json={"prompt": full[:2000], "steps": 6}, timeout=90)
+        if r.status_code == 429 or (not r.ok and "neuron" in r.text.lower()):
+            log.warning("Cloudflare free image quota used up for today")
+            _disabled.add("cloudflare")
+            return None
+        r.raise_for_status()
+        out_path.write_bytes(base64.b64decode(r.json()["result"]["image"]))
+    except (requests.RequestException, KeyError, ValueError) as e:
+        log.warning("AI image failed: %s", e)
+        return None
+    return {"id": f"a{out_path.stem}", "kind": "photo", "url": None, "path": str(out_path), "thumb": None,
+            "rank": 99, "score": 0, "credit": None, "ai": True, "portrait": False}
+
+
 # ---------- ranking ----------
 
 def candidates(queries, fmt, used_ids):
@@ -214,15 +238,20 @@ def shortlist(queries, fmt, used_ids, videos=3, photos=3):
 
 def thumbnail_b64(candidate):
     """(media_type, base64) of a candidate's small preview image, or None."""
-    if not candidate.get("thumb"):
+    if candidate.get("path"):
+        with open(candidate["path"], "rb") as f:
+            content = f.read()
+    elif not candidate.get("thumb"):
         return None
-    try:
-        r = requests.get(candidate["thumb"], timeout=15, headers=UA)
-        r.raise_for_status()
-    except requests.RequestException:
-        return None
+    else:
+        try:
+            r = requests.get(candidate["thumb"], timeout=15, headers=UA)
+            r.raise_for_status()
+            content = r.content
+        except requests.RequestException:
+            return None
     try:  # shrink to a small preview: cheap to send and within the many-image size limit
-        img = Image.open(io.BytesIO(r.content)).convert("RGB")
+        img = Image.open(io.BytesIO(content)).convert("RGB")
         img.thumbnail((320, 320))
         buf = io.BytesIO()
         img.save(buf, "JPEG", quality=80)
@@ -232,6 +261,11 @@ def thumbnail_b64(candidate):
 
 
 def download(candidate, out_base):
+    if candidate.get("path"):  # AI image already on disk
+        path = out_base.with_suffix(".jpg")
+        with open(candidate["path"], "rb") as f:
+            path.write_bytes(f.read())
+        return path
     url = candidate["url"] or _nasa_asset_url(candidate)
     if not url:
         return None
