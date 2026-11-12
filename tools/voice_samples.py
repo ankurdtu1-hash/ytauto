@@ -62,4 +62,24 @@ def parler():
         print("ok", spk)
 
 
-{"edge": edge, "kokoro": kokoro, "parler": parler}[sys.argv[1]]()
+def omni():
+    """OmniVoice (k2-fsa, Apache 2.0): the default engine inside VoiceStudio."""
+    import soundfile as sf
+    import torch
+    from omnivoice import OmniVoice
+    model = OmniVoice.from_pretrained("k2-fsa/OmniVoice", device_map="cpu", dtype=torch.float32)
+
+    styles = {"auto": {}, "male_young": {"instruct": "male, young adult, moderate pitch"},
+              "male_low": {"instruct": "male, middle-aged, low pitch"},
+              "female_young": {"instruct": "female, young adult, moderate pitch"}}
+    for name, kw in styles.items():
+        for speed in (1.0, 1.2):
+            try:
+                audio = model.generate(text=TEXT, speed=speed, **kw)
+                sf.write(OUT / f"omni_{name}_{speed}.wav", audio[0], 24000)
+                print("ok omni", name, speed)
+            except Exception as e:  # noqa: BLE001
+                print("failed omni", name, e)
+
+
+{"edge": edge, "kokoro": kokoro, "parler": parler, "omni": omni}[sys.argv[1]]()

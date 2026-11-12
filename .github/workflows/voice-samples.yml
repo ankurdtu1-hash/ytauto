@@ -26,6 +26,11 @@ jobs:
         run: |
           pip install -q --extra-index-url https://download.pytorch.org/whl/cpu torch soundfile git+https://github.com/huggingface/parler-tts.git
           python tools/voice_samples.py parler
+      - name: OmniVoice (k2-fsa, Apache 2.0; engine behind VoiceStudio)
+        continue-on-error: true
+        run: |
+          pip install -q --extra-index-url https://download.pytorch.org/whl/cpu torch torchaudio soundfile omnivoice
+          python tools/voice_samples.py omni
       - uses: actions/upload-artifact@v4
         with:
           name: voice-samples
