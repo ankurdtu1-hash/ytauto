@@ -1,12 +1,17 @@
-"""Thin wrapper around the Claude API with refusal fallback, pause_turn handling and cost logging."""
+"""LLM calls: Google Gemini (free tier) first, Claude as the paid backup.
+
+Claude also handles the rare web-search research step. Costs are logged per run.
+"""
 import json
 import logging
+import os
 
 import anthropic
+import requests
 
 from . import config
 
-client = anthropic.Anthropic()
+client = anthropic.Anthropic() if os.getenv("ANTHROPIC_API_KEY") else None
 log = logging.getLogger("ytauto")
 
 # USD per million tokens for claude-opus-5-5, and per web search.
@@ -69,8 +74,64 @@ def research(prompt, max_searches=3):
     return _final_text(response)
 
 
+GEMINI_KEY = os.getenv("GEMINI_API_KEY", "").strip()
+GEMINI_MODELS = [m for m in dict.fromkeys([os.getenv("GEMINI_MODEL", ""), "gemini-flash-latest",
+                                           "gemini-3.5-flash", "gemini-2.5-flash"]) if m]
+
+
+def _gemini_parts(prompt):
+    if isinstance(prompt, str):
+        return [{"text": prompt}]
+    parts = []
+    for block in prompt:
+        if block.get("type") == "text":
+            parts.append({"text": block["text"]})
+        elif block.get("type") == "image" and block.get("source", {}).get("type") == "base64":
+            parts.append({"inline_data": {"mime_type": block["source"]["media_type"], "data": block["source"]["data"]}})
+    return parts
+
+
+def _gemini_structured(prompt, schema, system):
+    body = {"contents": [{"role": "user", "parts": _gemini_parts(prompt)}],
+            "generationConfig": {"responseMimeType": "application/json", "responseJsonSchema": schema,
+                                 "maxOutputTokens": 16000}}
+    if system:
+        body["systemInstruction"] = {"parts": [{"text": system}]}
+    last = None
+    for model in GEMINI_MODELS:
+        try:
+            r = requests.post(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+                              headers={"x-goog-api-key": GEMINI_KEY}, json=body, timeout=300)
+            if r.status_code in (404, 429, 500, 503):  # model missing, free quota used up, or busy: try the next
+                last = f"{model}: HTTP {r.status_code} {r.text[:200]}"
+                log.warning("Gemini %s", last)
+                continue
+            r.raise_for_status()
+            data = r.json()
+            text = "".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"] if not p.get("thought"))
+            result = json.loads(text)
+            missing = [k for k in schema.get("required", []) if k not in result]
+            if missing:
+                raise ValueError(f"missing fields {missing}")
+            u = data.get("usageMetadata", {})
+            log.info("Gemini %s (free): %s in / %s out tokens", model, u.get("promptTokenCount"), u.get("candidatesTokenCount"))
+            return result
+        except (requests.RequestException, KeyError, IndexError, ValueError) as e:
+            last = f"{model}: {e}"
+            log.warning("Gemini %s", last)
+    raise RuntimeError(f"All Gemini models failed ({last})")
+
+
 def structured(prompt, schema, system=None, effort="medium"):
-    """JSON answer that is guaranteed to match `schema`. `prompt` is text or a list of content blocks."""
+    """JSON answer matching `schema`. `prompt` is text or a list of content blocks (text + base64 images).
+
+    Tries free Gemini first; falls back to Claude (paid) if Gemini is missing or fails.
+    """
+    if GEMINI_KEY:
+        try:
+            return _gemini_structured(prompt, schema, system)
+        except RuntimeError as e:
+            log.warning("%s; using Claude instead", e)
     kwargs = {"output_config": {"effort": effort, "format": {"type": "json_schema", "schema": schema}}}
     if system:
         kwargs["system"] = system
