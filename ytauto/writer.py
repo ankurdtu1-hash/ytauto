@@ -60,8 +60,11 @@ def write_script(kind, video_format, brief):
     fmt = config.FORMATS[kind]
     if kind == "short":
         structure = (
-            "Scene 1 is the hook (max 10 words). Middle scenes deliver fast facts with an open loop. "
-            "Last scene: the payoff plus a one-line question that makes people comment. No 'like and subscribe'."
+            "Scene 1 is the hook: a curiosity question or a surprising claim (max 10 words). Middle scenes deliver "
+            "fast facts with an open loop and ONE twist the viewer does not expect. Last scene: the payoff, ending "
+            "with a half-sentence that flows straight back into scene 1's first words, so when the Short replays it "
+            "sounds like one continuous sentence (viewers rewatch without noticing). Put a one-line question that "
+            "makes people comment as the FIRST line of the description instead. No 'like and subscribe'."
         )
     else:
         structure = (
