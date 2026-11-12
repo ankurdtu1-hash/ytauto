@@ -75,8 +75,8 @@ def research(prompt, max_searches=3):
 
 
 GEMINI_KEY = os.getenv("GEMINI_API_KEY", "").strip()
-GEMINI_MODELS = [m for m in dict.fromkeys([os.getenv("GEMINI_MODEL", ""), "gemini-flash-latest",
-                                           "gemini-3.5-flash", "gemini-2.5-flash"]) if m]
+GEMINI_MODELS = [m for m in dict.fromkeys([os.getenv("GEMINI_MODEL", ""), "gemini-3.5-flash", "gemini-flash-latest",
+                                           "gemini-2.5-flash"]) if m]
 
 
 def _gemini_parts(prompt):
@@ -101,7 +101,7 @@ def _gemini_structured(prompt, schema, system):
     for model in GEMINI_MODELS:
         try:
             r = requests.post(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
-                              headers={"x-goog-api-key": GEMINI_KEY}, json=body, timeout=300)
+                              headers={"x-goog-api-key": GEMINI_KEY}, json=body, timeout=150)
             if r.status_code in (404, 429, 500, 503):  # model missing, free quota used up, or busy: try the next
                 last = f"{model}: HTTP {r.status_code} {r.text[:200]}"
                 log.warning("Gemini %s", last)
