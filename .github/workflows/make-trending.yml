@@ -39,6 +39,15 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - name: Unlock background music (YouTube Audio Library tracks, kept encrypted in this public repo)
+        env:
+          MUSIC_KEY: ${{ secrets.MUSIC_KEY }}
+        run: |
+          if [ -n "$MUSIC_KEY" ]; then
+            mkdir -p assets && openssl enc -d -aes-256-cbc -pbkdf2 -pass env:MUSIC_KEY -in assets/music.tar.enc | tar -C assets -xf -
+            ls assets/music | wc -l
+          fi
+
       - name: Install OmniVoice narrator (free, CPU)
         run: pip install -q --extra-index-url https://download.pytorch.org/whl/cpu torch torchaudio soundfile omnivoice
 

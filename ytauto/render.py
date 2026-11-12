@@ -145,7 +145,8 @@ def final_mix(workdir, video, voice, subs, out):
     tracks = sorted(config.MUSIC_DIR.glob("*.mp3")) if config.MUSIC_DIR.exists() else []
     args = ["-i", video.name, "-i", voice.name]
     if tracks:
-        args += ["-stream_loop", "-1", "-i", str(random.choice(tracks))]
+        # random start point so the same track sounds different across videos
+        args += ["-stream_loop", "-1", "-ss", str(random.randint(0, 60)), "-i", str(random.choice(tracks))]
         audio = "[2:a]volume=0.10[m];[1:a][m]amix=inputs=2:duration=first:normalize=0[a]"
     else:
         audio = "[1:a]anull[a]"
