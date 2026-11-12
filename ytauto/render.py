@@ -45,6 +45,10 @@ def frame_aligned(seconds, pause=0.08):
     return math.ceil((seconds + pause) * config.FPS) / config.FPS
 
 
+# One consistent, slightly punchy colour grade so clips from different sources look like one video.
+GRADE = "eq=contrast=1.06:saturation=1.15:gamma=0.98"
+
+
 def scene_video(src, dst, seconds, fmt, is_photo=False, fit=False):
     w, h = fmt["width"], fmt["height"]
     if is_photo:
@@ -61,14 +65,14 @@ def scene_video(src, dst, seconds, fmt, is_photo=False, fit=False):
             "-i", str(src), "-t", f"{seconds:.3f}",
             "-vf", (base +
                     f"zoompan=z='min(zoom+0.0012,1.18)':d={frames}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
-                    f":s={w}x{h}:fps={config.FPS},setsar=1,scale=out_range=tv:out_color_matrix=bt709,format=yuv420p"),
+                    f":s={w}x{h}:fps={config.FPS},setsar=1,{GRADE},scale=out_range=tv:out_color_matrix=bt709,format=yuv420p"),
             "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
             "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(dst),
         ])
         return
     _run([
         "-stream_loop", "-1", "-i", str(src), "-t", f"{seconds:.3f}",
-        "-vf", f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},fps={config.FPS},setsar=1,format=yuv420p",
+        "-vf", f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},fps={config.FPS},setsar=1,{GRADE},format=yuv420p",
         "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(dst),
     ])
 
@@ -142,7 +146,7 @@ def final_mix(workdir, video, voice, subs, out):
     args = ["-i", video.name, "-i", voice.name]
     if tracks:
         args += ["-stream_loop", "-1", "-i", str(random.choice(tracks))]
-        audio = "[2:a]volume=0.07[m];[1:a][m]amix=inputs=2:duration=first:normalize=0[a]"
+        audio = "[2:a]volume=0.10[m];[1:a][m]amix=inputs=2:duration=first:normalize=0[a]"
     else:
         audio = "[1:a]anull[a]"
     args += [
