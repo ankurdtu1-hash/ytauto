@@ -4,7 +4,11 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
+import logging
+
 from . import config
+
+log = logging.getLogger("ytauto")
 
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.upload",
@@ -61,5 +65,9 @@ def upload(video_path, script, kind, thumbnail_path=None, publish_at=None):
     video_id = response["id"]
 
     if thumbnail_path:
-        youtube.thumbnails().set(videoId=video_id, media_body=MediaFileUpload(str(thumbnail_path))).execute()
+        try:
+            youtube.thumbnails().set(videoId=video_id, media_body=MediaFileUpload(str(thumbnail_path))).execute()
+            log.info("Custom thumbnail set")
+        except Exception as e:  # e.g. channel not phone-verified: the video is already up, keep going
+            log.warning("Custom thumbnail not accepted (%s)", str(e)[:200])
     return video_id

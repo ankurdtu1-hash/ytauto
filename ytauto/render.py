@@ -141,9 +141,47 @@ def subtitles_for(kind, events, path):
 
 # ---------- final mix ----------
 
-def final_mix(workdir, video, voice, subs, out):
+def _cover_ass(path, text, seconds, w, h):
+    """Big yellow cover title in the upper third (clear of the Shorts buttons and the captions)."""
+    size = 150 if len(text) <= 14 else 120
+    header = f"""[Script Info]
+ScriptType: v4.00+
+PlayResX: {w}
+PlayResY: {h}
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cover,{config.SUBTITLE_FONT},{size},&H0000F0FF,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,12,6,8,70,70,{int(h * 0.12)},1
+"""
+    path.write_text(header + f"""
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,{_ts(0)},{_ts(seconds)},Cover,,0,0,0,,{{\\fad(0,150)}}{_clean(text)}
+""", encoding="utf-8")
+
+
+def cover_image(workdir, src, text, out, w=1080, h=1920):
+    """The thumbnail: AI cover art, punchy grade, dark top band and the big title."""
+    ass = workdir / "cover_still.ass"
+    _cover_ass(ass, text, 10, w, h)
+    _run([
+        "-i", str(src), "-frames:v", "1",
+        "-vf", (f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},"
+                "eq=contrast=1.12:saturation=1.35,vignette=PI/5,"
+                f"drawbox=x=0:y=0:w=iw:h=ih*0.42:color=black@0.30:t=fill,ass={ass.name}"),
+        "-q:v", "3", out.name,
+    ], cwd=workdir)
+
+
+def final_mix(workdir, video, voice, subs, out, cover_text=None, cover_seconds=0):
     tracks = sorted(config.MUSIC_DIR.glob("*.mp3")) if config.MUSIC_DIR.exists() else []
     args = ["-i", video.name, "-i", voice.name]
+    cover = ""
+    if cover_text and cover_seconds:  # title on the opening scene, so the first frame works as a cover
+        w, h = config.FORMATS["short"]["width"], config.FORMATS["short"]["height"]
+        _cover_ass(workdir / "cover.ass", cover_text, cover_seconds, w, h)
+        cover = "ass=cover.ass,"
     if tracks:
         # random start point so the same track sounds different across videos
         args += ["-stream_loop", "-1", "-ss", str(random.randint(0, 60)), "-i", str(random.choice(tracks))]
@@ -151,7 +189,7 @@ def final_mix(workdir, video, voice, subs, out):
     else:
         audio = "[1:a]anull[a]"
     args += [
-        "-filter_complex", f"[0:v]ass={subs.name}[v];{audio}",
+        "-filter_complex", f"[0:v]{cover}ass={subs.name}[v];{audio}",
         "-map", "[v]", "-map", "[a]",
         "-c:v", "libx264", "-preset", "veryfast", "-crf", "21",
         "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", "-shortest", out.name,

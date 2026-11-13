@@ -3,11 +3,17 @@ name: make-trending
 # Second channel: Shorts about what India is searching right now.
 on:
   schedule:
-    - cron: "7 0,6,12 * * *"  # 3 Shorts a day (GitHub starts runs a few hours late; --daily-limit 3 guards extras)
+    # Check every 2 hours; a Short is made only when the next free publish slot (08:30, 13:30, 19:00 IST)
+    # is within 10 hours, so late or skipped GitHub runs no longer make a Short miss its time.
+    - cron: "7 */2 * * *"
   workflow_dispatch:
     inputs:
       upload:
         description: "upload to YouTube"
+        type: boolean
+        default: true
+      publish_now:
+        description: "public right away (untick: next free time slot)"
         type: boolean
         default: true
 
@@ -19,7 +25,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  check:
+    runs-on: ubuntu-24.04
+    outputs:
+      go: ${{ steps.due.outputs.go }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Is a video needed for the next publish slot?
+        id: due
+        env:
+          CHANNEL_PROFILE: trending
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then echo "go=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          pip install -q python-dotenv
+          python tools/due.py 10
+
   video:
+    needs: check
+    if: needs.check.outputs.go == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     env:
@@ -65,7 +88,7 @@ jobs:
           PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
           YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON_TRENDING }}
           UPLOAD_PRIVACY: ${{ vars.UPLOAD_PRIVACY || 'private' }}
-          PUBLISH_NOW: ${{ github.event_name == 'workflow_dispatch' }}
+          PUBLISH_NOW: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_now }}
           YOUTUBE_CATEGORY_ID: "24"
         run: |
           printf '%s' "$YOUTUBE_TOKEN_JSON" > token.json
@@ -73,7 +96,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.upload }}" = "false" ]; then
             flag="--no-upload"
           fi
-          python run.py short $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --daily-limit 3 )
+          python run.py short $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --ahead-hours 10 )
 
       - name: Keep the finished video for 3 days
         if: always()

@@ -47,3 +47,12 @@ def next_slot(min_lead_minutes=20):
             if t >= earliest and iso not in taken:
                 return iso
     return None
+
+
+def slot_due(ahead_hours):
+    """True when the next free publish slot is within ahead_hours, i.e. a video should be made now."""
+    slot = next_slot()
+    if not slot:
+        return False
+    when = datetime.strptime(slot, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    return when - datetime.now(timezone.utc) <= timedelta(hours=ahead_hours)

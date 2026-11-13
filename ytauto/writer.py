@@ -9,6 +9,7 @@ SCHEMA = {
         "tags": {"type": "array", "items": {"type": "string"}},
         "hashtags": {"type": "array", "items": {"type": "string"}},
         "thumbnail_text": {"type": "string"},
+        "cover_prompt": {"type": "string"},
         "scenes": {
             "type": "array",
             "items": {
@@ -23,7 +24,7 @@ SCHEMA = {
             },
         },
     },
-    "required": ["title", "description", "tags", "hashtags", "thumbnail_text", "scenes"],
+    "required": ["title", "description", "tags", "hashtags", "thumbnail_text", "cover_prompt", "scenes"],
     "additionalProperties": False,
 }
 
@@ -97,5 +98,12 @@ Metadata rules (optimise click-through rate):
   then this disclosure on its own line: "इस वीडियो में AI voice, AI images और stock footage (Pixabay, NASA, Openverse, Wikimedia Commons) का इस्तेमाल किया गया है।"
 - tags: 12-18 search phrases people actually type, in Hindi, Hinglish and English.
 - hashtags: 3-5 hashtags starting with #{' and include #Shorts' if kind == 'short' else ''}.
-- thumbnail_text: 2-4 bold Hindi words that tease the payoff without giving it away."""
+- thumbnail_text: the big words on the cover, 2-4 Hindi words (max 22 characters) that make people tap:
+  a shocking number, a bold claim or a question that teases the payoff without giving it away,
+  e.g. "21 छक्के!", "ये सच है?", "AI ने कर दिखाया". Honest: it must match what the video says.
+- cover_prompt: one English sentence (max 40 words) for an AI image generator: the scroll-stopping cover
+  image of this video. One big, clear subject filling the frame, close-up, dramatic lighting, bold
+  saturated colours, strong contrast, a sense of drama or wonder; a generic person with a strong
+  emotion (shocked, amazed) when it fits. Generic people only: never a real person's name or likeness;
+  no text, letters, numbers, logos, flags or religious symbols in the image."""
     return llm.structured(prompt, SCHEMA, system=SYSTEM, effort="low" if kind == "short" else "medium")

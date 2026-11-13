@@ -74,8 +74,12 @@ def make_video(kind, do_upload=True, script_only=False):
     log.info("Shortlisting visuals for %d scenes", len(scenes))
     shortlists = [footage.shortlist(s["footage_queries"], fmt, used_ids) for s in scenes]
     with ThreadPoolExecutor(3) as pool:  # free AI illustrations (Cloudflare), one per scene
+        cover_job = pool.submit(footage.ai_image, script.get("cover_prompt"), workdir / "cover_ai.jpg") \
+            if kind == "short" else None
         ai = list(pool.map(lambda i: footage.ai_image(scenes[i].get("image_prompt"), workdir / f"ai_{i:03d}.jpg"),
                            range(len(scenes))))
+    cover_art = cover_job.result() if cover_job else None
+    log.info("Cover art: %s", "made" if cover_art else "not available, using the first scene")
     for sl, cand in zip(shortlists, ai):
         if cand:
             sl.append(cand)
@@ -89,8 +93,11 @@ def make_video(kind, do_upload=True, script_only=False):
         words = voice.speak(scene["narration"], mp3)
         length = render.frame_aligned(render.duration(mp3))
 
-        raw, is_photo, fit = pick_visual(shortlists[i], scene["footage_queries"], workdir / f"raw_{i:03d}",
-                                    fmt, used_ids, credits)
+        if i == 0 and cover_art:  # open on the cover art: the first frame is what people see in the feed
+            raw, is_photo, fit = workdir / "cover_ai.jpg", True, False
+        else:
+            raw, is_photo, fit = pick_visual(shortlists[i], scene["footage_queries"], workdir / f"raw_{i:03d}",
+                                             fmt, used_ids, credits)
         scene_videos.append(workdir / f"scene_{i:03d}.mp4")
         scene_audios.append(workdir / f"voice_{i:03d}.wav")
         render.scene_video(raw, scene_videos[-1], length, fmt, is_photo, fit)
@@ -105,9 +112,19 @@ def make_video(kind, do_upload=True, script_only=False):
     render.concat(scene_audios, voice_track, workdir)
     render.subtitles_for(kind, events, subs)
     final = workdir / "final.mp4"
-    render.final_mix(workdir, video, voice_track, subs, final)
+    first_len = render.duration(scene_audios[0]) if scene_audios else 0
+    render.final_mix(workdir, video, voice_track, subs, final,
+                     cover_text=script.get("thumbnail_text") if kind == "short" else None, cover_seconds=first_len)
 
     thumb = None
+    if kind == "short":
+        thumb = workdir / "thumbnail.jpg"
+        src = workdir / "cover_ai.jpg" if cover_art else scene_videos[0]
+        try:
+            render.cover_image(workdir, src, script["thumbnail_text"], thumb)
+        except Exception as e:
+            log.warning("Cover image failed: %s", e)
+            thumb = None
     if kind == "long":
         thumb = workdir / "thumbnail.jpg"
         render.thumbnail(workdir, scene_videos[0], script["thumbnail_text"], thumb)
@@ -138,6 +155,8 @@ def main():
     parser.add_argument("--no-upload", action="store_true", help="make the video but do not upload")
     parser.add_argument("--script-only", action="store_true", help="only research and write the script")
     parser.add_argument("--daily-limit", type=int, default=0, help="skip if this channel already uploaded this many today")
+    parser.add_argument("--ahead-hours", type=float, default=0,
+                        help="skip unless the next free publish slot is within this many hours")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -145,6 +164,9 @@ def main():
     done_today = sum(1 for i in history.load() if i.get("video_id") and i["kind"] == args.kind and i["date"].startswith(today))
     if args.daily_limit and done_today >= args.daily_limit:
         log.info("Already uploaded %d %s video(s) today; skipping this scheduled run", done_today, args.kind)
+        return
+    if args.ahead_hours and not history.slot_due(args.ahead_hours):
+        log.info("Next publish slots are already filled; nothing to make now")
         return
     for tool in ("ffmpeg", "ffprobe"):
         if not args.script_only and not shutil.which(tool):
