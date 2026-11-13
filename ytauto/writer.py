@@ -104,6 +104,8 @@ Metadata rules (optimise click-through rate):
 - cover_prompt: one English sentence (max 40 words) for an AI image generator: the scroll-stopping cover
   image of this video. One big, clear subject filling the frame, close-up, dramatic lighting, bold
   saturated colours, strong contrast, a sense of drama or wonder; a generic person with a strong
-  emotion (shocked, amazed) when it fits. Generic people only: never a real person's name or likeness;
-  no text, letters, numbers, logos, flags or religious symbols in the image."""
+  emotion (shocked, amazed) when it fits. Generic people only: never a real person's name or likeness.
+  If the video is about a real, named person, show NO person who could be mistaken for them: show the
+  setting or objects instead (stadium under floodlights, cricket ball and bat, trophy, film camera, phone).
+  No text, letters, numbers, brand logos, flags or religious symbols anywhere, including on clothing."""
     return llm.structured(prompt, SCHEMA, system=SYSTEM, effort="low" if kind == "short" else "medium")
