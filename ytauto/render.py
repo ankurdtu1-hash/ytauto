@@ -185,7 +185,7 @@ def final_mix(workdir, video, voice, subs, out, cover_text=None, cover_seconds=0
     if tracks:
         # random start point so the same track sounds different across videos
         args += ["-stream_loop", "-1", "-ss", str(random.randint(0, 60)), "-i", str(random.choice(tracks))]
-        audio = "[2:a]volume=0.10[m];[1:a][m]amix=inputs=2:duration=first:normalize=0[a]"
+        audio = "[2:a]volume=0.05[m];[1:a][m]amix=inputs=2:duration=first:normalize=0[a]"
     else:
         audio = "[1:a]anull[a]"
     args += [
