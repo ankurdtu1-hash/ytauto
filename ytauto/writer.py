@@ -102,8 +102,10 @@ Metadata rules (optimise click-through rate):
 - thumbnail_text: the big words on the cover, 2-4 Hinglish words in Roman letters (max 22 characters) that make people tap:
   a shocking number, a bold claim or a question that teases the payoff without giving it away,
   e.g. "21 Chhakke!", "Ye Sach Hai?", "AI ne kar dikhaya". Never Devanagari. Honest: it must match what the video says.
-- cover_tagline: 3-5 Hinglish words in Roman letters for a yellow ribbon at the bottom of the cover that adds urgency or
-  curiosity and does not repeat thumbnail_text, e.g. "Asli wajah chauka degi", "Aaj sab yahi dekh rahe". Honest.
+- cover_tagline: the attractive hook line on a yellow ribbon at the bottom of the cover: 3-6 Hinglish words
+  in Roman letters, emotional and curious, ending in "!" or "?", that makes people NEED to watch and does not
+  repeat thumbnail_text, e.g. "Sach jaan ke hil jaoge!", "Ye kisi ne socha bhi nahi tha!",
+  "Aapke phone mein bhi hai ye?". Never Devanagari. Honest: no promise the video does not keep.
 - cover_prompt: one English sentence (max 40 words) for an AI image generator: the scroll-stopping cover
   image of this video. One big, clear subject filling the frame, close-up, dramatic lighting, bold
   saturated colours, strong contrast, a sense of drama or wonder; a generic person with a strong

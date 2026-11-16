@@ -150,30 +150,26 @@ def _split_title(text):
     return " ".join(words[:best]), " ".join(words[best:])
 
 
-# Channel badge colours (ASS &HAABBGGRR)
-BADGE = {"trending": "&H002A2AE8", "main": "&H00E5881E"}
 YELLOW, WHITE, BLACK = "&H0000D8FF", "&H00FFFFFF", "&H00000000"
 
 
 def _cover_ass(path, text, seconds, w, h, tagline=None, still=False):
-    """Thumbnail-style title block: channel badge, big two-colour title, optional yellow tagline ribbon.
+    """Thumbnail-style title block: big two-colour title, optional yellow tagline ribbon.
     Rendered by libass, so Devanagari shapes correctly."""
     line1, line2 = _split_title(_clean(text))
     longest = max(len(line1), len(line2), 1)
-    size = max(110, min(200, int((w - 120) / (0.56 * longest))))
-    badge_colour = BADGE.get(config.PROFILE, BADGE["main"])
-    top = int(h * 0.11)
+    size = max(110, min(200, int((w - 120) / (0.50 * longest))))
+    top = int(h * 0.10)
     styles = [
-        f"Style: Badge,{config.SUBTITLE_FONT},56,{WHITE},{WHITE},{badge_colour},{badge_colour},-1,0,0,0,100,100,2,0,3,16,0,8,0,0,0,1",
         f"Style: T1,{config.SUBTITLE_FONT},{size},{WHITE},{WHITE},{BLACK},&H64000000,-1,0,0,0,100,100,0,0,1,14,8,8,0,0,0,1",
         f"Style: T2,{config.SUBTITLE_FONT},{int(size * 1.08)},{YELLOW},{YELLOW},{BLACK},&H64000000,-1,0,0,0,100,100,0,0,1,15,9,8,0,0,0,1",
         f"Style: Tag,{config.SUBTITLE_FONT},74,{BLACK},{BLACK},{YELLOW},{YELLOW},-1,0,0,0,100,100,0,0,3,20,0,2,0,0,0,1",
     ]
     end = _ts(seconds)
     fade = "" if still else "\\fad(0,200)"
-    y1 = top + 110
+    y1 = top
     y2 = y1 + (int(size * 1.12) if line1 else 0)
-    events = [f"Dialogue: 1,{_ts(0)},{end},Badge,,0,0,0,,{{\\pos({w // 2},{top}){fade}}} {config.CHANNEL_NAME.upper()} "]
+    events = []
     if line1:
         events.append(f"Dialogue: 2,{_ts(0)},{end},T1,,0,0,0,,{{\\pos({w // 2},{y1})\\frz2{fade}}}{line1}")
     events.append(f"Dialogue: 2,{_ts(0)},{end},T2,,0,0,0,,{{\\pos({w // 2},{y2})\\frz2{fade}}}{line2}")
@@ -197,16 +193,18 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 
 def cover_image(workdir, src, text, out, tagline=None, w=1080, h=1920):
-    """The thumbnail: AI cover art, punchy grade, dark fades top and bottom, badge, title and tagline."""
+    """The thumbnail: AI cover art, punchy grade, dark fades top and bottom, title and tagline."""
     ass = workdir / "cover_still.ass"
     _cover_ass(ass, text, 10, w, h, tagline=tagline, still=True)
-    shade = ",".join(f"drawbox=x=0:y=0:w=iw:h=ih*{0.50 - i * 0.06:.2f}:color=black@0.10:t=fill" for i in range(7))
-    shade += "," + ",".join(f"drawbox=x=0:y=ih*{0.70 + i * 0.05:.2f}:w=iw:h=ih:color=black@0.10:t=fill" for i in range(5))
+    # smooth dark fades at the top (behind the title) and bottom (behind the ribbon), no banding
+    fade = "255*(0.62*clip(1-Y/(H*0.52),0,1)+0.55*clip((Y-H*0.66)/(H*0.34),0,1))"
     _run([
-        "-i", str(src), "-frames:v", "1",
-        "-vf", (f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},"
-                f"eq=contrast=1.15:saturation=1.4:brightness=0.02,unsharp=5:5:0.8,vignette=PI/4.5,{shade},"
-                f"ass={ass.name}"),
+        "-i", str(src), "-f", "lavfi", "-i", f"color=black:s={w}x{h}", "-frames:v", "1",
+        "-filter_complex", (
+            f"[0:v]scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},"
+            f"eq=contrast=1.15:saturation=1.4:brightness=0.02,unsharp=5:5:0.8,vignette=PI/4.5[bg];"
+            f"[1:v]format=rgba,geq=r=0:g=0:b=0:a='{fade}'[g];"
+            f"[bg][g]overlay=format=auto,ass={ass.name}"),
         "-q:v", "2", out.name,
     ], cwd=workdir)
 
