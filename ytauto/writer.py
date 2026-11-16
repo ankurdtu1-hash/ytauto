@@ -10,6 +10,7 @@ SCHEMA = {
         "hashtags": {"type": "array", "items": {"type": "string"}},
         "thumbnail_text": {"type": "string"},
         "cover_prompt": {"type": "string"},
+        "cover_tagline": {"type": "string"},
         "scenes": {
             "type": "array",
             "items": {
@@ -24,7 +25,7 @@ SCHEMA = {
             },
         },
     },
-    "required": ["title", "description", "tags", "hashtags", "thumbnail_text", "cover_prompt", "scenes"],
+    "required": ["title", "description", "tags", "hashtags", "thumbnail_text", "cover_prompt", "cover_tagline", "scenes"],
     "additionalProperties": False,
 }
 
@@ -101,6 +102,8 @@ Metadata rules (optimise click-through rate):
 - thumbnail_text: the big words on the cover, 2-4 Hindi words (max 22 characters) that make people tap:
   a shocking number, a bold claim or a question that teases the payoff without giving it away,
   e.g. "21 छक्के!", "ये सच है?", "AI ने कर दिखाया". Honest: it must match what the video says.
+- cover_tagline: 3-5 Hindi words for a yellow ribbon at the bottom of the cover that adds urgency or
+  curiosity and does not repeat thumbnail_text, e.g. "असली वजह चौंका देगी", "आज सब यही देख रहे". Honest.
 - cover_prompt: one English sentence (max 40 words) for an AI image generator: the scroll-stopping cover
   image of this video. One big, clear subject filling the frame, close-up, dramatic lighting, bold
   saturated colours, strong contrast, a sense of drama or wonder; a generic person with a strong

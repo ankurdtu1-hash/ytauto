@@ -121,7 +121,7 @@ def make_video(kind, do_upload=True, script_only=False):
         thumb = workdir / "thumbnail.jpg"
         src = workdir / "cover_ai.jpg" if cover_art else scene_videos[0]
         try:
-            render.cover_image(workdir, src, script["thumbnail_text"], thumb)
+            render.cover_image(workdir, src, script["thumbnail_text"], thumb, tagline=script.get("cover_tagline"))
         except Exception as e:
             log.warning("Cover image failed: %s", e)
             thumb = None

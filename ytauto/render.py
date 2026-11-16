@@ -141,36 +141,73 @@ def subtitles_for(kind, events, path):
 
 # ---------- final mix ----------
 
-def _cover_ass(path, text, seconds, w, h):
-    """Big yellow cover title in the upper third (clear of the Shorts buttons and the captions)."""
-    size = 150 if len(text) <= 14 else 120
+def _split_title(text):
+    """Two balanced lines; the second (yellow) line carries the punch."""
+    words = text.split()
+    if len(words) < 2:
+        return "", text
+    best = min(range(1, len(words)), key=lambda k: abs(len(" ".join(words[:k])) - len(" ".join(words[k:]))))
+    return " ".join(words[:best]), " ".join(words[best:])
+
+
+# Channel badge colours (ASS &HAABBGGRR)
+BADGE = {"trending": "&H002A2AE8", "main": "&H00E5881E"}
+YELLOW, WHITE, BLACK = "&H0000D8FF", "&H00FFFFFF", "&H00000000"
+
+
+def _cover_ass(path, text, seconds, w, h, tagline=None, still=False):
+    """Thumbnail-style title block: channel badge, big two-colour title, optional yellow tagline ribbon.
+    Rendered by libass, so Devanagari shapes correctly."""
+    line1, line2 = _split_title(_clean(text))
+    longest = max(len(line1), len(line2), 1)
+    size = max(110, min(200, int((w - 120) / (0.56 * longest))))
+    badge_colour = BADGE.get(config.PROFILE, BADGE["main"])
+    top = int(h * 0.11)
+    styles = [
+        f"Style: Badge,{config.SUBTITLE_FONT},56,{WHITE},{WHITE},{badge_colour},{badge_colour},-1,0,0,0,100,100,2,0,3,16,0,8,0,0,0,1",
+        f"Style: T1,{config.SUBTITLE_FONT},{size},{WHITE},{WHITE},{BLACK},&H64000000,-1,0,0,0,100,100,0,0,1,14,8,8,0,0,0,1",
+        f"Style: T2,{config.SUBTITLE_FONT},{int(size * 1.08)},{YELLOW},{YELLOW},{BLACK},&H64000000,-1,0,0,0,100,100,0,0,1,15,9,8,0,0,0,1",
+        f"Style: Tag,{config.SUBTITLE_FONT},74,{BLACK},{BLACK},{YELLOW},{YELLOW},-1,0,0,0,100,100,0,0,3,20,0,2,0,0,0,1",
+    ]
+    end = _ts(seconds)
+    fade = "" if still else "\\fad(0,200)"
+    y1 = top + 110
+    y2 = y1 + (int(size * 1.12) if line1 else 0)
+    events = [f"Dialogue: 1,{_ts(0)},{end},Badge,,0,0,0,,{{\\pos({w // 2},{top}){fade}}} {config.CHANNEL_NAME.upper()} "]
+    if line1:
+        events.append(f"Dialogue: 2,{_ts(0)},{end},T1,,0,0,0,,{{\\pos({w // 2},{y1})\\frz2{fade}}}{line1}")
+    events.append(f"Dialogue: 2,{_ts(0)},{end},T2,,0,0,0,,{{\\pos({w // 2},{y2})\\frz2{fade}}}{line2}")
+    if tagline:
+        events.append(f"Dialogue: 1,{_ts(0)},{end},Tag,,0,0,0,,{{\\pos({w // 2},{int(h * 0.80)})}}{_clean(tagline)}")
     header = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {w}
 PlayResY: {h}
-WrapStyle: 0
+WrapStyle: 2
+ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cover,{config.SUBTITLE_FONT},{size},&H0000F0FF,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,1,12,6,8,70,70,{int(h * 0.12)},1
-"""
-    path.write_text(header + f"""
+""" + "\n".join(styles) + """
+
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,{_ts(0)},{_ts(seconds)},Cover,,0,0,0,,{{\\fad(0,150)}}{_clean(text)}
-""", encoding="utf-8")
+"""
+    path.write_text(header + "\n".join(events) + "\n", encoding="utf-8")
 
 
-def cover_image(workdir, src, text, out, w=1080, h=1920):
-    """The thumbnail: AI cover art, punchy grade, dark top band and the big title."""
+def cover_image(workdir, src, text, out, tagline=None, w=1080, h=1920):
+    """The thumbnail: AI cover art, punchy grade, dark fades top and bottom, badge, title and tagline."""
     ass = workdir / "cover_still.ass"
-    _cover_ass(ass, text, 10, w, h)
+    _cover_ass(ass, text, 10, w, h, tagline=tagline, still=True)
+    shade = ",".join(f"drawbox=x=0:y=0:w=iw:h=ih*{0.50 - i * 0.06:.2f}:color=black@0.10:t=fill" for i in range(7))
+    shade += "," + ",".join(f"drawbox=x=0:y=ih*{0.70 + i * 0.05:.2f}:w=iw:h=ih:color=black@0.10:t=fill" for i in range(5))
     _run([
         "-i", str(src), "-frames:v", "1",
         "-vf", (f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},"
-                "eq=contrast=1.12:saturation=1.35,vignette=PI/5,"
-                f"drawbox=x=0:y=0:w=iw:h=ih*0.42:color=black@0.30:t=fill,ass={ass.name}"),
-        "-q:v", "3", out.name,
+                f"eq=contrast=1.15:saturation=1.4:brightness=0.02,unsharp=5:5:0.8,vignette=PI/4.5,{shade},"
+                f"ass={ass.name}"),
+        "-q:v", "2", out.name,
     ], cwd=workdir)
 
 
