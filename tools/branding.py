@@ -66,15 +66,18 @@ def main():
     # Logo: art inside a coloured ring, big monogram in the middle (YouTube shows it as a circle).
     a = OUT / "logo.ass"
     ass(a, 800, 800, [
+        f"Style: C,{FONT},20,{BRAND['colour']},{BRAND['colour']},{WHITE},&H00000000,0,0,0,0,100,100,0,0,1,14,0,7,0,0,0,1",
         f"Style: M,{FONT},300,{WHITE},{WHITE},{BLACK},&H80000000,-1,0,0,0,100,100,-6,0,1,16,10,5,0,0,0,1",
         f"Style: S,{FONT},62,{BLACK},{BLACK},{YELLOW},{YELLOW},-1,0,0,0,100,100,4,0,3,14,0,5,0,0,0,1",
     ], [
+        "C,,0,0,0,,{\\pos(0,0)\\1a&H50&\\p1}m 400 70 b 582 70 730 218 730 400 b 730 582 582 730 400 730 "
+        "b 218 730 70 582 70 400 b 70 218 218 70 400 70{\\p0}",
         f"M,,0,0,0,,{{\\pos(400,370)}}{BRAND['mono']}",
         f"S,,0,0,0,,{{\\pos(400,585)}} {'TRENDING' if config.PROFILE == 'trending' else 'AI • TECH'} ",
     ])
     _run(["-y", "-i", str(OUT / "logo_art.jpg"), "-frames:v", "1", "-vf",
           "scale=800:800:force_original_aspect_ratio=increase,crop=800:800,eq=contrast=1.15:saturation=1.4,"
-          "drawbox=x=0:y=0:w=iw:h=ih:color=black@0.35:t=fill,vignette=PI/3,"
+          "eq=brightness=0.06:saturation=1.3,vignette=PI/5,"
           f"ass={a.name}", "-q:v", "2", "logo.jpg"], cwd=OUT)
 
     # Banner: everything important inside the 1546x423 centre box that shows on every device.
