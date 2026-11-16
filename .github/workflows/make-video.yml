@@ -115,7 +115,6 @@ jobs:
           path: |
             output/*/final.mp4
             output/*/thumbnail.jpg
-            output/*/thumbnail.jpg
             output/*/script.json
             output/*/brief.txt
           retention-days: 3
