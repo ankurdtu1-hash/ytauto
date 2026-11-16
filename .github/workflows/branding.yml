@@ -1,0 +1,33 @@
+name: branding
+
+# Makes channel logo + banner for both channels (download the artifact, upload in YouTube Studio).
+on:
+  workflow_dispatch:
+
+jobs:
+  art:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        profile: [main, trending]
+    env:
+      CHANNEL_PROFILE: ${{ matrix.profile }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core
+          pip install -q -r requirements.txt
+      - run: python tools/branding.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: branding-${{ matrix.profile }}
+          path: |
+            output/branding/logo.jpg
+            output/branding/banner.jpg
