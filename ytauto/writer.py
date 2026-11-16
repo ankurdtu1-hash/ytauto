@@ -92,18 +92,18 @@ Script rules:
 {VISUALS}
 
 Metadata rules (optimise click-through rate):
-- title: Hindi/Hinglish, under 60 characters, front-load the most surprising word, create a curiosity gap,
+- title: Hinglish in Roman (English) letters, e.g. "Kohli ne kiya kamaal!", never Devanagari; under 60 characters, front-load the most surprising word, create a curiosity gap,
   but stay honest. Never promise photos, videos, leaks, "exclusive" or "unseen" footage: the video only
   shows stock visuals.
 - description: first line repeats the hook; then 2-4 Hindi lines summarising the video; then a "Sources:" line;
   then this disclosure on its own line: "इस वीडियो में AI voice, AI images और stock footage (Pixabay, NASA, Openverse, Wikimedia Commons) का इस्तेमाल किया गया है।"
 - tags: 12-18 search phrases people actually type, in Hindi, Hinglish and English.
 - hashtags: 3-5 hashtags starting with #{' and include #Shorts' if kind == 'short' else ''}.
-- thumbnail_text: the big words on the cover, 2-4 Hindi words (max 22 characters) that make people tap:
+- thumbnail_text: the big words on the cover, 2-4 Hinglish words in Roman letters (max 22 characters) that make people tap:
   a shocking number, a bold claim or a question that teases the payoff without giving it away,
-  e.g. "21 छक्के!", "ये सच है?", "AI ने कर दिखाया". Honest: it must match what the video says.
-- cover_tagline: 3-5 Hindi words for a yellow ribbon at the bottom of the cover that adds urgency or
-  curiosity and does not repeat thumbnail_text, e.g. "असली वजह चौंका देगी", "आज सब यही देख रहे". Honest.
+  e.g. "21 Chhakke!", "Ye Sach Hai?", "AI ne kar dikhaya". Never Devanagari. Honest: it must match what the video says.
+- cover_tagline: 3-5 Hinglish words in Roman letters for a yellow ribbon at the bottom of the cover that adds urgency or
+  curiosity and does not repeat thumbnail_text, e.g. "Asli wajah chauka degi", "Aaj sab yahi dekh rahe". Honest.
 - cover_prompt: one English sentence (max 40 words) for an AI image generator: the scroll-stopping cover
   image of this video. One big, clear subject filling the frame, close-up, dramatic lighting, bold
   saturated colours, strong contrast, a sense of drama or wonder; a generic person with a strong
