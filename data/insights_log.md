@@ -6,3 +6,11 @@ Everyday gadget mysteries and tangible tech curiosities like phone batteries, SI
 Best: Phone Battery में छेद हुआ तो क्या होगा? Shocking R (87); SIM Card का कोना क्यों कटा होता है? | 3 Quick Fact (69); पानी नहीं, बोतल एक्सपायर होती है! Shocking Truth # (60)
 
 Weakest: Incognito Mode का सच! क्या सच में सब छुप जाता है?  (1); दूध उबलकर बाहर क्यों गिरता है, पानी क्यों नहीं? अस (1); Internet ka Pahla Message crash kyon hua? #Shorts (0)
+
+## 2026-11-17: 1 subs, 466 views, 22 public Shorts
+
+Everyday gadget curiosities and physical design mysteries like phone battery hazards, SIM card notches, and airplane window shapes drove the strongest view velocity. Conversely, generic kitchen science facts and abstract cosmic 'What If' scenarios consistently failed to generate traction. Moving forward, center all scripts around tangible tech hardware and ubiquitous everyday objects, weaving in a direct engagement question before executing the seamless end-to-beginning loop.
+
+Best: Phone Battery में छेद हुआ तो क्या होगा? Shocking R (87); SIM Card का कोना क्यों कटा होता है? | 3 Quick Fact (69); पानी नहीं, बोतल एक्सपायर होती है! Shocking Truth # (60)
+
+Weakest: Internet ka Pahla Message crash kyon hua? #Shorts (1); Incognito Mode का सच! क्या सच में सब छुप जाता है?  (1); दूध उबलकर बाहर क्यों गिरता है, पानी क्यों नहीं? अस (1)
