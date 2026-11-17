@@ -6,3 +6,11 @@ Mainstream Indian cricket (Arshdeep, Hardik, IPL) and major entertainment buzz (
 Best: नंबर 11 पर छक्का! Arshdeep Singh का नया रिकॉर्ड #S (1205); हार्दिक अब पंजाब में! IPL 2027 का सबसे बड़ा ट्रेड  (893); टीम इंडिया दो हिस्सों में! IND vs NZ चौथे वनडे से  (893)
 
 Weakest: Creta-Nexon फेल! Oct 2026 में किस SUV ने मचाया धमा (11); 22 साल पुराना रिकॉर्ड टूटा! Sharapova के बाद कौन?  (4); Debutant ka Dhamaka! 7 Wickets Se Match Palta? #Sh (0)
+
+## 2026-11-17: 12 subs, 5795 views, 18 public Shorts
+
+Mainstream Indian cricket storylines and globally recognized icons like Cristiano Ronaldo and Yash drive over 80% of total viewership. Niche international athletes, financial stock updates, commodity rates, and civic rankings consistently stall below 100 views. To drive explosive growth toward monetisation, restrict coverage to tier-one cricket and marquee viral moments while perfecting seamless loops. Ensure Roman Hinglish titles feature prominent star names and specific stats right up front.
+
+Best: नंबर 11 पर छक्का! Arshdeep Singh का नया रिकॉर्ड #S (1205); हार्दिक अब पंजाब में! IPL 2027 का सबसे बड़ा ट्रेड  (893); टीम इंडिया दो हिस्सों में! IND vs NZ चौथे वनडे से  (893)
+
+Weakest: Creta-Nexon फेल! Oct 2026 में किस SUV ने मचाया धमा (11); 22 साल पुराना रिकॉर्ड टूटा! Sharapova के बाद कौन?  (4); Debutant ka Dhamaka! 7 Wickets Se Match Palta? #Sh (0)

@@ -1,41 +1,41 @@
 {
-  "summary": "Mainstream Indian cricket (Arshdeep, Hardik, IPL) and major entertainment buzz (Yash in Ramayana) drive over 80% of total channel views and engagement. Generic financial news, obscure international athletes, and vague lifestyle updates consistently flopped below 100 views. To reach monetisation velocity, shift 80% of channel production exclusively to Tier-1 cricket and marquee pop-culture, pairing Devanagari titles with strong tension-driven visual hooks.",
+  "summary": "Mainstream Indian cricket storylines and globally recognized icons like Cristiano Ronaldo and Yash drive over 80% of total viewership. Niche international athletes, financial stock updates, commodity rates, and civic rankings consistently stall below 100 views. To drive explosive growth toward monetisation, restrict coverage to tier-one cricket and marquee viral moments while perfecting seamless loops. Ensure Roman Hinglish titles feature prominent star names and specific stats right up front.",
   "do_more": [
-    "Double down on active Indian cricket drama, IPL updates, and mega Indian movie reveals",
-    "Feature globally recognizable household names like Rohit, Hardik, Arshdeep, and Ronaldo",
-    "Use Devanagari Hindi text with English keywords in titles rather than pure Roman Hinglish",
-    "Open videos with an exact record, unexpected score, or visual shock in the first 2 seconds"
+    "Focus on mainstream Indian cricket superstars (Arshdeep Singh, Hardik Pandya, Rohit Sharma) and high-stakes IPL news",
+    "Feature household global sports figures like Cristiano Ronaldo who have massive mainstream followings in India",
+    "Include high-impact numbers and unique milestones directly in the story (e.g., No. 11, 13 times sold)",
+    "Script tight 40-second narratives that seamlessly loop the ending back into the opening hook line"
   ],
   "avoid": [
-    "Covering niche global football players like Brajan Gruda or minor tennis news",
-    "Producing stock market, commodity price, or civic ranking updates",
-    "Writing low-context Romanized titles like 'Debutant ka Dhamaka'",
-    "Covering speculative automotive or far-future fantasy timelines like 2026-2027 car sales"
+    "Covering niche international athletes like Brajan Gruda or obscure tennis updates with low Indian interest",
+    "Producing finance, stock market, gold price, or municipal city cleanliness explainers",
+    "Writing vague, nameless titles like 'Debutant ka Dhamaka' that fail to state who or what is featured",
+    "Wasting the first three seconds on greetings, logos, or slow contextual build-up"
   ],
   "hook_tips": [
-    "Start with a hard shock stat: 'Kya No. 11 batsman match bacha sakta hai?'",
-    "Address the superstar directly: 'Rohit Sharma ka yeh faisla sabko chaukane wala tha'",
-    "Create an open curiosity gap: 'Ronaldo apni iconic Jersey No. 7 kyu chhod rahe hain?'",
-    "Anchor immediate stakes within 1.5 seconds instead of saying channel intros or greetings"
+    "Open with an unexpected stat: 'No. 11 par aakar kisi Indian pacer ne aisa chhakka pehle kabhi nahi mara!'",
+    "Pique curiosity around star decisions: 'Ronaldo apni iconic Jersey No. 7 kyu chhod rahe hain?'",
+    "Highlight immediate drama: 'Match se theek pehle Team India do alag hisso mein kyu bat gayi?'",
+    "Deliver the core tension in under 2 seconds without introductory fluff"
   ],
   "title_tips": [
-    "Mix Devanagari script for emotional punch with English for searchable names",
-    "Include surprising numbers or exact match situations in the first 30 characters",
-    "Use punchy punctuation like exclamation marks and question marks without misleading claims",
-    "Keep the main keyword up front before the #Shorts tag (e.g., 'Arshdeep Singh Record: नंबर 11 पर छक्का!')"
+    "Place the star or team name in the first three words (e.g., 'Arshdeep Singh Record: No 11 Par Six!')",
+    "Use exact numbers or milestones to spark instant interest (e.g., '13 Baar Bike! IPL Ka Sabse Anokha Record')",
+    "Use punchy punctuation (! or ?) to highlight genuine drama without resorting to fake clickbait"
   ],
   "hot_keywords": [
     "ipl 2025",
-    "rohit sharma",
-    "hardik pandya",
-    "virat kohli",
     "team india",
     "arshdeep singh",
+    "hardik pandya",
+    "rohit sharma",
+    "virat kohli",
+    "champions trophy",
+    "bcci",
+    "cristiano ronaldo",
     "ramayana movie",
     "yash",
-    "cristiano ronaldo",
-    "champions trophy",
-    "bcci"
+    "ind vs nz"
   ],
   "updated": "2026-11-17"
 }
