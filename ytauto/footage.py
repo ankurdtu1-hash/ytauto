@@ -15,6 +15,7 @@ import io
 import json
 import logging
 import html
+import os
 import re
 
 import requests
@@ -175,6 +176,11 @@ def _commons(query, fmt):
     return out
 
 
+# Free allowance is 10k neurons a day: 4 steps and ~5 images per Short keeps all 5 daily Shorts covered.
+AI_STEPS = int(os.getenv("AI_STEPS", "4"))
+AI_PER_VIDEO = int(os.getenv("AI_PER_VIDEO", "5"))
+
+
 def ai_image(prompt, out_path):
     """Free AI illustration from Cloudflare Workers AI (FLUX.1 schnell, Apache 2.0). Candidate dict or None."""
     if not (config.CF_ACCOUNT_ID and config.CF_API_TOKEN) or not prompt or "cloudflare" in _disabled:
@@ -185,7 +191,7 @@ def ai_image(prompt, out_path):
         r = requests.post(f"https://api.cloudflare.com/client/v4/accounts/{config.CF_ACCOUNT_ID}"
                           "/ai/run/@cf/black-forest-labs/flux-1-schnell",
                           headers={"Authorization": f"Bearer {config.CF_API_TOKEN}"},
-                          json={"prompt": full[:2000], "steps": 6}, timeout=90)
+                          json={"prompt": full[:2000], "steps": AI_STEPS}, timeout=90)
         if r.status_code == 429 or (not r.ok and "neuron" in r.text.lower()):
             log.warning("Cloudflare free image quota used up for today")
             _disabled.add("cloudflare")

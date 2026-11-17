@@ -73,12 +73,14 @@ def make_video(kind, do_upload=True, script_only=False):
     scenes = script["scenes"]
     log.info("Shortlisting visuals for %d scenes", len(scenes))
     shortlists = [footage.shortlist(s["footage_queries"], fmt, used_ids) for s in scenes]
-    with ThreadPoolExecutor(3) as pool:  # free AI illustrations (Cloudflare), one per scene
-        cover_job = pool.submit(footage.ai_image, script.get("cover_prompt"), workdir / "cover_ai.jpg") \
-            if kind == "short" else None
-        ai = list(pool.map(lambda i: footage.ai_image(scenes[i].get("image_prompt"), workdir / f"ai_{i:03d}.jpg"),
-                           range(len(scenes))))
-    cover_art = cover_job.result() if cover_job else None
+    # Free AI illustrations (Cloudflare): the cover first, then the scenes with the weakest stock options
+    # (scene 0 opens on the cover art, so it needs none).
+    cover_art = footage.ai_image(script.get("cover_prompt"), workdir / "cover_ai.jpg") if kind == "short" else None
+    need = sorted((i for i in range(len(scenes)) if not (i == 0 and cover_art)), key=lambda i: len(shortlists[i]))
+    need = set(need[:footage.AI_PER_VIDEO])
+    with ThreadPoolExecutor(3) as pool:
+        ai = list(pool.map(lambda i: footage.ai_image(scenes[i].get("image_prompt"), workdir / f"ai_{i:03d}.jpg")
+                           if i in need else None, range(len(scenes))))
     log.info("Cover art: %s", "made" if cover_art else "not available, using the first scene")
     for sl, cand in zip(shortlists, ai):
         if cand:
