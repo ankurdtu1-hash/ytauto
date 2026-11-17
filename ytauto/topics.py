@@ -1,5 +1,6 @@
 """Find a trending, fresh topic and gather verified facts for it."""
 import html
+import json
 import random
 import re
 import xml.etree.ElementTree as ET
@@ -86,9 +87,29 @@ HOT = re.compile(r"\b(cricket|ipl|ind(ia)? vs|vs ind|t20|odi|test match|bcci|icc
                  r"ronaldo|messi)\b", re.I)
 
 
+def insights():
+    """What the weekly self-review (tools/learn.py) learned from this channel's stats and web research."""
+    try:
+        return json.loads((config.DATA_DIR / "insights.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def insights_block():
+    ins = insights()
+    if not ins:
+        return ""
+    parts = [f"\n\nLearned from this channel's own analytics (review of {ins.get('updated', '?')}); follow these, "
+             "but the rules above always win:"]
+    for key, label in (("do_more", "Do more"), ("avoid", "Avoid"), ("hook_tips", "Hooks"), ("title_tips", "Titles")):
+        parts += [f"{label}:"] + [f"  - {x}" for x in ins.get(key, [])]
+    return "\n".join(parts)
+
+
 def _hot(item):
     text = item["query"] + " " + " ".join(n["title"] for n in item["news"])
-    return bool(HOT.search(text))
+    learned = [k for k in insights().get("hot_keywords", []) if k]
+    return bool(HOT.search(text)) or any(re.search(rf"\b{re.escape(k)}\b", text, re.I) for k in learned)
 
 
 def trending_items(limit=8):

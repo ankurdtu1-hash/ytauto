@@ -55,6 +55,7 @@ def make_video(kind, do_upload=True, script_only=False):
     else:
         log.info("Researching a long-video topic (format: %s)", video_format)
         brief = topics.research_topic(kind, video_format)
+    brief += topics.insights_block()
 
     log.info("Writing script")
     script = writer.write_script(kind, video_format, brief)

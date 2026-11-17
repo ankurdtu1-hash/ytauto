@@ -1,0 +1,47 @@
+name: learn
+
+# Weekly self-review: each channel studies its own stats and fresh web research, then writes
+# data/<profile>/insights.json, which every new video's script brief follows.
+on:
+  schedule:
+    - cron: "0 3 * * 1"   # Mondays 08:30 IST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  learn:
+    runs-on: ubuntu-24.04
+    strategy:
+      max-parallel: 1   # both commit to the repo
+      matrix:
+        include:
+          - profile: trending
+            token: YOUTUBE_TOKEN_JSON_TRENDING
+          - profile: main
+            token: YOUTUBE_TOKEN_JSON
+    env:
+      CHANNEL_PROFILE: ${{ matrix.profile }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TOKEN: ${{ secrets[matrix.token] }}
+        run: |
+          printf '%s' "$TOKEN" > t.json
+          python tools/learn.py t.json
+          rm -f t.json
+      - name: Save insights
+        run: |
+          git config user.name "ytauto-bot"
+          git config user.email "ytauto-bot@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "insights: weekly review (${{ matrix.profile }})"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
