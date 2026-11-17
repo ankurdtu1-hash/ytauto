@@ -77,8 +77,23 @@ def _article_text(url, max_words=120):
     return " ".join(words[:max_words])
 
 
-def trending_items(limit=5):
-    """Top Google Trends India searches right now, each with its news headlines and one article excerpt."""
+# What our viewers watch most (channel stats, Nov 2026): cricket/IPL and big film stars get 5-15x the views
+# of other topics. Trends matching these are moved to the front of the list.
+HOT = re.compile(r"\b(cricket|ipl|ind(ia)? vs|vs ind|t20|odi|test match|bcci|icc|wicket|century|innings|auction|"
+                 r"kohli|rohit|dhoni|bumrah|gill|pant|hardik|arshdeep|jadeja|surya|"
+                 r"bollywood|box office|trailer|teaser|film|movie|actor|actress|ott|netflix|prime video|hotstar|"
+                 r"release|ramayan|salman|shah ?rukh|srk|aamir|ranbir|alia|deepika|prabhas|yash|allu arjun|"
+                 r"ronaldo|messi)\b", re.I)
+
+
+def _hot(item):
+    text = item["query"] + " " + " ".join(n["title"] for n in item["news"])
+    return bool(HOT.search(text))
+
+
+def trending_items(limit=8):
+    """Top Google Trends India searches right now, each with its news headlines and one article excerpt.
+    Cricket and film trends (what this channel's viewers watch most) come first."""
     resp = requests.get(TRENDS_RSS, timeout=20)
     resp.raise_for_status()
     items = []
@@ -87,7 +102,8 @@ def trending_items(limit=5):
                  "source": n.findtext(f"{HT}news_item_source") or ""} for n in item.iter(f"{HT}news_item")]
         items.append({"query": item.findtext("title"), "traffic": item.findtext(f"{HT}approx_traffic"), "news": news})
     items.sort(key=lambda i: _traffic(i["traffic"]), reverse=True)
-    items = items[:limit]
+    items = items[:20]
+    items = ([i for i in items if _hot(i)] + [i for i in items if not _hot(i)])[:limit]
     for it in items:
         it["excerpt"] = next((t for t in (_article_text(n["url"]) for n in it["news"][:2] if n["url"]) if len(t.split()) > 60), "")
     return items
@@ -108,6 +124,14 @@ headlines and an excerpt from one article for each:
 {trends}
 
 Pick the ONE trend that will make the most viewers stop scrolling, and explain it in the format "{video_format}".
+
+What this channel's viewers watch (real stats): cricket and IPL Shorts (records, trades, auctions, star
+players) and big film stars or film releases get 5-15 times more views than anything else. Gold prices,
+stocks, cars and foreign news flopped. So pick in this order:
+  1. cricket / IPL with a famous Indian player or a record, 2. big Bollywood/South film stars, releases,
+  box office, trailers, OTT, 3. global megastars (Ronaldo, Messi), 4. only if none of these is in the list,
+  the most surprising other allowed trend.
+Hooks that worked: a star's name plus a shocking number or record ("No. 11 par chhakka!", "13 baar bike!").
 
 Rules:
 - Allowed: cricket and sports, movies, OTT and music releases, tech and gadget launches, science and space,
