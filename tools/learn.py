@@ -7,6 +7,7 @@ insights, so the channel keeps learning what its viewers want. A dated summary g
 import json
 import re
 import sys
+import time
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -67,6 +68,7 @@ def web_research():
               "hook and title styles, Shorts length, and any recent YouTube Shorts algorithm or policy changes. "
               "Facts only, no fluff.")
     for model in llm.GEMINI_MODELS:
+        time.sleep(20)  # free tier: space out requests
         try:
             r = requests.post(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
                               headers={"x-goog-api-key": llm.GEMINI_KEY}, timeout=150,
@@ -105,11 +107,17 @@ Find the patterns that separate the winners from the flops (topic, named stars, 
 style, format) and turn them into concrete instructions for the scriptwriter. Each list: 3-6 short, specific
 items. hook_tips / title_tips may give Hinglish examples in Roman letters. hot_keywords: 5-15 lowercase words
 or names (1-3 words each) of topics, people or events viewers want now or in the next weeks; they move matching
-trends to the front. Stay inside YouTube's rules: no clickbait that the video does not deliver, no misleading
+trends to the front. Fixed by the channel owner, never suggest changing: titles and on-screen text are
+Hinglish in Roman letters (titles in Devanagari were older videos; switched on 2026-11-16, so do not blame
+or credit the script of a title), narration stays Hindi, the Short ends looping back to its start.
+Stay inside YouTube's rules: no clickbait that the video does not deliver, no misleading
 claims, no politics/religion/crime/gossip, no copyrighted material, no look-alikes of real people."""
     ins = llm.structured(prompt, SCHEMA)
     ins = {k: [str(x).strip()[:200] for x in ins[k]][:15 if k == "hot_keywords" else 6]
            if isinstance(ins[k], list) else str(ins[k])[:800] for k in SCHEMA["required"]}
+    fixed = re.compile(r"devanagari|roman|hinglish|script of", re.I)  # owner's choice, not up for review
+    for k in ("do_more", "avoid", "hook_tips", "title_tips"):
+        ins[k] = [x for x in ins[k] if not fixed.search(x)]
     ins["hot_keywords"] = [k.lower() for k in ins.get("hot_keywords", []) if re.fullmatch(r"[a-z0-9 .'-]{2,30}", k.lower())]
     ins["updated"] = date.today().isoformat()
     OUT.write_text(json.dumps(ins, ensure_ascii=False, indent=2), encoding="utf-8")
