@@ -189,6 +189,7 @@ claims, no politics/religion/crime/gossip, no copyrighted material, no look-alik
         ins[k] = [x for x in ins[k] if not fixed.search(x)]
     ins["hot_keywords"] = [k.lower() for k in ins.get("hot_keywords", []) if re.fullmatch(r"[a-z0-9 .'-]{2,30}", k.lower())]
     ins["updated"] = date.today().isoformat()
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(ins, ensure_ascii=False, indent=2), encoding="utf-8")
 
     top = sorted(rows, key=lambda r: -r["views"])
@@ -203,4 +204,7 @@ claims, no politics/religion/crime/gossip, no copyrighted material, no look-alik
 
 
 if __name__ == "__main__":
+    import logging
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     main(sys.argv[1] if len(sys.argv) > 1 else str(config.TOKEN_FILE))
+    print(f"Claude (paid) cost for this review: ${llm.spent_usd:.3f}")

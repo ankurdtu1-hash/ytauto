@@ -26,55 +26,69 @@ permissions:
   contents: write
 
 jobs:
+  # Decide which channels need a video now, so only those get a (heavy) job. Idle channels get no job at all,
+  # which also stops an idle job from cancelling a real one waiting in the same per-channel queue.
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      channels: ${{ steps.plan.outputs.channels }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: plan
+        env:
+          HAS_trending: ${{ secrets.YOUTUBE_TOKEN_JSON_TRENDING != '' }}
+          HAS_main: ${{ secrets.YOUTUBE_TOKEN_JSON != '' }}
+          HAS_cricket: ${{ secrets.YOUTUBE_TOKEN_JSON_CRICKET != '' }}
+          HAS_animals: ${{ secrets.YOUTUBE_TOKEN_JSON_ANIMALS != '' }}
+          HAS_places: ${{ secrets.YOUTUBE_TOKEN_JSON_PLACES != '' }}
+          HAS_money: ${{ secrets.YOUTUBE_TOKEN_JSON_MONEY != '' }}
+        run: |
+          pip install -q python-dotenv
+          list=""
+          for p in trending main cricket animals places money; do
+            has="HAS_$p"
+            if [ "${!has}" != "true" ]; then echo "$p: no YouTube token yet"; continue; fi
+            if [ "${{ github.event_name }}" = "schedule" ]; then
+              out=$(CHANNEL_PROFILE=$p GITHUB_OUTPUT=/dev/null python tools/due.py 10); echo "$p: $out"
+              case "$out" in *True) list="$list $p" ;; esac
+            elif [ "${{ inputs.channel }}" = "$p" ]; then
+              list="$list $p"
+            fi
+          done
+          json=$(printf '%s\n' $list | python -c 'import json,sys; t={"main":"YOUTUBE_TOKEN_JSON"}; print(json.dumps([{"profile":p,"token":t.get(p,"YOUTUBE_TOKEN_JSON_"+p.upper())} for p in sys.stdin.read().split()]))')
+          echo "channels=$json" >> "$GITHUB_OUTPUT"
+          echo "to make now: $json"
+
   short:
+    needs: plan
+    if: needs.plan.outputs.channels != '[]'
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     strategy:
       fail-fast: false
       max-parallel: 2   # free Gemini / Cloudflare limits
       matrix:
-        include:
-          - {profile: trending, token: YOUTUBE_TOKEN_JSON_TRENDING}
-          - {profile: main, token: YOUTUBE_TOKEN_JSON}
-          - {profile: cricket, token: YOUTUBE_TOKEN_JSON_CRICKET}
-          - {profile: animals, token: YOUTUBE_TOKEN_JSON_ANIMALS}
-          - {profile: places, token: YOUTUBE_TOKEN_JSON_PLACES}
-          - {profile: money, token: YOUTUBE_TOKEN_JSON_MONEY}
+        include: ${{ fromJSON(needs.plan.outputs.channels) }}
     concurrency:
       group: short-${{ matrix.profile }}
       cancel-in-progress: false
     env:
       CHANNEL_PROFILE: ${{ matrix.profile }}
-      HAS_TOKEN: ${{ secrets[matrix.token] != '' }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Is a video needed now?
-        id: due
-        run: |
-          if [ "$HAS_TOKEN" != "true" ]; then echo "no YouTube token for this channel yet"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0; fi
-          if [ "${{ github.event_name }}" != "schedule" ]; then
-            [ "${{ inputs.channel }}" = "${{ matrix.profile }}" ] && echo "go=true" >> "$GITHUB_OUTPUT" || echo "go=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          pip install -q python-dotenv
-          python tools/due.py 10
-
-      - if: steps.due.outputs.go == 'true'
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: pip
 
       - name: Install FFmpeg, fonts and Python packages
-        if: steps.due.outputs.go == 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg fonts-noto-core
           pip install -q -r requirements.txt
 
       - name: Unlock background music (YouTube Audio Library tracks, kept encrypted in this public repo)
-        if: steps.due.outputs.go == 'true'
         env:
           MUSIC_KEY: ${{ secrets.MUSIC_KEY }}
         run: |
@@ -84,17 +98,14 @@ jobs:
           fi
 
       - name: Install OmniVoice narrator (free, CPU)
-        if: steps.due.outputs.go == 'true'
         run: pip install -q --extra-index-url https://download.pytorch.org/whl/cpu torch torchaudio soundfile omnivoice
 
-      - if: steps.due.outputs.go == 'true'
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
           key: hf-omnivoice-v1
 
       - name: Make and upload the Short
-        if: steps.due.outputs.go == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -116,7 +127,7 @@ jobs:
           rm -f token.json
 
       - name: Keep the finished video for 3 days
-        if: always() && steps.due.outputs.go == 'true'
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.profile }}-${{ github.run_number }}
@@ -129,7 +140,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Save topic history
-        if: always() && steps.due.outputs.go == 'true'
+        if: always()
         run: |
           git config user.name "ytauto-bot"
           git config user.email "ytauto-bot@users.noreply.github.com"
