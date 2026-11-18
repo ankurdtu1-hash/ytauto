@@ -74,10 +74,10 @@ def make_video(kind, do_upload=True, script_only=False):
     scenes = script["scenes"]
     log.info("Shortlisting visuals for %d scenes", len(scenes))
     shortlists = [footage.shortlist(s["footage_queries"], fmt, used_ids) for s in scenes]
-    # Free AI illustrations (Cloudflare): the cover first, then the scenes with the weakest stock options
-    # (scene 0 opens on the cover art, so it needs none).
+    # Free AI illustrations (Cloudflare): the cover (used only as the thumbnail), then the scenes with the
+    # weakest stock options.
     cover_art = footage.ai_image(script.get("cover_prompt"), workdir / "cover_ai.jpg") if kind == "short" else None
-    need = sorted((i for i in range(len(scenes)) if not (i == 0 and cover_art)), key=lambda i: len(shortlists[i]))
+    need = sorted(range(1, len(scenes)), key=lambda i: len(shortlists[i]))
     need = set(need[:footage.AI_PER_VIDEO])
     with ThreadPoolExecutor(3) as pool:
         ai = list(pool.map(lambda i: footage.ai_image(scenes[i].get("image_prompt"), workdir / f"ai_{i:03d}.jpg")
@@ -96,11 +96,11 @@ def make_video(kind, do_upload=True, script_only=False):
         words = voice.speak(scene["narration"], mp3)
         length = render.frame_aligned(render.duration(mp3))
 
-        if i == 0 and cover_art:  # open on the cover art: the first frame is what people see in the feed
-            raw, is_photo, fit = workdir / "cover_ai.jpg", True, False
-        else:
-            raw, is_photo, fit = pick_visual(shortlists[i], scene["footage_queries"], workdir / f"raw_{i:03d}",
-                                             fmt, used_ids, credits)
+        # Open on moving footage: in the Shorts feed a still title card looks like an ad and gets swiped away
+        # (Trending views fell ~6x in the days the Shorts opened on the still cover). Videos first for scene 0.
+        preferred = sorted(shortlists[i], key=lambda c: c["kind"] != "video") if i == 0 else shortlists[i]
+        raw, is_photo, fit = pick_visual(preferred, scene["footage_queries"], workdir / f"raw_{i:03d}",
+                                         fmt, used_ids, credits)
         scene_videos.append(workdir / f"scene_{i:03d}.mp4")
         scene_audios.append(workdir / f"voice_{i:03d}.wav")
         render.scene_video(raw, scene_videos[-1], length, fmt, is_photo, fit)
