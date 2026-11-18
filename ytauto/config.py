@@ -23,7 +23,7 @@ PROFILES = {
     },
     "trending": {
         "name": "Trending Kya Hai",
-        "niche": "India's trending topics explained in 40 seconds in Hindi: cricket and sports, movies and OTT, "
+        "niche": "India's trending topics explained in about a minute in Hindi: cricket and sports, movies and OTT, "
                  "tech and gadget launches, science and space, festivals and viral internet trends",
         "voice": "hi-IN-SwaraNeural",
         "topic_mode": "trending",
@@ -136,8 +136,8 @@ FORMATS = {
         "width": 1080,
         "height": 1920,
         "orientation": "portrait",
-        "words": "70 to 85 words — never more than 90 (about 35-40 seconds)",
-        "scenes": "8 to 10",
+        "words": "125 to 145 words — never more than 155 (about 55-65 seconds)",
+        "scenes": "12 to 15",
         "font_size": 96,
         "words_per_caption": 3,
     },

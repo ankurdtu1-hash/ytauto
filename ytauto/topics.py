@@ -199,7 +199,7 @@ def short_brief(video_format):
 
 def research_topic(kind, video_format):
     trends_text, past = _context()
-    length = "a 50-second YouTube Short" if kind == "short" else "a 7-8 minute YouTube video"
+    length = "a 60-second YouTube Short" if kind == "short" else "a 7-8 minute YouTube video"
 
     prompt = f"""Today is {date.today():%d %B %Y}. You are the researcher for a Hindi YouTube channel called "{config.CHANNEL_NAME}".
 Channel niche: {config.CHANNEL_NICHE}.

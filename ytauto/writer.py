@@ -92,13 +92,21 @@ Script rules:
 {VISUALS}
 
 Metadata rules (optimise click-through rate):
-- title: Hinglish in Roman (English) letters, e.g. "Kohli ne kiya kamaal!", never Devanagari; under 60 characters, front-load the most surprising word, create a curiosity gap,
-  but stay honest. Never promise photos, videos, leaks, "exclusive" or "unseen" footage: the video only
+- title: Hinglish in Roman (English) letters, never Devanagari; 45-75 characters. Formula used by the biggest
+  Hindi fact channels: ONE fitting emoji first, then a specific big number from the facts (tonnes, km/h, crore,
+  years, records) when there is one, then a "kaise/kyu/kya" question or a bold claim, ending with "😱" or "?",
+  e.g. "🚄 350 km/h ki train! 2.5 ghante ka safar 68 minute mein 😱", "🐦 Kauwa aapki shakal 5 saal yaad rakhta hai? 😱".
+  Front-load the most surprising part. Stay honest. Never promise photos, videos, leaks, "exclusive" or "unseen" footage: the video only
   shows stock visuals.
-- description: first line repeats the hook; then 2-4 Hindi lines summarising the video; then a "Sources:" line;
-  then this disclosure on its own line: "इस वीडियो में AI voice, AI images और stock footage (Pixabay, NASA, Openverse, Wikimedia Commons) का इस्तेमाल किया गया है।"
-- tags: 12-18 search phrases people actually type, in Hindi, Hinglish and English.
-- hashtags: 3-5 hashtags starting with #{' and include #Shorts' if kind == 'short' else ''}.
+- description: first line repeats the hook; then 3-4 Hindi lines summarising the video (name the key things,
+  numbers and places, since search reads them); then a blank line and "Keywords:" followed by 15-20 search
+  phrases, one per line (Hindi, Hinglish and English mix, specific to this video first, then the niche); then a
+  "Sources:" line;
+  then this disclosure on its own line: "इस वीडियो में AI voice, AI images और stock footage (Pixabay, Pexels, NASA, Openverse, Wikimedia Commons) का इस्तेमाल किया गया है।"
+- tags: 15-20 specific search phrases people actually type (names of the exact things in the video first, then
+  broader niche phrases), in Hindi, Hinglish and English; together under 450 characters.
+- hashtags: 10-15 hashtags starting with #, the first three the most important (YouTube shows them above the
+  title), specific to the video and the niche,{' and include #Shorts' if kind == 'short' else ''}.
 - thumbnail_text: the big words on the cover, 2-4 Hinglish words in Roman letters (max 22 characters) that make people tap:
   a shocking number, a bold claim or a question that teases the payoff without giving it away,
   e.g. "21 Chhakke!", "Ye Sach Hai?", "AI ne kar dikhaya". Never Devanagari. Honest: it must match what the video says.

@@ -25,7 +25,13 @@ def _youtube():
 
 
 def upload(video_path, script, kind, thumbnail_path=None, publish_at=None):
-    hashtags = " ".join(script["hashtags"])
+    hashtags = " ".join(script["hashtags"][:15])
+    tags, total = [], 0
+    for t in script["tags"]:  # YouTube rejects the upload if tags add up to more than 500 characters
+        t = t.replace("<", "").replace(">", "").strip()
+        if t and total + len(t) + 3 <= 480:
+            tags.append(t)
+            total += len(t) + 3
     credits = script.get("credits") or []
     credit_text = ("\n\nVisual credits:\n" + "\n".join(credits)) if credits else ""
     title = script["title"]
@@ -36,7 +42,7 @@ def upload(video_path, script, kind, thumbnail_path=None, publish_at=None):
         "snippet": {
             "title": title[:100],
             "description": f"{script['description']}{credit_text}\n\n{hashtags}"[:5000],
-            "tags": script["tags"],
+            "tags": tags,
             "categoryId": config.YOUTUBE_CATEGORY_ID,
             "defaultLanguage": "hi",
             "defaultAudioLanguage": "hi",
