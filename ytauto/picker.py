@@ -28,6 +28,8 @@ sentence and numbered preview images of candidate stock visuals. Pick the option
 said, so a viewer with the sound off still understands it.
 
 Rules:
+- Shorts must keep moving: prefer a "video" option (a moving clip) whenever it reasonably shows the subject.
+  Pick a photo or AI illustration only when no video option fits the sentence.
 - Prefer a visual that literally shows the subject of the sentence over a vaguely related mood shot.
 - Each scene may include one "AI illustration" made for that exact sentence. Pick it when no real photo or
   stock clip clearly shows the subject; prefer real photos/clips when they fit equally well. Skip an AI

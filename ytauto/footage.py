@@ -251,7 +251,7 @@ def candidates(queries, fmt, used_ids):
             yield c
 
 
-def shortlist(queries, fmt, used_ids, videos=3, photos=3):
+def shortlist(queries, fmt, used_ids, videos=5, photos=2):
     """A small, mixed set of the best candidates for one scene, for Claude to choose from by looking."""
     vids, pics = [], []
     for c in candidates(queries, fmt, used_ids):

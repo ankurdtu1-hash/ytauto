@@ -139,6 +139,10 @@ def make_video(kind, do_upload=True, script_only=False):
 
     script["credits"] = credits
     (workdir / "script.json").write_text(json.dumps(script, ensure_ascii=False, indent=2), encoding="utf-8")
+    problems = render.quality_check(final, kind)
+    if problems:
+        raise RuntimeError(f"Quality check failed, not uploading: {'; '.join(problems)}")
+    log.info("Quality check passed (length, size, sound, no black or frozen picture)")
     video_id = publish_at = None
     if do_upload:
         publish_at = history.next_slot() if config.UPLOAD_PRIVACY == "public" else None
