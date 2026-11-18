@@ -22,3 +22,11 @@ Everyday smartphone hardware mysteries, battery safety mechanics, and practical 
 Best: Phone Battery में छेद हुआ तो क्या होगा? Shocking R (92); हवाई जहाज़ की खिड़की गोल क्यों होती है? 3 Quick Fa (85); SIM Card का कोना क्यों कटा होता है? | 3 Quick Fact (69)
 
 Weakest: प्याज़ काटते ही आँसू क्यों आते हैं? असली Science # (3); माइक्रोवेव वाला खाना रेडियोएक्टिव? Myth vs Fact #S (2); दूध उबलकर बाहर क्यों गिरता है, पानी क्यों नहीं? अस (1)
+
+## 2026-11-18: 1 subs, 511 views, 24 public Shorts
+
+Successful Shorts on competitor channels leverage 'How it's made' engineering visuals and life-or-death scenario explanations. Our channel performed best with concrete gadget mechanics like battery and airplane windows, while abstract 'what if' space scenarios flopped entirely. Moving forward, we will pivot to high-stakes 'how it works' mechanical explanations and use high-emotion, punchy Hinglish hooks that highlight a specific mystery or dangerous misconception.
+
+Best: Phone Battery में छेद हुआ तो क्या होगा? Shocking R (92); हवाई जहाज़ की खिड़की गोल क्यों होती है? 3 Quick Fa (85); SIM Card का कोना क्यों कटा होता है? | 3 Quick Fact (69)
+
+Weakest: प्याज़ काटते ही आँसू क्यों आते हैं? असली Science # (3); माइक्रोवेव वाला खाना रेडियोएक्टिव? Myth vs Fact #S (2); दूध उबलकर बाहर क्यों गिरता है, पानी क्यों नहीं? अस (1)
