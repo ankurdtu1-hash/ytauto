@@ -9,10 +9,10 @@
 <body>
 <p><a href="index.html">Home</a> · <a href="terms.html">Terms of Service</a></p>
 <h1>Privacy Policy – ytauto</h1>
-<p>Last updated: 28 October 2026</p>
+<p>Last updated: 18 November 2026</p>
 
 <h2>1. What ytauto is</h2>
-<p>ytauto is a personal script used only by its owner to upload videos to the owner's own YouTube channel.
+<p>ytauto is a personal script used only by its owner to upload videos to, and reply to comments on, the owner's own YouTube channels.
 It has no other users and no public interface.</p>
 
 <h2>2. YouTube API Services</h2>
@@ -24,11 +24,12 @@ Google's handling of data is described in the
 <h2>3. Data accessed and how it is used</h2>
 <p>With the owner's permission (Google OAuth), ytauto uses the YouTube Data API to:</p>
 <ul>
-<li>upload videos to the owner's channel (<code>videos.insert</code>),</li>
+<li>upload videos to the owner's channels (<code>videos.insert</code>),</li>
 <li>set thumbnails for those videos (<code>thumbnails.set</code>),</li>
-<li>read basic information about the owner's own channel (<code>channels.list</code>).</li>
+<li>read basic information and view/like/comment counts of the owner's own channels and videos (<code>channels.list</code>, <code>playlistItems.list</code>, <code>videos.list</code>),</li>
+<li>read public comments left on the owner's own videos and post a short reply from the owner's channel (<code>commentThreads.list</code>, <code>comments.insert</code>).</li>
 </ul>
-<p>ytauto does not access, collect or store data about any other YouTube user, viewer or channel.</p>
+<p>To draft a reply, the text of a public comment and the video title are sent to Google's Gemini API; the comment text is not stored by ytauto. Commenters' names, channel IDs and other personal data are not collected, stored or shared. ytauto does not access any other channel's private data.</p>
 
 <h2>4. Storage and sharing</h2>
 <p>The only stored data is the owner's OAuth access/refresh token, kept on the owner's private server and computer.
@@ -39,7 +40,7 @@ No data is sold, shared with third parties or used for advertising. No cookies o
 <ul>
 <li>revoke access at <a href="https://myaccount.google.com/permissions">https://myaccount.google.com/permissions</a>
 (Google security settings) – the stored token stops working immediately; and</li>
-<li>the owner deletes the <code>token.json</code> file from the server.</li>
+<li>the owner deletes the token files from the server.</li>
 </ul>
 <p>Any stored API data is deleted or refreshed within 30 days, in line with the YouTube API Services Developer Policies.</p>
 
