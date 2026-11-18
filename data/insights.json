@@ -1,38 +1,57 @@
 {
-  "summary": "Everyday gadget curiosities and physical design mysteries like phone battery hazards, SIM card notches, and airplane window shapes drove the strongest view velocity. Conversely, generic kitchen science facts and abstract cosmic 'What If' scenarios consistently failed to generate traction. Moving forward, center all scripts around tangible tech hardware and ubiquitous everyday objects, weaving in a direct engagement question before executing the seamless end-to-beginning loop.",
+  "summary": "Everyday smartphone hardware mysteries, battery safety mechanics, and practical engineering designs like airplane windows and QR codes continue to drive the channel's highest view counts. Conversely, basic kitchen science facts and abstract cosmic hypotheticals like onion tears or missing moons consistently fail to gain traction. Moving forward, focus strictly on hidden mechanisms behind modern technology, transportation engineering, and daily gadgets using Roman Hinglish titles.",
   "do_more": [
-    "Focus on physical hardware mysteries of everyday gadgets like smartphone batteries, touchscreens, and SIM cards",
-    "Deconstruct non-intuitive design features of modern travel and tech objects like airplane windows and QR codes",
-    "Include a quick opinion or guess prompt right before the loop to convert passive viewers into commenters"
+    "Deconstruct hidden engineering mechanisms of real-world machines like train tracks, petrol pumps, and fast chargers",
+    "Focus on physical gadget hardware mysteries such as phone battery hazards, touchscreens, and SIM cards",
+    "Add a quick interactive prompt before executing the seamless end-to-beginning video loop"
   ],
   "avoid": [
-    "Avoid textbook kitchen science topics like onion tears, boiling milk, or microwave radiation",
-    "Avoid abstract hypothetical space scenarios like the moon or ozone layer disappearing",
-    "Avoid dry historical anecdotes that lack modern hardware or software relevance",
-    "Avoid slow cinematic introductions; never spend more than 1.5 seconds introducing the core mystery"
+    "Avoid basic kitchen or food science topics like boiling milk, microwave radiation, or onion tears",
+    "Avoid abstract hypothetical space scenarios like the moon or ozone layer vanishing",
+    "Avoid long context intros; state the central tech or hardware mystery within the first 1.5 seconds"
   ],
   "hook_tips": [
-    "Highlight an immediate physical danger: 'Agar aapke phone ki battery me galti se chhed ho jaye, toh kya blast hoga?'",
-    "Point out a bizarre design detail hiding in plain sight: 'Notice kiya hai? Airplane ki windows hamesha round kyu hoti hain?'",
-    "Expose a common modern misconception: 'Expiry date paani ki nahi hoti, balki us plastic bottle ki hoti hai!'",
-    "State the surprising answer first, then explain: 'Aapka touchscreen ungli se chalta hai, par pencil se kyu nahi?'"
+    "Pose a high-stakes mechanical mystery: 'Petrol pump zameen ke neeche se tel aapki gaadi tak kaise bhejta hai?'",
+    "Expose hidden safety automation: 'Chalti train ka driver behosh ho jaye toh train apne aap kaise rukti hai?'",
+    "Debunk common smartphone habits: 'Recent apps clear karne se battery bachti hai ya ziada khatam hoti hai?'",
+    "Question hidden physical design features: 'Phone ke SIM card slot ka koona hamesha kata kyon hota hai?'"
   ],
   "title_tips": [
-    "Use crisp curiosity tags at the end like '| 3 Quick Facts #Shorts' or 'Reality Check #Shorts'",
-    "Highlight everyday tech features: 'Airplane Window Round Kyu Hoti Hai? #Shorts'",
-    "Keep title lengths strictly under 55 characters so the core mystery is never cut off on mobile devices"
+    "Place the exact device or machine name in the first 3 words of the title",
+    "Use short curiosity tags at the end like '| Reality Check #Shorts' or '| Tech Fact #Shorts'"
   ],
   "hot_keywords": [
     "smartphone battery",
+    "petrol pump",
+    "train mechanism",
     "fast charger",
-    "airplane mode",
-    "upi qr code",
     "touchscreen tech",
-    "sim card slot",
-    "display refresh rate",
-    "ai cameras",
-    "earbuds battery",
-    "5g network"
+    "submarine science",
+    "car engine",
+    "upi qr code",
+    "5g network",
+    "ev battery"
   ],
-  "updated": "2026-11-17"
+  "topic_ideas": [
+    "Petrol Pump Tel Underground Se Kaise Kheenchta Hai?",
+    "Train Bina Steering Ke Patri Par Kaise Mudti Hai?",
+    "Fast Charger Battery Ko Overheat Hone Se Kaise Bachata Hai?",
+    "Submarine Paani Ke 1000 Feet Niche Oxygen Kaise Banati Hai?",
+    "Airplane Me Flying Mode On Rakhna Kyon Zaruri Hai?",
+    "Wireless Earbuds Ka Chhota Case Inhe Kaise Charge Karta Hai?",
+    "EV Car Ki Battery Me Aag Kyon Lagti Hai?",
+    "ATM Machine Note Count Karte Waqt Aawaz Kyon Karti Hai?"
+  ],
+  "search_phrases": [
+    "mobile facts",
+    "tech facts in hindi",
+    "science facts hindi",
+    "science facts in hindi",
+    "tech fact",
+    "science facts shorts in hindi",
+    "science facts video kaise banaye",
+    "science fact video",
+    "mobile fact"
+  ],
+  "updated": "2026-11-18"
 }

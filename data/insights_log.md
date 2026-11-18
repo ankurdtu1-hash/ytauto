@@ -14,3 +14,11 @@ Everyday gadget curiosities and physical design mysteries like phone battery haz
 Best: Phone Battery में छेद हुआ तो क्या होगा? Shocking R (87); SIM Card का कोना क्यों कटा होता है? | 3 Quick Fact (69); पानी नहीं, बोतल एक्सपायर होती है! Shocking Truth # (60)
 
 Weakest: Internet ka Pahla Message crash kyon hua? #Shorts (1); Incognito Mode का सच! क्या सच में सब छुप जाता है?  (1); दूध उबलकर बाहर क्यों गिरता है, पानी क्यों नहीं? अस (1)
+
+## 2026-11-18: 1 subs, 511 views, 24 public Shorts
+
+Everyday smartphone hardware mysteries, battery safety mechanics, and practical engineering designs like airplane windows and QR codes continue to drive the channel's highest view counts. Conversely, basic kitchen science facts and abstract cosmic hypotheticals like onion tears or missing moons consistently fail to gain traction. Moving forward, focus strictly on hidden mechanisms behind modern technology, transportation engineering, and daily gadgets using Roman Hinglish titles.
+
+Best: Phone Battery में छेद हुआ तो क्या होगा? Shocking R (92); हवाई जहाज़ की खिड़की गोल क्यों होती है? 3 Quick Fa (85); SIM Card का कोना क्यों कटा होता है? | 3 Quick Fact (69)
+
+Weakest: प्याज़ काटते ही आँसू क्यों आते हैं? असली Science # (3); माइक्रोवेव वाला खाना रेडियोएक्टिव? Myth vs Fact #S (2); दूध उबलकर बाहर क्यों गिरता है, पानी क्यों नहीं? अस (1)
