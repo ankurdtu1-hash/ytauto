@@ -1,6 +1,6 @@
 name: branding
 
-# Makes channel logo + banner for both channels (download the artifact, upload in YouTube Studio).
+# Makes channel logo + banner for all channels (download the artifact, upload in YouTube Studio).
 on:
   workflow_dispatch:
 
@@ -8,8 +8,9 @@ jobs:
   art:
     runs-on: ubuntu-24.04
     strategy:
+      max-parallel: 2   # Cloudflare free image allowance
       matrix:
-        profile: [main, trending]
+        profile: [main, trending, cricket, animals, places, money]
     env:
       CHANNEL_PROFILE: ${{ matrix.profile }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

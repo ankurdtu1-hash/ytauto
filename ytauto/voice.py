@@ -18,7 +18,9 @@ TICKS_PER_SECOND = 10_000_000  # edge-tts reports offsets in 100 ns units
 log = logging.getLogger("ytauto")
 
 ENGINE = os.getenv("TTS_ENGINE", "omnivoice")
-NARRATOR_WAV = config.ROOT / "assets" / "voice" / "narrator.wav"
+# Each channel can have its own designed narrator (tools/make_narrator.py); otherwise the shared one.
+NARRATOR_WAV = next(p for p in (config.ROOT / "assets" / "voice" / f"narrator_{config.PROFILE}.wav",
+                                config.ROOT / "assets" / "voice" / "narrator.wav") if p.exists())
 NARRATOR_TEXT = ("क्या आप जानते हैं? भारत ने सिर्फ बानवे रन पर पूरी टीम आउट कर दी! "
                  "आज हर कोई यही सर्च कर रहा है, और इसके पीछे की कहानी सच में हैरान कर देगी।")
 OMNI_SPEED = float(os.getenv("OMNI_SPEED", "1.1"))

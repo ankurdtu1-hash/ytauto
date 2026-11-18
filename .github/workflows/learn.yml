@@ -21,6 +21,14 @@ jobs:
             token: YOUTUBE_TOKEN_JSON_TRENDING
           - profile: main
             token: YOUTUBE_TOKEN_JSON
+          - profile: cricket
+            token: YOUTUBE_TOKEN_JSON_CRICKET
+          - profile: animals
+            token: YOUTUBE_TOKEN_JSON_ANIMALS
+          - profile: places
+            token: YOUTUBE_TOKEN_JSON_PLACES
+          - profile: money
+            token: YOUTUBE_TOKEN_JSON_MONEY
     env:
       CHANNEL_PROFILE: ${{ matrix.profile }}
     steps:
@@ -35,6 +43,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TOKEN: ${{ secrets[matrix.token] }}
         run: |
+          if [ -z "$TOKEN" ]; then echo "channel not connected yet"; exit 0; fi
           printf '%s' "$TOKEN" > t.json
           python tools/learn.py t.json
           rm -f t.json

@@ -15,7 +15,9 @@ PROFILES = {
         "voice": "hi-IN-MadhurNeural",
         "topic_mode": "evergreen",
         "data_dir": "data",
-        "publish_slots": "11:00,20:30",  # IST times the Shorts go public
+        "publish_slots": "12:30",  # IST time the daily Short goes public
+        "angle": "Prefer facts about things Indians use every day (phones, UPI, internet, trains, chargers, "
+                 "SIMs, everyday gadgets): these got the most views.",
         "art_style": "clean glossy 3D render, soft studio lighting, vivid blue and orange colours, high detail",
     },
     "trending": {
@@ -25,8 +27,67 @@ PROFILES = {
         "voice": "hi-IN-SwaraNeural",
         "topic_mode": "trending",
         "data_dir": "data/trending",
-        "publish_slots": "08:30,13:30,19:00",
+        "publish_slots": "19:00",
+        "category": "24",
         "art_style": "vibrant cinematic digital illustration, dramatic lighting, rich colours, high detail",
+    },
+    # New channels (Nov 2026): one Short a day each, own voice, look and posting time.
+    "cricket": {
+        "name": "Cricket Ki Kahaniyan",
+        "niche": "cricket history, records, rules and legendary moments explained in Hindi: Indian legends, "
+                 "World Cups, IPL history, strange rules and unbreakable records",
+        "angle": "Indian players and India's matches first (Sachin, Dhoni, Kohli, Rohit, Bumrah, World Cups, IPL). "
+                 "Hook with a star's name plus a record or number. Only records you are certain of; no live scores.",
+        "voice": "hi-IN-MadhurNeural",
+        "narrator": "male, young adult, high pitch",
+        "topic_mode": "evergreen",
+        "data_dir": "data/cricket",
+        "publish_slots": "18:00",
+        "category": "17",
+        "art_style": "dramatic cinematic sports illustration, stadium floodlights, motion and dust, rich colours, "
+                     "generic anonymous players only",
+    },
+    "animals": {
+        "name": "Janwar Ki Duniya",
+        "niche": "amazing animal, bird, insect and ocean-life facts in Hindi, from Indian wildlife to the deep sea",
+        "angle": "Shocking abilities, records and 'why does it do that' questions; animals Indians know first "
+                 "(tiger, cobra, elephant, crow, cat, dog, cow, peacock), then exotic ones.",
+        "voice": "hi-IN-SwaraNeural",
+        "narrator": "female, young adult, moderate pitch",
+        "topic_mode": "evergreen",
+        "data_dir": "data/animals",
+        "publish_slots": "16:00",
+        "category": "15",
+        "art_style": "stunning National-Geographic-style wildlife illustration, natural light, sharp detail, vivid colours",
+    },
+    "places": {
+        "name": "Ajab Gajab Duniya",
+        "niche": "strange places, countries, cities, world wonders and geography facts in Hindi, including "
+                 "unbelievable places in India",
+        "angle": "One unbelievable place or country fact per Short: weird laws, record-breaking places, hidden "
+                 "villages, natural wonders. Mix India and the world. No politics, borders or conflicts.",
+        "voice": "hi-IN-MadhurNeural",
+        "narrator": "male, middle-aged, moderate pitch",
+        "topic_mode": "evergreen",
+        "data_dir": "data/places",
+        "publish_slots": "14:00",
+        "category": "19",
+        "art_style": "breathtaking cinematic travel illustration, golden hour light, epic wide view, vivid colours",
+    },
+    "money": {
+        "name": "Paisa Gyaan",
+        "niche": "how money, business and famous brands work, explained in Hindi: brand origin stories, how "
+                 "companies earn, how banks, UPI, cards and taxes work, money history and big business facts",
+        "angle": "Brand stories Indians know (Parle-G, Amul, Tata, Zomato, Maggi, Jio) and how everyday money "
+                 "things work. Education only: never investment, loan or tax advice, never tips to buy or sell, "
+                 "no current prices or rates.",
+        "voice": "hi-IN-MadhurNeural",
+        "narrator": "male, young adult, moderate pitch",
+        "topic_mode": "evergreen",
+        "data_dir": "data/money",
+        "publish_slots": "09:00",
+        "category": "27",
+        "art_style": "clean premium 3D illustration, warm studio light, gold and deep green colours, high detail",
     },
 }
 PROFILE = os.getenv("CHANNEL_PROFILE", "main")
@@ -36,7 +97,7 @@ TOPIC_MODE = _profile["topic_mode"]
 OUTPUT_DIR = ROOT / "output"
 DATA_DIR = ROOT / _profile["data_dir"]
 MUSIC_DIR = ROOT / "assets" / "music"
-CLIENT_SECRET_FILE = ROOT / "client_secret.json"
+CLIENT_SECRET_FILE = ROOT / os.getenv("CLIENT_SECRET_FILE", "client_secret.json")
 TOKEN_FILE = ROOT / os.getenv("TOKEN_FILE", "token.json")
 
 MODEL = os.getenv("ANTHROPIC_MODEL", "claude-opus-5-5")
@@ -57,7 +118,7 @@ UPLOAD_PRIVACY = os.getenv("UPLOAD_PRIVACY", "private")
 PUBLISH_SLOTS = [s.strip() for s in (os.getenv("PUBLISH_SLOTS") or _profile["publish_slots"]).split(",") if s.strip()]
 if os.getenv("PUBLISH_NOW", "").lower() == "true":  # manual runs: public right away
     PUBLISH_SLOTS = []
-YOUTUBE_CATEGORY_ID = os.getenv("YOUTUBE_CATEGORY_ID", "27")
+YOUTUBE_CATEGORY_ID = os.getenv("YOUTUBE_CATEGORY_ID") or _profile.get("category", "27")
 
 SUBTITLE_FONT = os.getenv("SUBTITLE_FONT", "Noto Sans Devanagari")
 FPS = 30

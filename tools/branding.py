@@ -31,6 +31,46 @@ BRAND = {
         "tagline": "AI, Tech aur Science ki baatein, aasaan Hindi mein",
         "sub": "Roz naye Shorts  |  AI  |  Gadgets  |  Internet  |  Science",
     },
+    "cricket": {
+        "logo_art": "glowing red cricket ball with bright seam, sparks and motion trail, dark background, "
+                    "centred emblem, bold and simple",
+        "banner_art": "wide panoramic cricket stadium at night under floodlights, packed crowd, fireworks, "
+                      "green pitch, blue and gold tones, no people in focus",
+        "mono": "CKK", "colour": "&H00B5761A", "label": "CRICKET",
+        "name": "CRICKET KI KAHANIYAN",
+        "tagline": "Cricket ke records, kisse aur kamaal, aasaan Hindi mein",
+        "sub": "Roz naye Shorts  |  Records  |  Legends  |  World Cup  |  IPL",
+    },
+    "animals": {
+        "logo_art": "majestic tiger face made of glowing golden light, jungle leaves, dark green background, "
+                    "centred emblem, bold and simple",
+        "banner_art": "wide panoramic wildlife scene: tiger, elephant, peacock, eagle and dolphin in a lush jungle "
+                      "meeting the ocean, golden sunlight, vivid greens",
+        "mono": "JKD", "colour": "&H00359C2E", "label": "WILDLIFE",
+        "name": "JANWAR KI DUNIYA",
+        "tagline": "Janwaron ki hairan kar dene wali duniya",
+        "sub": "Roz naye Shorts  |  Jungle  |  Samundar  |  Pakshi  |  Facts",
+    },
+    "places": {
+        "logo_art": "glowing globe with a golden compass rose and light trails, deep blue background, "
+                    "centred emblem, bold and simple",
+        "banner_art": "wide panoramic collage of world wonders: mountains, desert dunes, ancient fort, ice cave, "
+                      "floating village, golden hour light, epic travel feel",
+        "mono": "AGD", "colour": "&H00A0522D", "label": "DUNIYA",
+        "name": "AJAB GAJAB DUNIYA",
+        "tagline": "Duniya ki sabse anokhi jagah, sirf 40 second mein",
+        "sub": "Roz naye Shorts  |  Desh  |  Shehar  |  Ajoobe  |  Geography",
+    },
+    "money": {
+        "logo_art": "shining gold rupee coin with glowing upward arrow, deep green background, "
+                    "centred emblem, bold and simple",
+        "banner_art": "wide panoramic premium business scene: city skyline at dusk, glowing gold coins, "
+                      "growth arrows, factory and shop fronts, deep green and gold tones",
+        "mono": "PG", "colour": "&H00347A1E", "label": "BUSINESS",
+        "name": "PAISA GYAAN",
+        "tagline": "Paisa, business aur brands ki kahani, aasaan Hindi mein",
+        "sub": "Roz naye Shorts  |  Brands  |  Business  |  Banking  |  Money",
+    },
 }[config.PROFILE]
 
 OUT = config.OUTPUT_DIR / "branding"
@@ -73,7 +113,7 @@ def main():
         "C,,0,0,0,,{\\pos(0,0)\\1a&H50&\\p1}m 400 70 b 582 70 730 218 730 400 b 730 582 582 730 400 730 "
         "b 218 730 70 582 70 400 b 70 218 218 70 400 70{\\p0}",
         f"M,,0,0,0,,{{\\pos(400,370)}}{BRAND['mono']}",
-        f"S,,0,0,0,,{{\\pos(400,585)}} {'TRENDING' if config.PROFILE == 'trending' else 'AI • TECH'} ",
+        f"S,,0,0,0,,{{\\pos(400,585)}} {BRAND.get('label') or ('TRENDING' if config.PROFILE == 'trending' else 'AI • TECH')} ",
     ])
     _run(["-y", "-i", str(OUT / "logo_art.jpg"), "-frames:v", "1", "-vf",
           "scale=800:800:force_original_aspect_ratio=increase,crop=800:800,eq=contrast=1.15:saturation=1.4,"

@@ -22,7 +22,11 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           T1: ${{ secrets.YOUTUBE_TOKEN_JSON_TRENDING }}
           T2: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+          T3: ${{ secrets.YOUTUBE_TOKEN_JSON_CRICKET }}
+          T4: ${{ secrets.YOUTUBE_TOKEN_JSON_ANIMALS }}
+          T5: ${{ secrets.YOUTUBE_TOKEN_JSON_PLACES }}
+          T6: ${{ secrets.YOUTUBE_TOKEN_JSON_MONEY }}
         run: |
-          printf '%s' "$T1" > t1.json; printf '%s' "$T2" > t2.json
-          python tools/comments.py t1.json t2.json
-          rm -f t1.json t2.json
+          files=""; for n in 1 2 3 4 5 6; do v="T$n"; if [ -n "${!v}" ]; then printf '%s' "${!v}" > t$n.json; files="$files t$n.json"; fi; done
+          python tools/comments.py $files
+          rm -f t?.json

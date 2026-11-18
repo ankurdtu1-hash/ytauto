@@ -180,8 +180,7 @@ def short_brief(video_format):
     return f"""No web research for this Short. Choose ONE topic yourself, in the format "{video_format}".
 
 - Pick a fact about {config.CHANNEL_NICHE} that is well established and widely documented,
-  that you are certain is correct, and that would surprise an Indian viewer. Prefer facts that relate
-  to things Indians use every day (phones, UPI, internet, trains, weather, food science, space missions).
+  that you are certain is correct, and that would surprise an Indian viewer. {config.PROFILES[config.PROFILE].get("angle", "")}
 - If a Google Trends India item below fits the niche and you know solid facts about it, you may use it:
 {trends}
 - Skip politics, religion, tragedies, crime, celebrity gossip, medical or financial advice, and anything

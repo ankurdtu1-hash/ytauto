@@ -1,13 +1,18 @@
-name: make-trending
+name: shorts
 
-# Second channel: Shorts about what India is searching right now.
+# Every channel: one Short a day. Every 2 hours each channel checks whether its daily publish slot is within
+# 10 hours and has no video yet; then it makes one and schedules it on YouTube (publishAt) for that slot.
+# A channel whose YouTube token secret is not set yet is skipped.
 on:
   schedule:
-    # Check every 2 hours; a Short is made only when the next free publish slot (08:30, 13:30, 19:00 IST)
-    # is within 10 hours, so late or skipped GitHub runs no longer make a Short miss its time.
     - cron: "7 */2 * * *"
   workflow_dispatch:
     inputs:
+      channel:
+        description: "which channel"
+        type: choice
+        options: [trending, main, cricket, animals, places, money]
+        default: trending
       upload:
         description: "upload to YouTube"
         type: boolean
@@ -20,49 +25,56 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: make-trending
-  cancel-in-progress: false
-
 jobs:
-  check:
+  short:
     runs-on: ubuntu-24.04
-    outputs:
-      go: ${{ steps.due.outputs.go }}
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 2   # free Gemini / Cloudflare limits
+      matrix:
+        include:
+          - {profile: trending, token: YOUTUBE_TOKEN_JSON_TRENDING}
+          - {profile: main, token: YOUTUBE_TOKEN_JSON}
+          - {profile: cricket, token: YOUTUBE_TOKEN_JSON_CRICKET}
+          - {profile: animals, token: YOUTUBE_TOKEN_JSON_ANIMALS}
+          - {profile: places, token: YOUTUBE_TOKEN_JSON_PLACES}
+          - {profile: money, token: YOUTUBE_TOKEN_JSON_MONEY}
+    concurrency:
+      group: short-${{ matrix.profile }}
+      cancel-in-progress: false
+    env:
+      CHANNEL_PROFILE: ${{ matrix.profile }}
+      HAS_TOKEN: ${{ secrets[matrix.token] != '' }}
     steps:
       - uses: actions/checkout@v4
-      - name: Is a video needed for the next publish slot?
+
+      - name: Is a video needed now?
         id: due
-        env:
-          CHANNEL_PROFILE: trending
         run: |
-          if [ "${{ github.event_name }}" != "schedule" ]; then echo "go=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ "$HAS_TOKEN" != "true" ]; then echo "no YouTube token for this channel yet"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            [ "${{ inputs.channel }}" = "${{ matrix.profile }}" ] && echo "go=true" >> "$GITHUB_OUTPUT" || echo "go=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           pip install -q python-dotenv
           python tools/due.py 10
 
-  video:
-    needs: check
-    if: needs.check.outputs.go == 'true'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 90
-    env:
-      CHANNEL_PROFILE: trending
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
+      - if: steps.due.outputs.go == 'true'
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: pip
 
-      - name: Install FFmpeg and Hindi fonts
+      - name: Install FFmpeg, fonts and Python packages
+        if: steps.due.outputs.go == 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg fonts-noto-core
-
-      - run: pip install -r requirements.txt
+          pip install -q -r requirements.txt
 
       - name: Unlock background music (YouTube Audio Library tracks, kept encrypted in this public repo)
+        if: steps.due.outputs.go == 'true'
         env:
           MUSIC_KEY: ${{ secrets.MUSIC_KEY }}
         run: |
@@ -72,24 +84,27 @@ jobs:
           fi
 
       - name: Install OmniVoice narrator (free, CPU)
+        if: steps.due.outputs.go == 'true'
         run: pip install -q --extra-index-url https://download.pytorch.org/whl/cpu torch torchaudio soundfile omnivoice
 
-      - uses: actions/cache@v4
+      - if: steps.due.outputs.go == 'true'
+        uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
           key: hf-omnivoice-v1
 
-      - name: Make and upload trending Short
+      - name: Make and upload the Short
+        if: steps.due.outputs.go == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
-          YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON_TRENDING }}
+          YOUTUBE_TOKEN_JSON: ${{ secrets[matrix.token] }}
           UPLOAD_PRIVACY: ${{ vars.UPLOAD_PRIVACY || 'private' }}
           PUBLISH_NOW: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_now }}
-          YOUTUBE_CATEGORY_ID: "24"
+          AI_PER_VIDEO: "4"   # 6 Shorts a day share Cloudflare's free image allowance
         run: |
           printf '%s' "$YOUTUBE_TOKEN_JSON" > token.json
           flag=""
@@ -97,12 +112,13 @@ jobs:
             flag="--no-upload"
           fi
           python run.py short $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --ahead-hours 10 )
+          rm -f token.json
 
       - name: Keep the finished video for 3 days
-        if: always()
+        if: always() && steps.due.outputs.go == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: trending-${{ github.run_number }}
+          name: ${{ matrix.profile }}-${{ github.run_number }}
           path: |
             output/*/final.mp4
             output/*/thumbnail.jpg
@@ -112,9 +128,10 @@ jobs:
           if-no-files-found: ignore
 
       - name: Save topic history
+        if: always() && steps.due.outputs.go == 'true'
         run: |
           git config user.name "ytauto-bot"
           git config user.email "ytauto-bot@users.noreply.github.com"
           git add data/
-          git diff --cached --quiet || git commit -m "history: trending short"
+          git diff --cached --quiet || git commit -m "history: ${{ matrix.profile }} short"
           for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
