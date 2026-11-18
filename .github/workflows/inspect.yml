@@ -1,0 +1,27 @@
+name: inspect
+
+# Read-only: details of any public video(s) and their channel, to learn from what works.
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: "video ids, space separated"
+        required: true
+
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - env:
+          T: ${{ secrets.YOUTUBE_TOKEN_JSON_TRENDING }}
+          IDS: ${{ inputs.ids }}
+        run: |
+          printf '%s' "$T" > t.json
+          python tools/inspect_video.py t.json $IDS
+          rm -f t.json
