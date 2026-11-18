@@ -14,3 +14,11 @@ Mainstream Indian cricket storylines and globally recognized icons like Cristian
 Best: नंबर 11 पर छक्का! Arshdeep Singh का नया रिकॉर्ड #S (1205); हार्दिक अब पंजाब में! IPL 2027 का सबसे बड़ा ट्रेड  (893); टीम इंडिया दो हिस्सों में! IND vs NZ चौथे वनडे से  (893)
 
 Weakest: Creta-Nexon फेल! Oct 2026 में किस SUV ने मचाया धमा (11); 22 साल पुराना रिकॉर्ड टूटा! Sharapova के बाद कौन?  (4); Debutant ka Dhamaka! 7 Wickets Se Match Palta? #Sh (0)
+
+## 2026-11-18: 12 subs, 6075 views, 19 public Shorts
+
+Mainstream Indian cricket storylines featuring big stars like Arshdeep Singh and Hardik Pandya, alongside global icons like Ronaldo and mega film news like Yash in Ramayana, continue to drive maximum viewership. Offbeat sports updates like Sharapova tennis records, car sales data, stock updates, and nameless debutant clips severely underperform and stall under 100 views. To scale toward monetisation, the channel must exclusively stick to top-tier Indian cricket and major Bollywood pop culture trends. Scripting must feature Roman Hinglish text, front-load named stars with exact stats, and maintain seamless video loops.
+
+Best: नंबर 11 पर छक्का! Arshdeep Singh का नया रिकॉर्ड #S (1206); हार्दिक अब पंजाब में! IPL 2027 का सबसे बड़ा ट्रेड  (893); टीम इंडिया दो हिस्सों में! IND vs NZ चौथे वनडे से  (893)
+
+Weakest: Debutant ka Dhamaka! 7 Wickets Se Match Palta? #Sh (22); Creta-Nexon फेल! Oct 2026 में किस SUV ने मचाया धमा (15); 22 साल पुराना रिकॉर्ड टूटा! Sharapova के बाद कौन?  (4)

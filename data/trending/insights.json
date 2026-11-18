@@ -1,41 +1,61 @@
 {
-  "summary": "Mainstream Indian cricket storylines and globally recognized icons like Cristiano Ronaldo and Yash drive over 80% of total viewership. Niche international athletes, financial stock updates, commodity rates, and civic rankings consistently stall below 100 views. To drive explosive growth toward monetisation, restrict coverage to tier-one cricket and marquee viral moments while perfecting seamless loops. Ensure Roman Hinglish titles feature prominent star names and specific stats right up front.",
+  "summary": "Mainstream Indian cricket storylines featuring big stars like Arshdeep Singh and Hardik Pandya, alongside global icons like Ronaldo and mega film news like Yash in Ramayana, continue to drive maximum viewership. Offbeat sports updates like Sharapova tennis records, car sales data, stock updates, and nameless debutant clips severely underperform and stall under 100 views. To scale toward monetisation, the channel must exclusively stick to top-tier Indian cricket and major Bollywood pop culture trends. Scripting must feature Roman Hinglish text, front-load named stars with exact stats, and maintain seamless video loops.",
   "do_more": [
-    "Focus on mainstream Indian cricket superstars (Arshdeep Singh, Hardik Pandya, Rohit Sharma) and high-stakes IPL news",
-    "Feature household global sports figures like Cristiano Ronaldo who have massive mainstream followings in India",
-    "Include high-impact numbers and unique milestones directly in the story (e.g., No. 11, 13 times sold)",
-    "Script tight 40-second narratives that seamlessly loop the ending back into the opening hook line"
+    "Focus on mainstream Indian cricket legends and high-profile IPL transfers",
+    "Feature blockbuster Bollywood updates and viral global sports stars like Ronaldo",
+    "Highlight shocking numbers and exact stats directly in the hook and title"
   ],
   "avoid": [
-    "Covering niche international athletes like Brajan Gruda or obscure tennis updates with low Indian interest",
-    "Producing finance, stock market, gold price, or municipal city cleanliness explainers",
-    "Writing vague, nameless titles like 'Debutant ka Dhamaka' that fail to state who or what is featured",
-    "Wasting the first three seconds on greetings, logos, or slow contextual build-up"
+    "Covering niche international sports like tennis records or obscure football debutants",
+    "Producing videos on finance, gold rates, automotive market reports, or city rankings",
+    "Using nameless titles like Debutant ka Dhamaka without explicitly naming the player",
+    "Including slow contextual intros instead of starting with the core viral twist immediately"
   ],
   "hook_tips": [
-    "Open with an unexpected stat: 'No. 11 par aakar kisi Indian pacer ne aisa chhakka pehle kabhi nahi mara!'",
-    "Pique curiosity around star decisions: 'Ronaldo apni iconic Jersey No. 7 kyu chhod rahe hain?'",
-    "Highlight immediate drama: 'Match se theek pehle Team India do alag hisso mein kyu bat gayi?'",
-    "Deliver the core tension in under 2 seconds without introductory fluff"
+    "Start with direct star action: Arshdeep Singh ne Number 11 par aakar aisa record tod diya!",
+    "Build curiosity on massive updates: Hardik Pandya IPL 2027 mein Punjab ke saath kyu jude?",
+    "Highlight jaw-dropping figures: 13 baar bikne waala IPL ka sabse anokha player kaun hai?",
+    "Deliver the core conflict in the first 2 seconds without greetings or channel titles"
   ],
   "title_tips": [
-    "Place the star or team name in the first three words (e.g., 'Arshdeep Singh Record: No 11 Par Six!')",
-    "Use exact numbers or milestones to spark instant interest (e.g., '13 Baar Bike! IPL Ka Sabse Anokha Record')",
-    "Use punchy punctuation (! or ?) to highlight genuine drama without resorting to fake clickbait"
+    "Place the celebrity name in the first two words like Arshdeep Singh Record: No 11 Par Six!",
+    "Use exact numerical records to trigger instant curiosity like 13 Baar Bike IPL Player!"
   ],
   "hot_keywords": [
-    "ipl 2025",
-    "team india",
     "arshdeep singh",
     "hardik pandya",
+    "ipl 2027 trade",
+    "team india",
     "rohit sharma",
-    "virat kohli",
-    "champions trophy",
-    "bcci",
     "cristiano ronaldo",
-    "ramayana movie",
-    "yash",
-    "ind vs nz"
+    "ramayana movie yash",
+    "ind vs nz",
+    "cricket news hindi",
+    "ms dhoni csk"
   ],
-  "updated": "2026-11-17"
+  "topic_ideas": [
+    "Arshdeep Singh record as No 11 batter hitting most sixes in T20Is",
+    "Hardik Pandya IPL trade rumors connecting him to Punjab Kings",
+    "Why Cristiano Ronaldo jersey number 7 story became a global internet trend",
+    "Yash first day box office collection breakdown for Ramayana movie",
+    "Most expensive buys in IPL auction history and who was sold 13 times",
+    "Rohit Sharma fastest century record in ODI cricket history",
+    "MS Dhoni new mentorship role in CSK after retirement plans",
+    "IND vs NZ match drama and key player selection controversies explained",
+    "Shah Rukh Khan upcoming movie King teaser breakdown and record budget",
+    "Top 3 unbreakable records held by Team India in ICC tournaments"
+  ],
+  "search_phrases": [
+    "cricket news hindi",
+    "cricket news hindi today",
+    "cricket news hindi short",
+    "cricket samachar",
+    "cricket news ipl",
+    "bollywood news hindi",
+    "latest bollywood news hindi",
+    "trending news hindi",
+    "trending news hindi short",
+    "cricket news short video kaise banaye"
+  ],
+  "updated": "2026-11-18"
 }
