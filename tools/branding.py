@@ -5,6 +5,7 @@ Upload them yourself in YouTube Studio > Customisation > Branding (the API canno
 """
 import os
 import sys
+import time
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from ytauto import config, footage  # noqa: E402
@@ -100,7 +101,11 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     for kind in ("logo", "banner"):
         art = OUT / f"{kind}_art.jpg"
-        if not footage.ai_image(BRAND[f"{kind}_art"], art):
+        for attempt in range(4):  # Cloudflare sometimes answers 500 for a moment
+            if footage.ai_image(BRAND[f"{kind}_art"], art):
+                break
+            time.sleep(20 * (attempt + 1))
+        else:
             raise SystemExit(f"AI art failed for {kind}")
 
     # Logo: art inside a coloured ring, big monogram in the middle (YouTube shows it as a circle).

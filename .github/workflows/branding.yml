@@ -3,14 +3,19 @@ name: branding
 # Makes channel logo + banner for all channels (download the artifact, upload in YouTube Studio).
 on:
   workflow_dispatch:
+    inputs:
+      channels:
+        description: "channels (JSON list)"
+        default: '["cricket","animals","places","money"]'
 
 jobs:
   art:
     runs-on: ubuntu-24.04
     strategy:
+      fail-fast: false
       max-parallel: 2   # Cloudflare free image allowance
       matrix:
-        profile: [main, trending, cricket, animals, places, money]
+        profile: ${{ fromJSON(inputs.channels) }}
     env:
       CHANNEL_PROFILE: ${{ matrix.profile }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
