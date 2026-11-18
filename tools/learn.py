@@ -8,7 +8,7 @@ import json
 import re
 import sys
 import time
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -33,8 +33,11 @@ SCHEMA = {
         "hook_tips": {"type": "array", "items": {"type": "string"}},
         "title_tips": {"type": "array", "items": {"type": "string"}},
         "hot_keywords": {"type": "array", "items": {"type": "string"}},
+        "topic_ideas": {"type": "array", "items": {"type": "string"}},
+        "search_phrases": {"type": "array", "items": {"type": "string"}},
     },
-    "required": ["summary", "do_more", "avoid", "hook_tips", "title_tips", "hot_keywords"],
+    "required": ["summary", "do_more", "avoid", "hook_tips", "title_tips", "hot_keywords", "topic_ideas",
+                 "search_phrases"],
 }
 
 
@@ -44,6 +47,7 @@ def video_stats(token):
         creds.refresh(Request())  # in memory only
     yt = build("youtube", "v3", credentials=creds, cache_discovery=False)
     ch = yt.channels().list(part="statistics,contentDetails", mine=True).execute()["items"][0]
+    watch = retention(creds)
     uploads = ch["contentDetails"]["relatedPlaylists"]["uploads"]
     ids = [i["contentDetails"]["videoId"] for i in
            yt.playlistItems().list(part="contentDetails", playlistId=uploads, maxResults=50).execute()["items"]]
@@ -56,8 +60,59 @@ def video_stats(token):
         s = v["statistics"]
         rows.append({"title": v["snippet"]["title"], "age_days": round((now - published).total_seconds() / 86400, 1),
                      "views": int(s.get("viewCount", 0)), "likes": int(s.get("likeCount", 0)),
-                     "comments": int(s.get("commentCount", 0))})
-    return ch["statistics"], rows
+                     "comments": int(s.get("commentCount", 0)), **watch.get(v["id"], {})})
+    return ch["statistics"], rows, yt, ch["id"]
+
+
+def retention(creds):
+    """Per video: % of the Short watched and subscribers gained (YouTube Analytics API). Empty without the scope."""
+    if not creds.has_scopes(["https://www.googleapis.com/auth/yt-analytics.readonly"]):
+        print("no analytics scope yet: retention not available (re-run auth_youtube.py to add it)")
+        return {}
+    try:
+        ya = build("youtubeAnalytics", "v2", credentials=creds, cache_discovery=False)
+        r = ya.reports().query(ids="channel==MINE", startDate="2026-01-01", endDate=date.today().isoformat(),
+                               metrics="views,averageViewPercentage,subscribersGained", dimensions="video",
+                               sort="-views", maxResults=200).execute()
+        return {row[0]: {"watched_pct": round(row[2]), "subs_gained": int(row[3])} for row in r.get("rows", [])}
+    except Exception as e:
+        print(f"analytics failed: {str(e)[:150]}")
+        return {}
+
+
+def competitors(yt, my_channel):
+    """Most-viewed Hindi Shorts of the last 30 days for this channel's niche searches (ideas, never copies)."""
+    since = (datetime.now(timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    ids = []
+    for q in config.PROFILES[config.PROFILE].get("seeds", [])[:3]:
+        try:  # 100 API units per search
+            res = yt.search().list(part="id", q=q, type="video", videoDuration="short", order="viewCount",
+                                   publishedAfter=since, regionCode="IN", relevanceLanguage="hi",
+                                   maxResults=25).execute()
+            ids += [i["id"]["videoId"] for i in res.get("items", []) if i["id"]["videoId"] not in ids]
+        except Exception as e:
+            print(f"search '{q}' failed: {str(e)[:120]}")
+    out = []
+    for k in range(0, len(ids), 50):
+        for v in yt.videos().list(part="snippet,statistics", id=",".join(ids[k:k + 50])).execute().get("items", []):
+            if v["snippet"]["channelId"] != my_channel:
+                out.append((int(v["statistics"].get("viewCount", 0)), v["snippet"]["channelTitle"], v["snippet"]["title"]))
+    return sorted(out, reverse=True)[:25]
+
+
+def autocomplete():
+    """What people type into YouTube search for this niche (free Google suggest endpoint)."""
+    phrases = []
+    for seed in config.PROFILES[config.PROFILE].get("seeds", [])[:3]:
+        base = seed.replace(" hindi", "")
+        for q in (seed, base + " kyu", base + " kaise"):
+            try:
+                r = requests.get("https://suggestqueries.google.com/complete/search", timeout=15,
+                                 params={"client": "firefox", "ds": "yt", "hl": "hi", "gl": "in", "q": q})
+                phrases += [p for p in r.json()[1] if p not in phrases]
+            except (requests.RequestException, ValueError, IndexError):
+                pass
+    return phrases[:40]
 
 
 def web_research():
@@ -85,11 +140,15 @@ def web_research():
 
 
 def main(token):
-    channel, rows = video_stats(token)
+    channel, rows, yt, my_id = video_stats(token)
     old = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     research = web_research()
-    table = "\n".join(f"- {r['views']} views, {r['likes']} likes, {r['comments']} comments, {r['age_days']} days old: "
-                      f"{r['title']}" for r in sorted(rows, key=lambda r: -r["views"])) or "(no public videos yet)"
+    rivals = competitors(yt, my_id)
+    searches = autocomplete()
+    table = "\n".join(f"- {r['views']} views, {r['likes']} likes, {r['comments']} comments, {r['age_days']} days old"
+                      + (f", {r['watched_pct']}% watched, +{r['subs_gained']} subs" if "watched_pct" in r else "")
+                      + f": {r['title']}" for r in sorted(rows, key=lambda r: -r["views"])) or "(no public videos yet)"
+    rival_text = "\n".join(f"- {v:,} views ({c}): {t}" for v, c, t in rivals) or "(not available)"
     prompt = f"""You are the growth strategist for the Hindi YouTube Shorts channel "{config.CHANNEL_NAME}"
 (niche: {config.CHANNEL_NICHE}). Channel: {channel.get('subscriberCount')} subscribers, {channel['viewCount']} views.
 Goal: more views and subscribers, towards YouTube monetisation (1,000 subs + 10M Shorts views in 90 days).
@@ -103,17 +162,27 @@ Last week's insights (keep what the numbers still support, drop what they don't)
 Fresh web research on what works for Indian Shorts right now:
 {research or "(not available this week)"}
 
+The most-viewed Hindi Shorts in this niche from other channels in the last 30 days (learn their topics, hooks
+and title patterns; never copy a title, script or video):
+{rival_text}
+
+What people type into YouTube search for this niche (autocomplete):
+{", ".join(searches) or "(not available)"}
+
 Find the patterns that separate the winners from the flops (topic, named stars, numbers in the hook, title
 style, format) and turn them into concrete instructions for the scriptwriter. Each list: 3-6 short, specific
 items. hook_tips / title_tips may give Hinglish examples in Roman letters. hot_keywords: 5-15 lowercase words
 or names (1-3 words each) of topics, people or events viewers want now or in the next weeks; they move matching
-trends to the front. Fixed by the channel owner, never suggest changing: titles and on-screen text are
+trends to the front. topic_ideas: 8-12 concrete, specific Short topics for the next week, inspired by the winners
+above but in this channel's own angle, each a well-documented fact. search_phrases: 8-15 phrases from the
+autocomplete list (or close to it) worth using in titles, descriptions and tags. "watched_pct" (share of the
+Short watched) matters most for Shorts: learn from the highest. Fixed by the channel owner, never suggest changing: titles and on-screen text are
 Hinglish in Roman letters (titles in Devanagari were older videos; switched on 2026-11-16, so do not blame
 or credit the script of a title), narration stays Hindi, the Short ends looping back to its start.
 Stay inside YouTube's rules: no clickbait that the video does not deliver, no misleading
 claims, no politics/religion/crime/gossip, no copyrighted material, no look-alikes of real people."""
     ins = llm.structured(prompt, SCHEMA)
-    ins = {k: [str(x).strip()[:200] for x in ins[k]][:15 if k == "hot_keywords" else 6]
+    ins = {k: [str(x).strip()[:200] for x in ins[k]][:15 if k in ("hot_keywords", "search_phrases", "topic_ideas") else 6]
            if isinstance(ins[k], list) else str(ins[k])[:800] for k in SCHEMA["required"]}
     fixed = re.compile(r"devanagari|roman|hinglish|script of", re.I)  # owner's choice, not up for review
     for k in ("do_more", "avoid", "hook_tips", "title_tips"):

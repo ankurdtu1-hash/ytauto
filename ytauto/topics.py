@@ -101,8 +101,15 @@ def insights_block():
         return ""
     parts = [f"\n\nLearned from this channel's own analytics (review of {ins.get('updated', '?')}); follow these, "
              "but the rules above always win:"]
-    for key, label in (("do_more", "Do more"), ("avoid", "Avoid"), ("hook_tips", "Hooks"), ("title_tips", "Titles")):
-        parts += [f"{label}:"] + [f"  - {x}" for x in ins.get(key, [])]
+    sections = [("do_more", "Do more"), ("avoid", "Avoid"), ("hook_tips", "Hooks"), ("title_tips", "Titles"),
+                ("search_phrases", "What people search on YouTube (use the matching ones naturally in title, "
+                                   "description and tags)")]
+    if config.TOPIC_MODE != "trending":
+        sections.append(("topic_ideas", "Topic ideas from this week's research (pick one if it is not covered yet "
+                                        "and you are sure of the facts)"))
+    for key, label in sections:
+        if ins.get(key):
+            parts += [f"{label}:"] + [f"  - {x}" for x in ins[key]]
     return "\n".join(parts)
 
 

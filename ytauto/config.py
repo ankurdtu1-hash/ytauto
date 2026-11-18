@@ -19,6 +19,7 @@ PROFILES = {
         "angle": "Prefer facts about things Indians use every day (phones, UPI, internet, trains, chargers, "
                  "SIMs, everyday gadgets): these got the most views.",
         "art_style": "clean glossy 3D render, soft studio lighting, vivid blue and orange colours, high detail",
+        "seeds": ["mobile facts hindi", "tech facts hindi", "science facts hindi"],  # YouTube searches for competitor research
     },
     "trending": {
         "name": "Trending Kya Hai",
@@ -30,6 +31,7 @@ PROFILES = {
         "publish_slots": "19:00",
         "category": "24",
         "art_style": "vibrant cinematic digital illustration, dramatic lighting, rich colours, high detail",
+        "seeds": ["cricket news hindi", "bollywood news hindi", "trending news hindi"],  # YouTube searches for competitor research
     },
     # New channels (Nov 2026): one Short a day each, own voice, look and posting time.
     "cricket": {
@@ -46,6 +48,7 @@ PROFILES = {
         "category": "17",
         "art_style": "dramatic cinematic sports illustration, stadium floodlights, motion and dust, rich colours, "
                      "generic anonymous players only",
+        "seeds": ["cricket facts hindi", "cricket records hindi", "cricket story hindi"],
     },
     "animals": {
         "name": "Janwar Ki Duniya",
@@ -59,6 +62,7 @@ PROFILES = {
         "publish_slots": "16:00",
         "category": "15",
         "art_style": "stunning National-Geographic-style wildlife illustration, natural light, sharp detail, vivid colours",
+        "seeds": ["animal facts hindi", "janwar facts", "wildlife facts hindi"],  # YouTube searches for competitor research
     },
     "places": {
         "name": "Ajab Gajab Duniya",
@@ -73,6 +77,7 @@ PROFILES = {
         "publish_slots": "14:00",
         "category": "19",
         "art_style": "breathtaking cinematic travel illustration, golden hour light, epic wide view, vivid colours",
+        "seeds": ["amazing facts hindi", "duniya ki ajeeb jagah", "country facts hindi"],  # YouTube searches for competitor research
     },
     "money": {
         "name": "Paisa Gyaan",
@@ -88,6 +93,7 @@ PROFILES = {
         "publish_slots": "09:00",
         "category": "27",
         "art_style": "clean premium 3D illustration, warm studio light, gold and deep green colours, high detail",
+        "seeds": ["business case study hindi", "brand story hindi", "money facts hindi"],  # YouTube searches for competitor research
     },
 }
 PROFILE = os.getenv("CHANNEL_PROFILE", "main")
@@ -102,6 +108,7 @@ TOKEN_FILE = ROOT / os.getenv("TOKEN_FILE", "token.json")
 
 MODEL = os.getenv("ANTHROPIC_MODEL", "claude-opus-5-5")
 PIXABAY_API_KEY = os.getenv("PIXABAY_API_KEY", "")
+PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
 CF_ACCOUNT_ID = os.getenv("CLOUDFLARE_ACCOUNT_ID", "").strip()
 CF_API_TOKEN = os.getenv("CLOUDFLARE_API_TOKEN", "").strip()
 ART_STYLE = _profile["art_style"]

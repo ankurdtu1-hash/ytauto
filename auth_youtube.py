@@ -8,7 +8,8 @@ from ytauto import config
 from ytauto.upload import SCOPES
 
 # force-ssl lets tools/comments.py reply to viewer comments.
-SCOPES = SCOPES + ["https://www.googleapis.com/auth/youtube.force-ssl"]
+SCOPES = SCOPES + ["https://www.googleapis.com/auth/youtube.force-ssl",
+                   "https://www.googleapis.com/auth/yt-analytics.readonly"]  # retention for tools/learn.py
 
 flow = InstalledAppFlow.from_client_secrets_file(str(config.CLIENT_SECRET_FILE), SCOPES)
 creds = flow.run_local_server(port=0, access_type="offline", prompt="consent")

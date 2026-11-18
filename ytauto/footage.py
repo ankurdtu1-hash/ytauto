@@ -54,11 +54,11 @@ def _relevance(query, text):
     return sum(1 for w in words if w in text or w.rstrip("s") in text)
 
 
-def _get_json(source, url, **params):
+def _get_json(source, url, headers=None, **params):
     if source in _disabled:
         return None
     try:
-        resp = requests.get(url, params=params, timeout=30, headers=UA)
+        resp = requests.get(url, params=params, timeout=30, headers={**UA, **(headers or {})})
         if resp.status_code == 429:
             log.warning("%s rate limit reached; skipping it for the rest of this video", source)
             _disabled.add(source)
@@ -86,6 +86,27 @@ def _pixabay_videos(query, fmt):
             thumb = next((r.get("thumbnail") for r in v["videos"].values() if r.get("thumbnail")), None)
             out.append({"id": f"v{v['id']}", "kind": "video", "url": f["url"], "rank": rank, "thumb": thumb,
                         "score": _relevance(query, v.get("tags", "")), "credit": None,
+                        "portrait": f["height"] > f["width"]})
+    return out
+
+
+def _pexels_videos(query, fmt):
+    """Pexels (free licence, no attribution needed). Used only when PEXELS_API_KEY is set."""
+    if not config.PEXELS_API_KEY:
+        return []
+    data = _get_json("pexels", "https://api.pexels.com/videos/search", headers={"Authorization": config.PEXELS_API_KEY},
+                     query=query[:100], per_page=20, orientation=fmt["orientation"], size="medium") or {}
+    target = max(fmt["width"], fmt["height"]) * 0.66
+    out = []
+    for rank, v in enumerate(data.get("videos", [])):
+        files = [f for f in v.get("video_files", []) if f.get("link") and f.get("width") and f.get("height")]
+        big = [f for f in files if max(f["width"], f["height"]) >= target]
+        f = min(big, key=lambda f: f["width"] * f["height"]) if big else max(files, key=lambda f: f["width"], default=None)
+        if f:
+            slug = v.get("url", "").rstrip("/").rsplit("/", 1)[-1].replace("-", " ")
+            name = (v.get("user") or {}).get("name")
+            out.append({"id": f"x{v['id']}", "kind": "video", "url": f["link"], "rank": rank, "thumb": v.get("image"),
+                        "score": _relevance(query, slug), "credit": f"Video by {name} on Pexels" if name else None,
                         "portrait": f["height"] > f["width"]})
     return out
 
@@ -218,7 +239,7 @@ def candidates(queries, fmt, used_ids):
         return sorted(items, key=lambda c: (-c["score"], c["portrait"] != portrait, c["rank"]))
 
     for q in queries:
-        for c in fresh(_pixabay_videos(q, fmt), 1):
+        for c in fresh(_pixabay_videos(q, fmt) + _pexels_videos(q, fmt), 1):
             seen.add(c["id"])
             yield c
         for c in fresh(_commons(q, fmt) + _pixabay_photos(q, fmt) + _openverse(q, fmt) + _nasa(q, "image"), 1):
