@@ -16,8 +16,10 @@ PROFILES = {
         "topic_mode": "evergreen",
         "data_dir": "data",
         "publish_slots": "12:30",  # IST time the daily Short goes public
-        "angle": "Prefer facts about things Indians use every day (phones, UPI, internet, trains, chargers, "
-                 "SIMs, everyday gadgets): these got the most views.",
+        "angle": "Lead with how giant machines and mega engineering work (excavators, JCBs, bulldozers, cranes, "
+                 "tunnel borers, bullet trains, ships, dams, bridges, factories, rockets) and with everyday "
+                 "gadgets Indians use (phones, chargers, SIMs, UPI): both get the most views. Show the real "
+                 "machine in action and explain it with huge numbers.",
         "art_style": "clean glossy 3D render, soft studio lighting, vivid blue and orange colours, high detail",
         "seeds": ["mobile facts hindi", "tech facts hindi", "science facts hindi"],  # YouTube searches for competitor research
     },

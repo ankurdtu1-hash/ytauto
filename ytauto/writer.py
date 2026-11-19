@@ -51,7 +51,9 @@ well-established fact you are certain of. Never invent numbers. Curiosity, yes; 
 VISUALS = """- footage_queries: 3 English stock-footage searches for THIS sentence, most specific first, e.g.
   ["tv remote infrared light", "remote control closeup", "living room television"].
   Describe what should literally be ON SCREEN while this sentence is spoken: concrete, filmable nouns
-  (objects, places, actions), 1-3 words each. The visual must match the words being spoken, so a viewer
+  (objects, places, actions), 1-3 words each. Best is the real thing IN ACTION, the way stock video is
+  tagged: thing + action, e.g. "excavator digging rock", "bullet train passing", "ship launching sea",
+  "tiger running", "molten steel pouring". Moving footage of the actual subject keeps viewers watching. The visual must match the words being spoken, so a viewer
   with the sound off still follows. No abstract ideas, no brand logos.
   When the sentence is about a real, named person (actor, cricketer, scientist), place or event, the FIRST
   query must be just that exact full name in English, e.g. ["Ranbir Kapoor", "film shooting set", "cinema audience"].

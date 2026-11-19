@@ -197,6 +197,36 @@ def _commons(query, fmt):
     return out
 
 
+def _commons_videos(query, fmt):
+    """Freely licensed real video clips from Wikimedia Commons: machines, trains, ships, launches, animals."""
+    data = _get_json("commons", "https://commons.wikimedia.org/w/api.php", action="query", format="json",
+                     generator="search", gsrsearch=f"{query[:90]} filetype:video", gsrnamespace=6, gsrlimit=12,
+                     prop="videoinfo", viprop="url|size|extmetadata|derivatives", viurlwidth=640,
+                     viextmetadatafilter="LicenseShortName|Artist|ImageDescription|Categories") or {}
+    pages = sorted(data.get("query", {}).get("pages", {}).values(), key=lambda p: p.get("index", 99))
+    out = []
+    for rank, page in enumerate(pages):
+        info = (page.get("videoinfo") or [{}])[0]
+        meta = info.get("extmetadata", {})
+        lic = _plain(meta.get("LicenseShortName", {}).get("value"))
+        if not FREE_LICENSE.match(lic) or re.search(r"\b(nc|nd)\b", lic, re.I):
+            continue
+        if (info.get("duration") or 0) > 600 or min(info.get("width", 0), info.get("height", 0)) < 360:
+            continue
+        # a 480-720p transcode keeps downloads small; the original only if it is small itself
+        derivs = [d for d in info.get("derivatives", []) if "webm" in d.get("type", "") and 360 <= (d.get("height") or 0) <= 1080]
+        src = min(derivs, key=lambda d: d["height"])["src"] if derivs else (info.get("url") if info.get("size", 0) < 60e6 else None)
+        title = page.get("title", "").removeprefix("File:").rsplit(".", 1)[0]
+        if not src or re.search(r"logo|poster|map|flag|trailer|interview|speech", title, re.I):
+            continue
+        text = " ".join([title, _plain(meta.get("ImageDescription", {}).get("value")), meta.get("Categories", {}).get("value", "")])
+        artist = _plain(meta.get("Artist", {}).get("value"))[:80] or "unknown author"
+        out.append({"id": f"c{page['pageid']}", "kind": "video", "url": src, "rank": rank, "thumb": info.get("thumburl"),
+                    "score": _relevance(query, text), "credit": f'"{title}" by {artist}, {lic}, via Wikimedia Commons',
+                    "portrait": info.get("height", 0) > info.get("width", 0)})
+    return out
+
+
 # Free allowance is 10k neurons a day: 4 steps and ~5 images per Short keeps all 5 daily Shorts covered.
 AI_STEPS = int(os.getenv("AI_STEPS", "4"))
 AI_PER_VIDEO = int(os.getenv("AI_PER_VIDEO", "5"))
@@ -239,7 +269,7 @@ def candidates(queries, fmt, used_ids):
         return sorted(items, key=lambda c: (-c["score"], c["portrait"] != portrait, c["rank"]))
 
     for q in queries:
-        for c in fresh(_pixabay_videos(q, fmt) + _pexels_videos(q, fmt), 1):
+        for c in fresh(_pixabay_videos(q, fmt) + _pexels_videos(q, fmt) + _commons_videos(q, fmt), 1):
             seen.add(c["id"])
             yield c
         for c in fresh(_commons(q, fmt) + _pixabay_photos(q, fmt) + _openverse(q, fmt) + _nasa(q, "image"), 1):

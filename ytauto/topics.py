@@ -188,6 +188,10 @@ def short_brief(video_format):
 
 - Pick a fact about {config.CHANNEL_NICHE} that is well established and widely documented,
   that you are certain is correct, and that would surprise an Indian viewer. {config.PROFILES[config.PROFILE].get("angle", "")}
+- Visual first: pick a topic whose key moments can be SHOWN with real footage of the thing in action
+  (machines, vehicles, factories, construction, animals, nature, space launches, everyday objects in use).
+  Avoid topics that are mostly abstract ideas, history without footage, or talking. Explain how it works
+  with big, specific numbers (tonnes, km/h, crore, metres), like a short documentary, not a story.
 - If a Google Trends India item below fits the niche and you know solid facts about it, you may use it:
 {trends}
 - Skip politics, religion, tragedies, crime, celebrity gossip, medical or financial advice, and anything
