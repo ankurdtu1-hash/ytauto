@@ -1,5 +1,9 @@
 """Turn a research brief into a Hindi script plus YouTube metadata."""
+import logging
+
 from . import config, llm
+
+log = logging.getLogger("ytauto")
 
 SCHEMA = {
     "type": "object",
@@ -123,4 +127,16 @@ Metadata rules (optimise click-through rate):
   If the video is about a real, named person, show NO person who could be mistaken for them: show the
   setting or objects instead (stadium under floodlights, cricket ball and bat, trophy, film camera, phone).
   No text, letters, numbers, brand logos, flags or religious symbols anywhere, including on clothing."""
-    return llm.structured(prompt, SCHEMA, system=SYSTEM, effort="low" if kind == "short" else "medium")
+    effort = "low" if kind == "short" else "medium"
+    script = llm.structured(prompt, SCHEMA, system=SYSTEM, effort=effort)
+    words = sum(len(s["narration"].split()) for s in script["scenes"])
+    if kind == "short" and words < MIN_SHORT_WORDS:
+        log.warning("Script has only %d words; asking for a longer one", words)
+        longer = llm.structured(prompt + f"\n\nIMPORTANT: your last draft had only {words} words of narration. "
+                                f"Write {fmt['words']}, in {fmt['scenes']} scenes.", SCHEMA, system=SYSTEM, effort=effort)
+        if sum(len(s["narration"].split()) for s in longer["scenes"]) > words:
+            script = longer
+    return script
+
+
+MIN_SHORT_WORDS = 110

@@ -5,7 +5,7 @@ name: shorts
 # A channel whose YouTube token secret is not set yet is skipped.
 on:
   schedule:
-    - cron: "7 */2 * * *"
+    - cron: "17 * * * *"
   workflow_dispatch:
     inputs:
       channel:
@@ -49,7 +49,8 @@ jobs:
             has="HAS_$p"
             if [ "${!has}" != "true" ]; then echo "$p: no YouTube token yet"; continue; fi
             if [ "${{ github.event_name }}" = "schedule" ]; then
-              out=$(CHANNEL_PROFILE=$p GITHUB_OUTPUT=/dev/null python tools/due.py 10); echo "$p: $out"
+              hours=24; [ "$p" = trending ] && hours=12
+              out=$(CHANNEL_PROFILE=$p GITHUB_OUTPUT=/dev/null python tools/due.py $hours); echo "$p: $out"
               case "$out" in *True) list="$list $p" ;; esac
             elif [ "${{ inputs.channel }}" = "$p" ]; then
               list="$list $p"
@@ -123,7 +124,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.upload }}" = "false" ]; then
             flag="--no-upload"
           fi
-          python run.py short $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --ahead-hours 10 )
+          python run.py short $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --ahead-hours $( [ "${{ matrix.profile }}" = trending ] && echo 12 || echo 24 ) )
           rm -f token.json
 
       - name: Keep the finished video for 3 days
