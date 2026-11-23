@@ -1,61 +1,64 @@
 {
-  "summary": "Mainstream Indian cricket storylines featuring big stars and high-stakes IPL developments consistently drive top-tier viewership, while niche topics like finance and automotive news fail to engage the audience. Successful videos rely on high-intensity hooks that lead immediately with a recognizable celebrity name and a shocking numerical stat. To accelerate toward monetization, the channel must prioritize high-frequency trending cricket news and major Bollywood updates while maintaining an aggressive, fast-paced delivery style.",
+  "summary": "Cricket and Bollywood controversies remain the top performers, especially when they focus on specific individual records or heated celebrity reactions. Videos that fail often lack a clear, high-energy hook or focus on dry financial or automotive topics that don't connect with the casual viewer. To scale toward monetization, we will pivot to 'reaction-style' cricket news and emotional storytelling around Bollywood star dynamics while ditching slow, informational news segments.",
   "do_more": [
-    "Prioritize trending cricket news involving Team India stars and IPL trade rumors",
-    "Focus on major Bollywood film announcements or controversial viral actor moments",
-    "Ensure every video front-loads a high-profile name and a specific, surprising numerical record",
-    "Maintain the 40-second pacing with punchy, fast cuts and zero fluff intros"
+    "Focus on 'conflict' or 'record-breaking' news pieces featuring one major Indian celebrity",
+    "Use high-contrast thumbnails or visual cues that feature a recognizable star",
+    "Ensure every script starts with a 3-second 'pattern interrupt' hook (e.g., 'Ye kaise hua?')",
+    "Include a 'call to action' at the end that encourages a sub based on future match or movie predictions",
+    "Stick to 40-45 seconds max to keep audience retention and loop-ability high"
   ],
   "avoid": [
-    "Reporting on niche sports like tennis, golf, or international football debutants",
-    "Creating content around financial markets, stock updates, gold rates, or car sales",
-    "Using vague or generic titles that hide the core celebrity or subject",
-    "Including conversational filler or greetings at the start of the video"
+    "Economic news, car specs, or stock market updates that feel too academic",
+    "Ambiguous titles that do not name the celebrity or the specific event",
+    "Long-winded introductions that don't get straight to the 'why' of the video",
+    "Niche international sports updates that lack a connection to an Indian fan-favorite player"
   ],
   "hook_tips": [
-    "Start with the biggest name: Rohit Sharma ne 39 ki umar mein ye bada record tod diya!",
-    "Lead with conflict: Hardik Pandya ka ye badlaav IPL auction mein hungama macha dega?",
-    "Use shocking stats: 500 Crore ka budget aur sirf 5 Crore ki opening? Ye movie flop kaise?",
-    "Drive urgency: Dhoni ka ye naya role CSK ke liye game changer hai!"
+    "Virat Kohli ka ye record todna namumkin kyun hai? Jaan ke hairaan ho jaoge!",
+    "Kya Shah Rukh Khan ki nayi film flop hone wali hai? Ye dekho asal sach!",
+    "Rohit Sharma ka ye gussa match palat sakta hai! Dekhiye kyun?",
+    "Sirf 10 second mein samjho kyun Dhoni ka ye decision sabse bada tha!"
   ],
   "title_tips": [
-    "Always start with the celebrity name: Rohit Sharma Record: 39 Ki Umar Mein Dhamaka!",
-    "Put the 'Why' or the 'Stat' in the title: Hardik Pandya Punjab Trade: Sach Ya Afwah?",
-    "Keep it under 60 characters for maximum CTR on the Shorts feed"
+    "Use ALL CAPS for the main event (e.g., ROHIT SHARMA RECORD BREAKER!)",
+    "Add emojis to stand out in the Shorts feed (🏏, 😱, 🎬, 📈)",
+    "Always include a question mark if predicting a result or reacting to a rumor",
+    "Keep titles under 50 characters to avoid being cut off on mobile devices"
   ],
   "hot_keywords": [
     "rohit sharma",
-    "hardik pandya",
-    "ipl 2027",
-    "ms dhoni",
-    "team india",
-    "yash ramayana",
-    "cricket news hindi",
-    "bollywood news",
     "virat kohli",
+    "ms dhoni",
+    "ipl 2027",
+    "team india",
+    "bollywood news",
+    "ramayana movie",
+    "shah rukh khan",
+    "cricket updates",
+    "trending news",
     "ipl auction"
   ],
   "topic_ideas": [
-    "Rohit Sharma fastest century statistics analysis in upcoming ODI series",
-    "Hardik Pandya IPL 2027 trade rumors breakdown and potential team impact",
-    "MS Dhoni's new strategic role in CSK explained with exact details",
-    "Yash Ramayana movie first day collection vs production budget comparison",
-    "Top 3 unmatchable records currently held by Virat Kohli in international cricket",
-    "Upcoming major Bollywood movie budget leaks and fan expectations",
-    "Team India ICC tournament records that are nearly impossible to break",
-    "IPL history's most expensive players and their actual performance ROI"
+    "Why Virat Kohli's current fitness regime is baffling sports experts",
+    "Top 5 most controversial IPL trade moves in history explained",
+    "The budget vs earnings reality check of the latest big Bollywood release",
+    "Why MS Dhoni's mentoring style is considered the secret to CSK's success",
+    "How Rohit Sharma changes his batting stance for different bowlers",
+    "Top 3 viral cricket moments from the last decade that still trend",
+    "The truth behind the latest Bollywood 'rivalry' rumors between top stars",
+    "Predicting the most expensive player in the next IPL 2027 auction"
   ],
   "search_phrases": [
     "cricket news hindi",
     "cricket news hindi today",
-    "cricket samachar",
     "cricket news ipl",
+    "cricket samachar",
     "bollywood news hindi",
     "latest bollywood news hindi",
     "trending news hindi",
-    "trending news hindi today",
-    "cricket news short video kaise banaye",
-    "bollywood news today hindi"
+    "cricket news short video",
+    "bollywood news today",
+    "cricket news hindi live"
   ],
-  "updated": "2026-11-18"
+  "updated": "2026-11-23"
 }

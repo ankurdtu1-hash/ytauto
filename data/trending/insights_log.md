@@ -30,3 +30,11 @@ Mainstream Indian cricket storylines featuring big stars and high-stakes IPL dev
 Best: नंबर 11 पर छक्का! Arshdeep Singh का नया रिकॉर्ड #S (1206); हार्दिक अब पंजाब में! IPL 2027 का सबसे बड़ा ट्रेड  (893); टीम इंडिया दो हिस्सों में! IND vs NZ चौथे वनडे से  (893)
 
 Weakest: Debutant ka Dhamaka! 7 Wickets Se Match Palta? #Sh (22); Creta-Nexon फेल! Oct 2026 में किस SUV ने मचाया धमा (15); 22 साल पुराना रिकॉर्ड टूटा! Sharapova के बाद कौन?  (4)
+
+## 2026-11-23: 14 subs, 7019 views, 23 public Shorts
+
+Cricket and Bollywood controversies remain the top performers, especially when they focus on specific individual records or heated celebrity reactions. Videos that fail often lack a clear, high-energy hook or focus on dry financial or automotive topics that don't connect with the casual viewer. To scale toward monetization, we will pivot to 'reaction-style' cricket news and emotional storytelling around Bollywood star dynamics while ditching slow, informational news segments.
+
+Best: नंबर 11 पर छक्का! Arshdeep Singh का नया रिकॉर्ड #S (1316); हार्दिक अब पंजाब में! IPL 2027 का सबसे बड़ा ट्रेड  (893); टीम इंडिया दो हिस्सों में! IND vs NZ चौथे वनडे से  (893)
+
+Weakest: Kohli ने रोका गुस्सा! NZ vs IND मैच में हुआ गजब ड् (30); Creta-Nexon फेल! Oct 2026 में किस SUV ने मचाया धमा (15); 22 साल पुराना रिकॉर्ड टूटा! Sharapova के बाद कौन?  (13)
