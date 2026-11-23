@@ -1,66 +1,57 @@
 {
-  "summary": "Successful Shorts on competitor channels leverage 'How it's made' engineering visuals and life-or-death scenario explanations. Our channel performed best with concrete gadget mechanics like battery and airplane windows, while abstract 'what if' space scenarios flopped entirely. Moving forward, we will pivot to high-stakes 'how it works' mechanical explanations and use high-emotion, punchy Hinglish hooks that highlight a specific mystery or dangerous misconception.",
+  "summary": "Everyday physical gadget mysteries and practical engineering questions like battery punctures, phone mic pins, and airplane window shapes drove our highest view counts. Abstract sci-fi concepts like moon disappearance, cosmic events, and mundane domestic chemistry flopped completely. Moving forward, we will focus exclusively on tangible device mechanics, hidden hardware features, and immediate physical consequences using engaging Hinglish hooks.",
   "do_more": [
-    "Visualize the internal mechanics of household objects (e.g., how an elevator or ATM works)",
-    "Use high-contrast visual transitions every 2-3 seconds to maintain audience retention",
-    "Incorporate a 'scary or mind-blowing' truth about everyday items early in the video",
-    "Focus on manufacturing processes or hidden automation that people use daily but don't understand"
+    "Focus on physical gadget actions and safety risks (e.g., puncturing batteries, inserting pins in mic holes)",
+    "Explain tangible mechanical engineering of everyday tech like elevators, phone hardware, and aircraft",
+    "Open with a high-stakes, visual curiosity question within the first 2 seconds",
+    "Structure scripts to seamlessly loop the final sentence back into the opening hook"
   ],
   "avoid": [
-    "Abstract space, cosmic, or hypothetical scenarios (e.g., 'What if the moon vanishes')",
-    "Slow-paced educational intros that define terms before getting to the mystery",
-    "Over-explaining science concepts; focus on the impact or the 'how' instead",
-    "Using vague or broad titles that don't name the specific object being discussed"
+    "Abstract cosmic scenarios, space facts, or hypothetical universe theories",
+    "Basic kitchen science like onion tearing or milk boiling that lacks a modern tech twist",
+    "Generic educational introductions before establishing the main mystery",
+    "Explaining software myths without showing immediate hardware or battery impact"
   ],
   "hook_tips": [
-    "ATM machine note count karte waqt wo aawaz kahan se aati hai? 😱",
-    "Petro pump ke neeche se tel gaadi tak kaise pahunchta hai? ⛽🤯",
-    "Recent apps clear karne se battery bachti hai ya khatam hoti hai? 📱",
-    "Chalti train ka driver behosh ho jaye toh train khud kaise rukti hai? 🚂",
-    "Bluetooth ka naam ek purane raja ke naam par kyon rakha gaya? 👑"
+    "Phone ke mic hole me sim ejector pin daal di toh andar kya tootega? 📱",
+    "35,000 feet upar plane me oxygen cylinder ke bina saans kaise aati hai? ✈️",
+    "Fast charger raat bhar laga chhod diya toh battery blast kyon nahi hoti? ⚡",
+    "ATM se cash nikalte waqt wo aawaz note ki hoti hai ya speaker ki? 🏧"
   ],
   "title_tips": [
-    "Start with the specific object + 1 power word like 'Sach' or 'Secret'",
-    "Add a high-stakes emotional trigger like 'Darr jaoge' or 'Shocking Truth'",
-    "Keep titles under 60 characters for maximum mobile visibility"
+    "Include impactful trigger words like 'Shocking Reality', 'Secret', or 'Myth vs Fact'"
   ],
   "hot_keywords": [
-    "mobile battery",
-    "engineering secrets",
-    "hidden tech facts",
-    "manufacturing process",
+    "phone battery",
+    "smartphone secrets",
+    "airplane science",
     "gadget hacks",
-    "smartphone safety",
-    "science facts",
     "how it works",
-    "machine mechanics",
-    "tech mystery"
+    "engineering secrets",
+    "mobile safety",
+    "tech facts"
   ],
   "topic_ideas": [
-    "ATM machine note count karte waqt aawaz kyon karti hai?",
-    "Petrol pump zameen ke neeche se tel kaise kheenchta hai?",
-    "Fast charger battery ko garam hone se kaise bachata hai?",
-    "Train bina steering ke patri par kaise mudti hai?",
-    "Wireless earbuds ka chhota case inhein kaise charge karta hai?",
-    "Airplane me flying mode on rakhna kyon zaruri hai?",
-    "Submarine paani ke neeche oxygen kaise banati hai?",
-    "EV battery me aag kyon lagti hai?",
-    "Keyboard ka layout 'QWERTY' hi kyon hai?",
-    "Lift (Elevator) ka emergency break kaise kaam karta hai?"
+    "Phone ke mic hole me sim pin daalne se waterproofing khatam hoti hai?",
+    "ATM machine note ginte waqt real sound banati hai ya duplicate speaker sound?",
+    "Airplane me flying mode off na karein toh pilot ko kya dikkat hoti hai?",
+    "Fast charger phone ko jaldi garam kyon karta hai aur ise kaise bachein?",
+    "Submarine paani ke 1000 feet neeche bina oxygen cylinder kaise rehti hai?",
+    "Car ke airbag accident ke waqt kitni speed se khulte hain?",
+    "EV battery me achanak aag lagne ka asli scientific reason kya hai?",
+    "Smartphone screen Guard lagane ke baad touch lag kyon hota hai?"
   ],
   "search_phrases": [
     "tech facts in hindi",
     "science facts in hindi",
     "mobile facts",
-    "science amazing facts hindi",
-    "science interesting facts in hindi",
-    "new science facts in hindi",
-    "mobile ke nuksan",
     "tech fact",
-    "science logical facts",
     "science facts shorts in hindi",
-    "tech facts",
-    "mobile fact"
+    "science amazing facts hindi",
+    "mobile dekhne ke nuksan",
+    "new science facts in hindi",
+    "science logical facts",
+    "tech facts shorts"
   ],
-  "updated": "2026-11-18"
+  "updated": "2026-11-23"
 }
