@@ -13,11 +13,23 @@ def _run(args, cwd=None):
 
 
 def duration(path):
-    out = subprocess.run(
-        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(path)],
-        capture_output=True, text=True, check=True,
-    )
-    return float(out.stdout.strip())
+    """Length in seconds. Some web videos (e.g. Wikimedia Commons WebM transcodes) store no length in the
+    container ("N/A"), so fall back to the stream length, then to the last packet's timestamp."""
+    for entries in ("format=duration", "stream=duration"):
+        out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", entries, "-of", "csv=p=0", str(path)],
+                             capture_output=True, text=True, check=True)
+        for value in out.stdout.split():
+            try:
+                if float(value) > 0:
+                    return float(value)
+            except ValueError:  # "N/A"
+                pass
+    out = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "packet=pts_time",
+                          "-of", "csv=p=0", str(path)], capture_output=True, text=True)
+    times = [float(t) for t in out.stdout.split() if t.replace(".", "", 1).isdigit()]
+    if times:
+        return max(times)
+    raise ValueError(f"cannot read the length of {path.name if hasattr(path, 'name') else path}")
 
 
 def _mean_luma(path, at):
@@ -33,7 +45,10 @@ def _mean_luma(path, at):
 
 def looks_ok(path, is_photo):
     """Reject near-black or blown-out white visuals (fade-ins, light flashes, dark intros)."""
-    points = [0] if is_photo else [0.3, min(2.0, max(duration(path) / 2, 0.3))]
+    try:
+        points = [0] if is_photo else [0.3, min(2.0, max(duration(path) / 2, 0.3))]
+    except (ValueError, subprocess.CalledProcessError):  # unreadable or broken file: skip this candidate
+        return False
     for at in points:
         luma = _mean_luma(path, at)
         if luma is None or not 35 <= luma <= 215:
