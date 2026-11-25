@@ -1,7 +1,7 @@
 """Turn a research brief into a Hindi script plus YouTube metadata."""
 import logging
 
-from . import config, llm
+from . import config, history, llm
 
 log = logging.getLogger("ytauto")
 
@@ -133,6 +133,16 @@ Metadata rules (optimise click-through rate):
   No text, letters, numbers, brand logos, flags or religious symbols anywhere, including on clothing."""
     effort = "low" if kind == "short" else "medium"
     script = llm.structured(prompt, SCHEMA, system=SYSTEM, effort=effort)
+    for _ in range(2):  # hard check: never the same topic twice
+        repeat = history.similar_title(script["title"])
+        if not repeat:
+            break
+        log.warning("Topic repeats a past video (%s); asking for a different topic", repeat)
+        script = llm.structured(prompt + f"\n\nIMPORTANT: \"{script['title']}\" repeats the past video \"{repeat}\". "
+                                "Choose a completely different topic.", SCHEMA, system=SYSTEM, effort=effort)
+    else:
+        if history.similar_title(script["title"]):
+            raise RuntimeError("Could not find a topic that is not a repeat; skipping today rather than duplicating")
     words = sum(len(s["narration"].split()) for s in script["scenes"])
     if kind == "short" and words < MIN_SHORT_WORDS:
         log.warning("Script has only %d words; asking for a longer one", words)

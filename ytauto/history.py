@@ -24,6 +24,26 @@ def recent_titles(n=60):
     return [f"{i['kind']}: {i['title']}" for i in load()[-n:]]
 
 
+STOP = set("me mein main ka ki ke ko se hai hain ye yeh kya kyu kyun kyon kaise kab aur ya par pe toh to "
+           "the a an of in is how why what shorts sach facts fact baad what if "
+           "का की के को से है हैं में ये यह क्या क्यों कैसे और या पर तो हो जाए होगा अगर जो".split())
+
+
+def _words(title):
+    import re
+    return {w for w in re.findall(r"[a-z0-9]+|[ऀ-ॿ]+", title.lower().replace("-", "")) if w not in STOP and len(w) > 1}
+
+
+def similar_title(title, n=120):
+    """The past title this one repeats (most key words shared), or None. The model sometimes ignores the list."""
+    new = _words(title)
+    for item in reversed(load()[-n:]):
+        old = _words(item["title"])
+        if new and old and len(new & old) / len(new | old) >= 0.45:
+            return item["title"]
+    return None
+
+
 def recent_formats(kind, n=5):
     return [i.get("format") for i in load() if i["kind"] == kind][-n:]
 
