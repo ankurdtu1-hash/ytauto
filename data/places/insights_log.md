@@ -24,3 +24,13 @@ Targets: Reach 250 subscribers and 50,000 views in 30 days, 2,500 subscribers an
 Best: 🗿 70 Ton Ka Khamba Hawa Mein Kyun Latakta Hai? 😱 # (176); Bhutan mein traffic signal kyun nahi hai? #Shorts (111); 🧱 21,196 km lambi wall space se kyun nahi dikhti?  (63)
 
 Weakest: 🏢 1 Hi Building Mein Basa Poora Shehar? 300 Log Ek (52); 🗿 2 Lakh Ton Patthar Kata! Top To Bottom Kaise Ban (42); 🏘️ 30 Feet Zameen Ke Neeche Basa Poora Shehar? 😱 # (42)
+
+## 2026-11-25: 0 subs, 307 views, 6 public Shorts
+
+Ancient Indian architectural mysteries like the Lepakshi hanging pillar outperformed general global geography trivia, generating the highest immediate view velocity on the channel. General country trivia like Bhutan traffic signals had slower view traction compared to mystery-driven structural marvels. Shifting focus heavily toward secret ancient Indian engineering feats and extreme geographic anomalies will capitalize on proven multi-million view competitor trends. To accelerate growth, every video must open with an immediate visual shock hook, specific numerical stats, and seamless narration that loops back to the start.
+
+Targets: Reach 100 subscribers and 2,500 views in 30 days, 500 subscribers and 15,000 views in 60 days, and 1,500 subscribers with 50,000 views in 90 days.
+
+Best: 🗿 70 Ton Ka Khamba Hawa Mein Kyun Latakta Hai? 😱 # (176); Bhutan mein traffic signal kyun nahi hai? #Shorts (111); 🧱 21,196 km lambi wall space se kyun nahi dikhti?  (63)
+
+Weakest: 🏢 1 Hi Building Mein Basa Poora Shehar? 300 Log Ek (52); 🗿 2 Lakh Ton Patthar Kata! Top To Bottom Kaise Ban (42); 🏘️ 30 Feet Zameen Ke Neeche Basa Poora Shehar? 😱 # (42)
