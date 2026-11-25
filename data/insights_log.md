@@ -38,3 +38,13 @@ Everyday physical gadget mysteries and practical engineering questions like batt
 Best: Phone Battery में छेद हुआ तो क्या होगा? Shocking R (101); हवाई जहाज़ की खिड़की गोल क्यों होती है? 3 Quick Fa (98); Phone Mic me Pin Daali Toh Kya Hoga? #Shorts (77)
 
 Weakest: दूध उबलकर बाहर क्यों गिरता है, पानी क्यों नहीं? अस (3); प्याज़ काटते ही आँसू क्यों आते हैं? असली Science # (3); माइक्रोवेव वाला खाना रेडियोएक्टिव? Myth vs Fact #S (2)
+
+## 2026-11-25: 1 subs, 999 views, 27 public Shorts
+
+Everyday physical technology and high-stakes safety engineering videos like car airbag triggers, battery puncture hazards, and airplane window science drove our highest view counts. Abstract sci-fi space concepts, historical anecdotes, and basic kitchen chemistry flopped due to lack of visual tension. Moving forward, we will focus strictly on tangible 3D hardware mechanics, hidden safety engineering, and everyday device mysteries using punchy Hinglish hooks. Narration will maintain high energy while scripts will be structured to seamlessly loop back to the opening hook.
+
+Targets: Reach 1,000 views per Short and 100 subscribers by Day 30, scale to 50,000 views per Short and 500 subscribers by Day 60, and achieve monetization thresholds of 1,000 subscribers and 10 million total Shorts views by Day 90.
+
+Best: 🚗 300 km/h ki speed! Car airbag accident mein kais (197); Phone Battery में छेद हुआ तो क्या होगा? Shocking R (102); हवाई जहाज़ की खिड़की गोल क्यों होती है? 3 Quick Fa (98)
+
+Weakest: दूध उबलकर बाहर क्यों गिरता है, पानी क्यों नहीं? अस (3); प्याज़ काटते ही आँसू क्यों आते हैं? असली Science # (3); माइक्रोवेव वाला खाना रेडियोएक्टिव? Myth vs Fact #S (2)

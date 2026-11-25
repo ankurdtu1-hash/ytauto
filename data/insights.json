@@ -1,57 +1,69 @@
 {
-  "summary": "Everyday physical gadget mysteries and practical engineering questions like battery punctures, phone mic pins, and airplane window shapes drove our highest view counts. Abstract sci-fi concepts like moon disappearance, cosmic events, and mundane domestic chemistry flopped completely. Moving forward, we will focus exclusively on tangible device mechanics, hidden hardware features, and immediate physical consequences using engaging Hinglish hooks.",
+  "summary": "Everyday physical technology and high-stakes safety engineering videos like car airbag triggers, battery puncture hazards, and airplane window science drove our highest view counts. Abstract sci-fi space concepts, historical anecdotes, and basic kitchen chemistry flopped due to lack of visual tension. Moving forward, we will focus strictly on tangible 3D hardware mechanics, hidden safety engineering, and everyday device mysteries using punchy Hinglish hooks. Narration will maintain high energy while scripts will be structured to seamlessly loop back to the opening hook.",
   "do_more": [
-    "Focus on physical gadget actions and safety risks (e.g., puncturing batteries, inserting pins in mic holes)",
-    "Explain tangible mechanical engineering of everyday tech like elevators, phone hardware, and aircraft",
-    "Open with a high-stakes, visual curiosity question within the first 2 seconds",
-    "Structure scripts to seamlessly loop the final sentence back into the opening hook"
+    "Double down on high-stakes physical tech mechanics like airbag triggers, battery safety, and airplane engineering",
+    "Structure script intros with immediate visual tension within the first 1.5 seconds",
+    "Ensure every video ending seamlessly connects back to the opening statement for automatic looping"
   ],
   "avoid": [
-    "Abstract cosmic scenarios, space facts, or hypothetical universe theories",
-    "Basic kitchen science like onion tearing or milk boiling that lacks a modern tech twist",
-    "Generic educational introductions before establishing the main mystery",
-    "Explaining software myths without showing immediate hardware or battery impact"
+    "Abstract cosmic theories, space facts, or sci-fi hypothetical scenarios like moon disappearance",
+    "Basic domestic science and kitchen tricks like onion tears or milk boiling",
+    "Slow explanatory intros that take more than 2 seconds to present the central mystery"
   ],
   "hook_tips": [
-    "Phone ke mic hole me sim ejector pin daal di toh andar kya tootega? 📱",
+    "Car crash ke 0.03 seconds me airbag balloon ki tarah kaise phoolta hai? 🚗",
     "35,000 feet upar plane me oxygen cylinder ke bina saans kaise aati hai? ✈️",
-    "Fast charger raat bhar laga chhod diya toh battery blast kyon nahi hoti? ⚡",
-    "ATM se cash nikalte waqt wo aawaz note ki hoti hai ya speaker ki? 🏧"
+    "Phone ko raat bhar fast charger par chhod diya toh battery blast kyun nahi hoti? ⚡",
+    "Submarine samundar me 1000 feet neeche bina headlight ke rasta kaise dhoondti hai? 🌊"
   ],
   "title_tips": [
-    "Include impactful trigger words like 'Shocking Reality', 'Secret', or 'Myth vs Fact'"
+    "Keep titles concise and framed around immediate physical consequences ('Kya Hoga?', 'Kaise Karta Hai?')",
+    "Place emojis strategically near the start or middle to visually emphasize key components"
   ],
   "hot_keywords": [
-    "phone battery",
-    "smartphone secrets",
-    "airplane science",
-    "gadget hacks",
-    "how it works",
-    "engineering secrets",
-    "mobile safety",
-    "tech facts"
+    "airbag science",
+    "airplane oxygen",
+    "battery explosion",
+    "submarine technology",
+    "car engine 3d",
+    "phone hardware",
+    "tech facts",
+    "gadget safety",
+    "ev battery fire",
+    "petrol pump working"
   ],
   "topic_ideas": [
-    "Phone ke mic hole me sim pin daalne se waterproofing khatam hoti hai?",
-    "ATM machine note ginte waqt real sound banati hai ya duplicate speaker sound?",
-    "Airplane me flying mode off na karein toh pilot ko kya dikkat hoti hai?",
-    "Fast charger phone ko jaldi garam kyon karta hai aur ise kaise bachein?",
-    "Submarine paani ke 1000 feet neeche bina oxygen cylinder kaise rehti hai?",
-    "Car ke airbag accident ke waqt kitni speed se khulte hain?",
-    "EV battery me achanak aag lagne ka asli scientific reason kya hai?",
-    "Smartphone screen Guard lagane ke baad touch lag kyon hota hai?"
+    "Petrol pump ke underground tank se fuel car tak kaise aata hai? (trigger: curiosity gap; feeling: awe)",
+    "Airplane me 35,000 feet upar bina cylinder ke oxygen kaise banti hai? (trigger: shock; feeling: fear)",
+    "Submarine bina khidki aur headlight ke samundar ke andar rasta kaise dhoondti hai? (trigger: curiosity gap; feeling: awe)",
+    "Phone ko 100% raat bhar charge rakhne par battery blast kyon nahi hoti? (trigger: forbidden knowledge; feeling: shock)",
+    "Bullet train 300 km/h ki speed par bina patri se utre kaise mudti hai? (trigger: curiosity gap; feeling: awe)",
+    "Car break fail hone par electronic parking brake gaadi ko kaise rokti hai? (trigger: shock; feeling: fear)",
+    "EV car ki battery me paani jaane par aag kyon lagti hai? (trigger: forbidden knowledge; feeling: shock)",
+    "ATM machine note ginte waqt real sound banati hai ya speaker fake sound deta hai? (trigger: curiosity gap; feeling: shock)"
   ],
   "search_phrases": [
     "tech facts in hindi",
-    "science facts in hindi",
     "mobile facts",
-    "tech fact",
+    "science facts in hindi",
     "science facts shorts in hindi",
-    "science amazing facts hindi",
-    "mobile dekhne ke nuksan",
     "new science facts in hindi",
+    "mobile ke nuksan",
+    "tech facts shorts",
     "science logical facts",
-    "tech facts shorts"
+    "science amazing facts hindi"
   ],
-  "updated": "2026-11-23"
+  "gaps": [
+    "EV battery fire thermal runaway mechanisms explained simply",
+    "How aircraft black boxes survive catastrophic ocean crashes",
+    "Undersea fiber optic cable repair techniques in deep waters",
+    "How modern phone liquid cooling vapor chambers actually work"
+  ],
+  "best_formats": [
+    "3D Mechanical Explainer: Breaks down internal machinery like car engines, petrol pumps, or airbags step-by-step",
+    "Myth vs Reality Hardware Buster: Rapidly debunks common smartphone and battery misconceptions with practical physics",
+    "High-Stakes Survival Tech: Explains life-saving engineering in extreme environments like airplanes and submarines"
+  ],
+  "milestones": "Reach 1,000 views per Short and 100 subscribers by Day 30, scale to 50,000 views per Short and 500 subscribers by Day 60, and achieve monetization thresholds of 1,000 subscribers and 10 million total Shorts views by Day 90.",
+  "updated": "2026-11-25"
 }
