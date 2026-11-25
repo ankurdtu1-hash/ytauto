@@ -152,6 +152,7 @@ def make_video(kind, do_upload=True, script_only=False):
 
     footage.save_used(used_ids)
     history.add({"kind": kind, "format": video_format, "title": script["title"], "video_id": video_id,
+                 "script": " ".join(s["narration"] for s in script["scenes"])[:1500],
                  "folder": workdir.name, **({"publish_at": publish_at} if video_id and publish_at else {})})
     return workdir
 

@@ -8,6 +8,7 @@ log = logging.getLogger("ytauto")
 SCHEMA = {
     "type": "object",
     "properties": {
+        "title_options": {"type": "array", "items": {"type": "string"}},
         "title": {"type": "string"},
         "description": {"type": "string"},
         "tags": {"type": "array", "items": {"type": "string"}},
@@ -29,7 +30,7 @@ SCHEMA = {
             },
         },
     },
-    "required": ["title", "description", "tags", "hashtags", "thumbnail_text", "cover_prompt", "cover_tagline", "scenes"],
+    "required": ["title_options", "title", "description", "tags", "hashtags", "thumbnail_text", "cover_prompt", "cover_tagline", "scenes"],
     "additionalProperties": False,
 }
 
@@ -98,7 +99,10 @@ Script rules:
 {VISUALS}
 
 Metadata rules (optimise click-through rate):
-- title: Hinglish in Roman (English) letters, never Devanagari; 45-75 characters. Formula used by the biggest
+- title_options: first brainstorm 5 different titles, each built on a different trigger: curiosity gap,
+  shock number, "forbidden"/little-known knowledge, comparison/status, fear of missing out. All follow the
+  title rules below and stay honest.
+- title: the strongest of title_options (the one a scrolling Indian viewer would tap first). Hinglish in Roman (English) letters, never Devanagari; 45-75 characters. Formula used by the biggest
   Hindi fact channels: ONE fitting emoji first, then a specific big number from the facts (tonnes, km/h, crore,
   years, records) when there is one, then a "kaise/kyu/kya" question or a bold claim, ending with "😱" or "?",
   e.g. "🚄 350 km/h ki train! 2.5 ghante ka safar 68 minute mein 😱", "🐦 Kauwa aapki shakal 5 saal yaad rakhta hai? 😱".

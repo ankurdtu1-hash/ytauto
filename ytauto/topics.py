@@ -103,10 +103,12 @@ def insights_block():
              "but the rules above always win:"]
     sections = [("do_more", "Do more"), ("avoid", "Avoid"), ("hook_tips", "Hooks"), ("title_tips", "Titles"),
                 ("search_phrases", "What people search on YouTube (use the matching ones naturally in title, "
-                                   "description and tags)")]
+                                   "description and tags)"),
+                ("best_formats", "Formats winning in this niche now (shape the script like one when it fits)")]
     if config.TOPIC_MODE != "trending":
         sections.append(("topic_ideas", "Topic ideas from this week's research (pick one if it is not covered yet "
                                         "and you are sure of the facts)"))
+        sections.append(("gaps", "Gaps viewers ask for that competitors never cover (great topics)"))
     for key, label in sections:
         if ins.get(key):
             parts += [f"{label}:"] + [f"  - {x}" for x in ins[key]]
