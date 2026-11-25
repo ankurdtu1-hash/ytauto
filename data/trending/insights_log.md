@@ -38,3 +38,13 @@ Cricket and Bollywood controversies remain the top performers, especially when t
 Best: नंबर 11 पर छक्का! Arshdeep Singh का नया रिकॉर्ड #S (1316); हार्दिक अब पंजाब में! IPL 2027 का सबसे बड़ा ट्रेड  (893); टीम इंडिया दो हिस्सों में! IND vs NZ चौथे वनडे से  (893)
 
 Weakest: Kohli ने रोका गुस्सा! NZ vs IND मैच में हुआ गजब ड् (30); Creta-Nexon फेल! Oct 2026 में किस SUV ने मचाया धमा (15); 22 साल पुराना रिकॉर्ड टूटा! Sharapova के बाद कौन?  (13)
+
+## 2026-11-25: 14 subs, 7084 views, 24 public Shorts
+
+Cricket records, mega-budget Bollywood movie updates, and star trades generate the highest viewer interest and engagement on the channel. Technical automobile news, stock market updates, and general news updates lack emotional pull and underperform consistently. Shifting focus entirely to high-stakes Indian sports stats and viral movie lore in Hinglish titles with strong visual hooks will drive retention. Maintaining a strict focus on fast-paced, 45-second stories with flawless seamless loops will help hit monetization goals.
+
+Targets: Reach 250 subscribers and 150,000 views within 30 days, scale to 600 subscribers and 2 million views within 60 days, and achieve 1,000 subscribers with 10 million total Shorts views within 90 days to meet monetization criteria.
+
+Best: नंबर 11 पर छक्का! Arshdeep Singh का नया रिकॉर्ड #S (1316); हार्दिक अब पंजाब में! IPL 2027 का सबसे बड़ा ट्रेड  (893); टीम इंडिया दो हिस्सों में! IND vs NZ चौथे वनडे से  (893)
+
+Weakest: 22 साल पुराना रिकॉर्ड टूटा! Sharapova के बाद कौन?  (16); Creta-Nexon फेल! Oct 2026 में किस SUV ने मचाया धमा (15); 🏏 GAMBHIR UNDER FIRE! BCCI Ki 3 Badi Khabrein 😱 #S (4)
