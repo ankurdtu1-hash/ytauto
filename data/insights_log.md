@@ -48,3 +48,13 @@ Targets: Reach 1,000 views per Short and 100 subscribers by Day 30, scale to 50,
 Best: 🚗 300 km/h ki speed! Car airbag accident mein kais (197); Phone Battery में छेद हुआ तो क्या होगा? Shocking R (102); हवाई जहाज़ की खिड़की गोल क्यों होती है? 3 Quick Fa (98)
 
 Weakest: दूध उबलकर बाहर क्यों गिरता है, पानी क्यों नहीं? अस (3); प्याज़ काटते ही आँसू क्यों आते हैं? असली Science # (3); माइक्रोवेव वाला खाना रेडियोएक्टिव? Myth vs Fact #S (2)
+
+## 2026-11-25: 1 subs, 897 views, 27 public Shorts
+
+Our high-performing videos succeed by highlighting immediate, life-critical hardware engineering in gadgets and infrastructure, such as car airbags and battery safety. Conversely, abstract science concepts and distant space topics have flopped due to a lack of tangible, high-stakes urgency. To reach our growth targets, we will shift all content toward 'dangerous reality' and 'hidden physical mechanics' of everyday objects, using high-tension Hinglish hooks that emphasize immediate viewer relevance.
+
+Targets: Reach 100 subscribers and 1,000 views per Short by Day 30, scale to 500 subscribers and 5,000 views per Short by Day 60, and aim for 1,500 subscribers and 15,000 views per Short by Day 90.
+
+Best: 🚗 300 km/h ki speed! Car airbag accident mein kais (197); Phone Battery में छेद हुआ तो क्या होगा? Shocking R (102); हवाई जहाज़ की खिड़की गोल क्यों होती है? 3 Quick Fa (98)
+
+Weakest: दूध उबलकर बाहर क्यों गिरता है, पानी क्यों नहीं? अस (3); प्याज़ काटते ही आँसू क्यों आते हैं? असली Science # (3); माइक्रोवेव वाला खाना रेडियोएक्टिव? Myth vs Fact #S (2)

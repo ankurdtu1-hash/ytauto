@@ -1,69 +1,72 @@
 {
-  "summary": "Everyday physical technology and high-stakes safety engineering videos like car airbag triggers, battery puncture hazards, and airplane window science drove our highest view counts. Abstract sci-fi space concepts, historical anecdotes, and basic kitchen chemistry flopped due to lack of visual tension. Moving forward, we will focus strictly on tangible 3D hardware mechanics, hidden safety engineering, and everyday device mysteries using punchy Hinglish hooks. Narration will maintain high energy while scripts will be structured to seamlessly loop back to the opening hook.",
+  "summary": "Our high-performing videos succeed by highlighting immediate, life-critical hardware engineering in gadgets and infrastructure, such as car airbags and battery safety. Conversely, abstract science concepts and distant space topics have flopped due to a lack of tangible, high-stakes urgency. To reach our growth targets, we will shift all content toward 'dangerous reality' and 'hidden physical mechanics' of everyday objects, using high-tension Hinglish hooks that emphasize immediate viewer relevance.",
   "do_more": [
-    "Double down on high-stakes physical tech mechanics like airbag triggers, battery safety, and airplane engineering",
-    "Structure script intros with immediate visual tension within the first 1.5 seconds",
-    "Ensure every video ending seamlessly connects back to the opening statement for automatic looping"
+    "Focus on high-stakes mechanics: how safety systems in cars, planes, and phones actually function under pressure",
+    "Use a fast-paced 'Hook-Fact-Loop' structure: start with a startling physical consequence in under 1.5 seconds",
+    "Include real-world scenarios where technology keeps users safe from invisible dangers",
+    "Prioritize visual, mechanical explanations over abstract theory"
   ],
   "avoid": [
-    "Abstract cosmic theories, space facts, or sci-fi hypothetical scenarios like moon disappearance",
-    "Basic domestic science and kitchen tricks like onion tears or milk boiling",
-    "Slow explanatory intros that take more than 2 seconds to present the central mystery"
+    "Abstract science topics like space, solar systems, or cosmic phenomena",
+    "Domestic science trivia like boiling milk or kitchen chemistry",
+    "Soft, historical, or purely educational explanations that lack a 'danger' or 'shock' element",
+    "Slow-building intros that take longer than 2 seconds to state the mystery"
   ],
   "hook_tips": [
-    "Car crash ke 0.03 seconds me airbag balloon ki tarah kaise phoolta hai? 🚗",
-    "35,000 feet upar plane me oxygen cylinder ke bina saans kaise aati hai? ✈️",
-    "Phone ko raat bhar fast charger par chhod diya toh battery blast kyun nahi hoti? ⚡",
-    "Submarine samundar me 1000 feet neeche bina headlight ke rasta kaise dhoondti hai? 🌊"
+    "Phone ko charger pe chhod kar sone se battery blast kyun nahi hoti? ⚡",
+    "Submarine 1000 feet neeche bina window ke rasta kaise dhoondti hai? 🌊",
+    "Car ka airbag 0.03 seconds mein kaise phoolta hai? 🚗",
+    "Plane ki window gol kyun hoti hai? Shocking engineering logic ✈️"
   ],
   "title_tips": [
-    "Keep titles concise and framed around immediate physical consequences ('Kya Hoga?', 'Kaise Karta Hai?')",
-    "Place emojis strategically near the start or middle to visually emphasize key components"
+    "Use strong curiosity triggers like 'Shocking Reality', 'Kaise Hota Hai?', or 'Kya Hoga?'",
+    "Use emojis strategically at the start to indicate the category (Tech, Safety, Gadget)"
   ],
   "hot_keywords": [
-    "airbag science",
-    "airplane oxygen",
-    "battery explosion",
-    "submarine technology",
-    "car engine 3d",
-    "phone hardware",
-    "tech facts",
     "gadget safety",
-    "ev battery fire",
-    "petrol pump working"
+    "battery engineering",
+    "mechanical facts",
+    "car safety systems",
+    "airplane technology",
+    "tech myth vs fact",
+    "smartphone hardware",
+    "how things work",
+    "hidden tech",
+    "engineering secrets"
   ],
   "topic_ideas": [
     "Petrol pump ke underground tank se fuel car tak kaise aata hai? (trigger: curiosity gap; feeling: awe)",
-    "Airplane me 35,000 feet upar bina cylinder ke oxygen kaise banti hai? (trigger: shock; feeling: fear)",
-    "Submarine bina khidki aur headlight ke samundar ke andar rasta kaise dhoondti hai? (trigger: curiosity gap; feeling: awe)",
-    "Phone ko 100% raat bhar charge rakhne par battery blast kyon nahi hoti? (trigger: forbidden knowledge; feeling: shock)",
-    "Bullet train 300 km/h ki speed par bina patri se utre kaise mudti hai? (trigger: curiosity gap; feeling: awe)",
+    "EV battery mein paani jaane par aag kyun lagti hai? (trigger: forbidden knowledge; feeling: shock)",
+    "Airplane mein 35,000 feet upar oxygen bina cylinder ke kaise banti hai? (trigger: shock; feeling: fear)",
+    "Phone liquid cooling vapor chamber andar se kaise dikhta hai? (trigger: curiosity gap; feeling: awe)",
+    "ATM machine note ginte waqt real sound banati hai ya speaker fake sound deta hai? (trigger: curiosity gap; feeling: shock)",
+    "Bullet train 300 km/h par bina patri se utre kaise mudti hai? (trigger: curiosity gap; feeling: awe)",
     "Car break fail hone par electronic parking brake gaadi ko kaise rokti hai? (trigger: shock; feeling: fear)",
-    "EV car ki battery me paani jaane par aag kyon lagti hai? (trigger: forbidden knowledge; feeling: shock)",
-    "ATM machine note ginte waqt real sound banati hai ya speaker fake sound deta hai? (trigger: curiosity gap; feeling: shock)"
+    "Deep sea internet cable agar kat jaye toh kya hoga? (trigger: forbidden knowledge; feeling: shock)"
   ],
   "search_phrases": [
     "tech facts in hindi",
-    "mobile facts",
     "science facts in hindi",
-    "science facts shorts in hindi",
+    "science amazing facts hindi",
+    "mobile facts",
+    "science logical facts",
+    "tech facts shorts",
     "new science facts in hindi",
     "mobile ke nuksan",
-    "tech facts shorts",
-    "science logical facts",
-    "science amazing facts hindi"
+    "science interesting facts in hindi",
+    "science facts shorts in hindi"
   ],
   "gaps": [
-    "EV battery fire thermal runaway mechanisms explained simply",
-    "How aircraft black boxes survive catastrophic ocean crashes",
-    "Undersea fiber optic cable repair techniques in deep waters",
-    "How modern phone liquid cooling vapor chambers actually work"
+    "Real-world thermal runaway explanation for EV batteries in Indian weather conditions",
+    "How structural engineering prevents airplane cabin windows from shattering under high pressure",
+    "The physical mechanism of vapor chamber cooling in modern flagship smartphones",
+    "How undersea infrastructure is actually repaired without stopping global internet flow"
   ],
   "best_formats": [
-    "3D Mechanical Explainer: Breaks down internal machinery like car engines, petrol pumps, or airbags step-by-step",
-    "Myth vs Reality Hardware Buster: Rapidly debunks common smartphone and battery misconceptions with practical physics",
-    "High-Stakes Survival Tech: Explains life-saving engineering in extreme environments like airplanes and submarines"
+    "3D Mechanical Explainer: Uses simulated visuals to show exactly how a machine or device part functions under stress.",
+    "Myth vs Reality Hardware Buster: Breaks common tech rumors about charging, water resistance, and battery health with physical proof.",
+    "High-Stakes Survival Tech: Focuses on engineering features meant to save lives in planes, cars, or submersibles."
   ],
-  "milestones": "Reach 1,000 views per Short and 100 subscribers by Day 30, scale to 50,000 views per Short and 500 subscribers by Day 60, and achieve monetization thresholds of 1,000 subscribers and 10 million total Shorts views by Day 90.",
+  "milestones": "Reach 100 subscribers and 1,000 views per Short by Day 30, scale to 500 subscribers and 5,000 views per Short by Day 60, and aim for 1,500 subscribers and 15,000 views per Short by Day 90.",
   "updated": "2026-11-25"
 }
