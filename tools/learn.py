@@ -45,7 +45,7 @@ SCHEMA = {
 
 
 BANNED = (r"sledg|fight|clash|scandal|controvers|gossip|feud|affair|divorce|arrest|murder|crime|scam|"
-          r"religio|temple mystery|ram setu|\bgods?\b|politic|election|alcohol|liquor|whisky|rum|old monk|beer|"
+          r"religio|temple mystery|ram setu|\bgods?\b|politic|election|alcohol|liquor|whisky|brumb|old monk|beer|"
           r"tobacco|cigarette|gutkha|betting|gambl|casino|tax.saving|tax loop|invest(ment)? tip|stock tip|crypto")
 
 
