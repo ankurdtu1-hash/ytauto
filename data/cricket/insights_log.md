@@ -14,3 +14,13 @@ High-stakes historical mysteries featuring iconic superstars like Sachin Tendulk
 Best: 🏏 1992 Mein Sachin Ke Sath Ye Kya Hua? 😱 #Shorts (1331); Sachin Tendulkar Myth Vs Fact Record! 🏏 #Shorts (337); 🏏 12 Ball Mein 50! Yuvi Ke 6 Sixes Ke 3 Sach 😱 #Sh (249)
 
 Weakest: Sachin Tendulkar Myth Vs Fact Record! 🏏 #Shorts (337); 🏏 12 Ball Mein 50! Yuvi Ke 6 Sixes Ke 3 Sach 😱 #Sh (249); 🏏 5 Penalty Runs Rule: Helmet Se 5 Extra Run Kyu M (2)
+
+## 2026-11-25: 3 subs, 1956 views, 5 public Shorts
+
+Superstar-driven historical mysteries like Sachin Tendulkar's 1992 third-umpire run-out generated over 1,300 views by pairing iconic names with high-stakes emotional narrative hooks. Conversely, technical rule breakdowns lacking a prominent player focus flopped with single-digit views because audience retention relies heavily on human drama. Competitor trends confirm massive fan appetite for emotional origin stories and legendary moments of icons like Virat Kohli, Abhishek Sharma, and Glenn Maxwell. Moving forward, every Short must open immediately with a beloved cricket star's emotional turning point while seamlessly looping the narrative back to the start.
+
+Targets: Reach 50 subscribers and 25,000 cumulative Shorts views in 30 days, 350 subscribers and 250,000 views in 60 days, and 1,000 subscribers with 1,500,000 Shorts views by day 90.
+
+Best: 🏏 1992 Mein Sachin Ke Sath Ye Kya Hua? 😱 #Shorts (1333); Sachin Tendulkar Myth Vs Fact Record! 🏏 #Shorts (337); 🏏 12 Ball Mein 50! Yuvi Ke 6 Sixes Ke 3 Sach 😱 #Sh (251)
+
+Weakest: 🏏 12 Ball Mein 50! Yuvi Ke 6 Sixes Ke 3 Sach 😱 #Sh (251); 👁️ 1 Aankh Se 2799 Runs! Tiger Pataudi Ka Ye Sach  (31); 🏏 5 Penalty Runs Rule: Helmet Se 5 Extra Run Kyu M (8)
