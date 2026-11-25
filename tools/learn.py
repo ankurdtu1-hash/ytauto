@@ -44,6 +44,11 @@ SCHEMA = {
 }
 
 
+BANNED = (r"sledg|fight|clash|scandal|controvers|gossip|feud|affair|divorce|arrest|murder|crime|scam|"
+          r"religio|temple mystery|ram setu|god|politic|election|alcohol|liquor|whisky|rum|old monk|beer|"
+          r"tobacco|cigarette|gutkha|betting|gambl|casino|tax.saving|tax loop|invest(ment)? tip|stock tip|crypto")
+
+
 def video_stats(token):
     creds = Credentials.from_authorized_user_file(token)
     if not creds.valid:
@@ -244,6 +249,9 @@ claims, no politics/religion/crime/gossip, no copyrighted material, no look-alik
     fixed = re.compile(r"devanagari|roman|hinglish|script of", re.I)  # owner's choice, not up for review
     for k in ("do_more", "avoid", "hook_tips", "title_tips"):
         ins[k] = [x for x in ins[k] if not fixed.search(x)]
+    banned = re.compile(BANNED, re.I)  # channel rules, enforced in code, not left to the model
+    for k in ("topic_ideas", "gaps", "hot_keywords", "do_more"):
+        ins[k] = [x for x in ins[k] if not banned.search(x)]
     ins["hot_keywords"] = [k.lower() for k in ins.get("hot_keywords", []) if re.fullmatch(r"[a-z0-9 .'-]{2,30}", k.lower())]
     ins["updated"] = date.today().isoformat()
     OUT.parent.mkdir(parents=True, exist_ok=True)
