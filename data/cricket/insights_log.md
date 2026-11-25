@@ -24,3 +24,13 @@ Targets: Reach 50 subscribers and 25,000 cumulative Shorts views in 30 days, 350
 Best: 🏏 1992 Mein Sachin Ke Sath Ye Kya Hua? 😱 #Shorts (1333); Sachin Tendulkar Myth Vs Fact Record! 🏏 #Shorts (337); 🏏 12 Ball Mein 50! Yuvi Ke 6 Sixes Ke 3 Sach 😱 #Sh (251)
 
 Weakest: 🏏 12 Ball Mein 50! Yuvi Ke 6 Sixes Ke 3 Sach 😱 #Sh (251); 👁️ 1 Aankh Se 2799 Runs! Tiger Pataudi Ka Ye Sach  (31); 🏏 5 Penalty Runs Rule: Helmet Se 5 Extra Run Kyu M (8)
+
+## 2026-11-25: 3 subs, 1956 views, 5 public Shorts
+
+Iconic superstar mystery stories like Sachin Tendulkar's 1992 third-umpire run-out led channel performance, while dry technical rule explainers without famous player hooks flopped completely. Competitor trends demonstrate massive audience appetite around Virat Kohli's childhood origins, Abhishek Sharma's hero journey, and Tiger Pataudi's heroic physical grit. Moving forward, every Short must center on a legendary player or rising prodigy, framing historical records around emotional adversity, hidden rivalries, or unbelievable physical sacrifices.
+
+Targets: Reach 25 subscribers and 5,000 cumulative Shorts views in 30 days, 100 subscribers and 20,000 views in 60 days, and 300 subscribers with 60,000 views by day 90.
+
+Best: 🏏 1992 Mein Sachin Ke Sath Ye Kya Hua? 😱 #Shorts (1333); Sachin Tendulkar Myth Vs Fact Record! 🏏 #Shorts (337); 🏏 12 Ball Mein 50! Yuvi Ke 6 Sixes Ke 3 Sach 😱 #Sh (251)
+
+Weakest: 🏏 12 Ball Mein 50! Yuvi Ke 6 Sixes Ke 3 Sach 😱 #Sh (251); 👁️ 1 Aankh Se 2799 Runs! Tiger Pataudi Ka Ye Sach  (31); 🏏 5 Penalty Runs Rule: Helmet Se 5 Extra Run Kyu M (8)

@@ -1,49 +1,51 @@
 {
-  "summary": "Superstar-driven historical mysteries like Sachin Tendulkar's 1992 third-umpire run-out generated over 1,300 views by pairing iconic names with high-stakes emotional narrative hooks. Conversely, technical rule breakdowns lacking a prominent player focus flopped with single-digit views because audience retention relies heavily on human drama. Competitor trends confirm massive fan appetite for emotional origin stories and legendary moments of icons like Virat Kohli, Abhishek Sharma, and Glenn Maxwell. Moving forward, every Short must open immediately with a beloved cricket star's emotional turning point while seamlessly looping the narrative back to the start.",
+  "summary": "Iconic superstar mystery stories like Sachin Tendulkar's 1992 third-umpire run-out led channel performance, while dry technical rule explainers without famous player hooks flopped completely. Competitor trends demonstrate massive audience appetite around Virat Kohli's childhood origins, Abhishek Sharma's hero journey, and Tiger Pataudi's heroic physical grit. Moving forward, every Short must center on a legendary player or rising prodigy, framing historical records around emotional adversity, hidden rivalries, or unbelievable physical sacrifices.",
   "do_more": [
-    "Lead every Short with legendary superstars like Virat Kohli, Sachin Tendulkar, MS Dhoni, and emerging stars like Abhishek Sharma in the first 1.5 seconds.",
-    "Frame historical records as high-stakes mystery stories or emotional origin journeys rather than plain statistics.",
-    "Include exact dates, specific years, and dramatic numbers in titles and narration hooks to build instant curiosity.",
-    "End every script on a line that seamlessly flows back into the opening phrase for a perfect audio loop."
+    "Lead scripts immediately with top cricket superstars like Virat Kohli, Sachin Tendulkar, MS Dhoni, and Abhishek Sharma within the first 1.5 seconds.",
+    "Frame historic milestones around emotional adversity, hidden rivalries, or legendary physical sacrifices.",
+    "Maintain a seamless audio loop where the final sentence connects naturally back into the introductory phrase."
   ],
   "avoid": [
-    "Avoid clinical rule explanations that lack a famous cricketer or high-stakes match context.",
-    "Avoid generic statistical lists that fail to pinpoint a specific iconic moment or star player.",
-    "Avoid slow context setups in narration; jump directly into the core drama from the very first frame.",
-    "Avoid clickbait hooks that do not provide a clear, satisfying answer by the end of the Short."
+    "Avoid clinical rule breakdowns like helmet penalty runs that lack a famous player hook or iconic match context.",
+    "Avoid generic statistical lists without an emotional narrative core or specific moment of tension.",
+    "Avoid spending the first 3 seconds on background context instead of launching straight into the central dramatic mystery.",
+    "Avoid titles that do not pair a famous player's name with a clear curiosity trigger."
   ],
   "hook_tips": [
     "5 November 1998 ko 9 saal ke Virat Kohli ne coach ko aisa kya dikhaya jo duniya dang reh gayi?",
     "1992 mein Sachin Tendulkar ke 3rd umpire run out ke peeche ka wo sach jo bohot kam log jaante hain!",
-    "Flintoff ke bas ek lafz ne Yuvraj Singh ko 6 ball par 6 sixes maarne par majboor kar diya!",
-    "Glenn Maxwell ne ek taang par khade ho kar 201 runs ki miraculous inning kaise kheli?"
+    "Andrew Flintoff ke ek lafz ne Yuvraj Singh ko 6 ball par 6 sixes maarne par kaise majboor kiya?",
+    "1 aankh se 2799 runs! Tiger Pataudi ne eye injury ke baad bhi gora saheb logon ko kaise haraya?"
   ],
   "title_tips": [
-    "Combine exact dates with superstar names: 5 November 1998 Ka Virat Kohli Secret 😱 #Shorts",
-    "Highlight dramatic match rivalries: Yuvi Ke 6 Sixes Ke 3 Sach 🏏 #Shorts",
-    "Frame origin stories around emotional transformation: Abhishek Sharma: Punjab Se India Hero Tak 🇮🇳 #Shorts"
+    "Combine exact childhood dates with legend names: 5 November 1998 Ka Virat Kohli Secret 😱 #Shorts",
+    "Highlight famous player rivalries and triggers: Yuvi Ke 6 Sixes Ke 3 Sach 🏏 #Shorts",
+    "Frame rising star journeys: Abhishek Sharma: Punjab Se India Hero Tak 🇮🇳 #Shorts",
+    "Use physical handicap or heroic feats: 1 Aankh Se 2799 Runs! Tiger Pataudi Story 🏏 #Shorts"
   ],
   "hot_keywords": [
     "virat kohli",
-    "sachin tendulkar",
     "abhishek sharma",
+    "sachin tendulkar",
     "yuvraj singh",
+    "tiger pataudi",
     "ms dhoni",
     "glenn maxwell",
-    "unmukt chand",
     "vaibhav sooryavanshi",
+    "unmukt chand",
     "cricket history",
     "unbreakable records"
   ],
   "topic_ideas": [
-    "How 9-year-old Virat Kohli stunned coach Rajkumar Sharma on 5 November 1998 (trigger: emotional origin; feeling: awe)",
-    "The heated Andrew Flintoff exchange that provoked Yuvraj Singh's 6 sixes in 2007 (trigger: hidden conflict; feeling: pride)",
-    "Glenn Maxwell's heroic 201* played on one leg during the 2023 World Cup (trigger: superhuman willpower; feeling: awe)",
-    "Abhishek Sharma's emotional journey from Punjab youth cricket to international stardom (trigger: underdog success; feeling: inspiration)",
-    "How Tiger Pataudi scored 2799 international runs with vision in only one eye (trigger: impossible feat; feeling: shock)",
-    "The tragic rise and fall of 2012 U19 World Cup winning captain Unmukt Chand (trigger: unfulfilled potential; feeling: sympathy)",
-    "How MS Dhoni executed the smartest stumping in cricket history in 0.08 seconds (trigger: genius play; feeling: awe)",
-    "Why Vaibhav Sooryavanshi became the youngest sensation in Indian domestic cricket history (trigger: teenage prodigy; feeling: shock)"
+    "How 9-year-old Virat Kohli stunned coach Rajkumar Sharma on 5 November 1998 (trigger: curiosity gap; feeling: awe)",
+    "The hidden Andrew Flintoff altercation that provoked Yuvraj Singh's 6 sixes in 2007 (trigger: forbidden knowledge; feeling: pride)",
+    "Glenn Maxwell's miraculous 201* played on one leg during the 2023 World Cup (trigger: status; feeling: awe)",
+    "Abhishek Sharma's emotional journey from Punjab youth cricket to international stardom (trigger: status; feeling: pride)",
+    "How Tiger Pataudi funded India's England tour out of his own pocket after losing an eye (trigger: curiosity gap; feeling: awe)",
+    "The heartbreaking rise and fall of 2012 U19 World Cup captain Unmukt Chand (trigger: FOMO; feeling: shock)",
+    "How MS Dhoni executed the fastest stumping in cricket history in just 0.08 seconds (trigger: shock; feeling: awe)",
+    "Why 13-year-old Vaibhav Sooryavanshi became Indian domestic cricket's youngest prodigy (trigger: shock; feeling: shock)",
+    "The story behind Australia's sandpaper scandal and the cameraman who caught it (trigger: forbidden knowledge; feeling: shock)"
   ],
   "search_phrases": [
     "cricket facts hindi",
@@ -53,19 +55,20 @@
     "cricket records",
     "cricket history records",
     "cricket story hindi",
-    "cricket kahani"
+    "cricket story movie hindi",
+    "cricket love story hindi"
   ],
   "gaps": [
-    "Emotional underdog journeys of forgotten U19 World Cup stars like Unmukt Chand.",
-    "Behind-the-scenes player fights and verbal clashes that triggered historic record performances.",
-    "Incredible physical recovery stories of cricketers playing through severe injuries in crucial World Cup matches.",
-    "Specific childhood turning points of current superstars backed by exact dates and coach quotes."
+    "Personal financial sacrifices by early legends like Tiger Pataudi funding national team trips out of pocket.",
+    "Detailed breakdowns of high-profile sledge triggers like Flintoff vs Yuvraj or Wasim Akram calling Kohli Chulbul Pandey.",
+    "The emotional downfall of youth prodigies like Unmukt Chand compared to successful peers.",
+    "Behind-the-scenes cameramen and umpire decisions that exposed historic scandals."
   ],
   "best_formats": [
-    "Emotional Origin Story: Focuses on a superstar's early struggle or childhood breakthrough to build deep viewer connection.",
-    "Secret Conflict Explainer: Reveals the hidden argument or trigger behind a legendary record to create intense curiosity.",
-    "Impossible Feat Breakdown: Details how a player overcame severe physical odds to achieve a miracle victory."
+    "Emotional Origin Story: Explores a superstar's childhood determination or turning point to evoke intense viewer pride.",
+    "Superhuman Feat Breakdown: Focuses on physical grit or impossible records set under extreme physical pain or adversity.",
+    "Conflict Trigger Mystery: Explores the hidden verbal clash or insult behind an iconic match-winning performance."
   ],
-  "milestones": "Reach 50 subscribers and 25,000 cumulative Shorts views in 30 days, 350 subscribers and 250,000 views in 60 days, and 1,000 subscribers with 1,500,000 Shorts views by day 90.",
+  "milestones": "Reach 25 subscribers and 5,000 cumulative Shorts views in 30 days, 100 subscribers and 20,000 views in 60 days, and 300 subscribers with 60,000 views by day 90.",
   "updated": "2026-11-25"
 }
