@@ -56,7 +56,8 @@ PROFILES = {
         "name": "Janwar Ki Duniya",
         "niche": "amazing animal, bird, insect and ocean-life facts in Hindi, from Indian wildlife to the deep sea",
         "angle": "Shocking abilities, records and 'why does it do that' questions; animals Indians know first "
-                 "(tiger, cobra, elephant, crow, cat, dog, cow, peacock), then exotic ones.",
+                 "(tiger, cobra, elephant, crow, cat, dog, cow, peacock), then exotic ones. No animal fights, "
+                 "'X vs Y' battles, attacks, kills or blood: YouTube limits violent animal content.",
         "voice": "hi-IN-SwaraNeural",
         "narrator": "female, young adult, moderate pitch",
         "topic_mode": "evergreen",
