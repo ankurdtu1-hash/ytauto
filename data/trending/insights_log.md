@@ -48,3 +48,13 @@ Targets: Reach 250 subscribers and 150,000 views within 30 days, scale to 600 su
 Best: नंबर 11 पर छक्का! Arshdeep Singh का नया रिकॉर्ड #S (1316); हार्दिक अब पंजाब में! IPL 2027 का सबसे बड़ा ट्रेड  (893); टीम इंडिया दो हिस्सों में! IND vs NZ चौथे वनडे से  (893)
 
 Weakest: 22 साल पुराना रिकॉर्ड टूटा! Sharapova के बाद कौन?  (16); Creta-Nexon फेल! Oct 2026 में किस SUV ने मचाया धमा (15); 🏏 GAMBHIR UNDER FIRE! BCCI Ki 3 Badi Khabrein 😱 #S (4)
+
+## 2026-11-25: 14 subs, 7094 views, 24 public Shorts
+
+Cricket stats involving iconic Indian players and major Bollywood blockbuster announcements consistently generate the highest view counts and engagement. Technical finance news, non-Indian sports updates, and auto launch specs suffer from low viewer interest and should be dropped immediately. Content focus must shift entirely toward fast-paced Indian cricket record breakdowns and big-budget movie lore using crisp Hinglish titles. Refining hooks to deliver maximum visual impact within the first 2 seconds while maintaining seamless end-to-start loops will accelerate subscriber acquisition.
+
+Targets: Reach 100 subscribers and 25,000 views within 30 days, scale to 300 subscribers and 100,000 views within 60 days, and achieve 600 subscribers with 250,000 views within 90 days.
+
+Best: नंबर 11 पर छक्का! Arshdeep Singh का नया रिकॉर्ड #S (1316); हार्दिक अब पंजाब में! IPL 2027 का सबसे बड़ा ट्रेड  (893); टीम इंडिया दो हिस्सों में! IND vs NZ चौथे वनडे से  (893)
+
+Weakest: 22 साल पुराना रिकॉर्ड टूटा! Sharapova के बाद कौन?  (16); Creta-Nexon फेल! Oct 2026 में किस SUV ने मचाया धमा (15); 🏏 GAMBHIR UNDER FIRE! BCCI Ki 3 Badi Khabrein 😱 #S (4)

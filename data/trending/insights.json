@@ -1,49 +1,48 @@
 {
-  "summary": "Cricket records, mega-budget Bollywood movie updates, and star trades generate the highest viewer interest and engagement on the channel. Technical automobile news, stock market updates, and general news updates lack emotional pull and underperform consistently. Shifting focus entirely to high-stakes Indian sports stats and viral movie lore in Hinglish titles with strong visual hooks will drive retention. Maintaining a strict focus on fast-paced, 45-second stories with flawless seamless loops will help hit monetization goals.",
+  "summary": "Cricket stats involving iconic Indian players and major Bollywood blockbuster announcements consistently generate the highest view counts and engagement. Technical finance news, non-Indian sports updates, and auto launch specs suffer from low viewer interest and should be dropped immediately. Content focus must shift entirely toward fast-paced Indian cricket record breakdowns and big-budget movie lore using crisp Hinglish titles. Refining hooks to deliver maximum visual impact within the first 2 seconds while maintaining seamless end-to-start loops will accelerate subscriber acquisition.",
   "do_more": [
-    "Lead scripts with shocking stat breakdowns or unexpected player record feats in the first 2 seconds",
-    "Focus on major Indian cricket icons like Arshdeep, Hardik, Rohit, and Kohli, plus blockbuster cinema announcements",
-    "Keep script length under 45 seconds to maximize completion percentage and automatic loop plays",
-    "Include an intriguing question at 35 seconds to drive comments and retention right before the seamless loop"
+    "Double down on Indian cricket stats and record breakdowns featuring icons like Arshdeep Singh, Hardik Pandya, Rohit Sharma, and Virat Kohli",
+    "Cover high-budget Indian cinema announcements, star casting reveals, and box-office record milestones",
+    "Structure scripts for seamless loop playback with a high-curiosity question near the 35-second mark"
   ],
   "avoid": [
-    "Avoid reporting dry financial updates like gold rates, stock movements, and defense share news",
-    "Stop covering niche car launches, generic auto sales stats, or technical specs",
-    "Avoid covering low-interest international sports events without a strong Indian player connection",
-    "Eliminate long background intros; get straight to the central conflict or record in line one"
+    "Avoid reporting stock market trends, gold rate movements, and corporate finance news",
+    "Stop creating Shorts about general automobile sales figures and technical car launch specifications",
+    "Avoid covering niche international sports events that lack a direct connection to famous Indian athletes",
+    "Eliminate slow, descriptive intros; state the central shocker or record within the first 2 seconds"
   ],
   "hook_tips": [
-    "Arshdeep Singh ka ye record Jasprit Bumrah bhi nahi tod paye! Jano kaise?",
-    "Hardik Pandya ki Punjab mein entry ne IPL history palat di!",
-    "Yash ki Ramayana ne pehle hi din SRK ka ye 500 cr record tod diya?",
-    "Rohit Sharma ne 39 ki umr mein banaya aisa record jo namumkin tha!"
+    "Arshdeep Singh ne number 11 par aisa six maara ki Jasprit Bumrah bhi dekhte reh gaye!",
+    "Hardik Pandya ka IPL trade transfer kyun bana sabse bada shocker?",
+    "Yash ki Ramayana ne release se pehle hi tod diye box office ke 3 bade records!",
+    "Rohit Sharma ke iss 39 year record ke peeche ka sach jaan kar dang reh jaoge!"
   ],
   "title_tips": [
-    "Start titles with player or movie names in ALL CAPS like HARDIK PANDYA or RAMAYANA",
-    "Add high-emotion emojis at the end of titles (😱, 🏏, 🔥, 🎬)",
-    "Keep titles under 55 characters so the full text remains visible on mobile screens"
+    "Start titles with major celebrity or team names capitalized, like HARDIK PANDYA or RAMAYANA",
+    "Keep title length concise under 50 characters so full text stays visible on mobile screens",
+    "Add high-emotion visual emojis at the end of titles (😱, 🏏, 🔥, 🎬) to increase tap-through rate"
   ],
   "hot_keywords": [
     "arshdeep singh",
     "hardik pandya",
-    "ipl 2027 trade",
-    "ind vs nz",
-    "yash ramayana",
+    "ipl trade",
     "rohit sharma",
     "virat kohli",
-    "ms dhoni",
+    "ramayana movie",
+    "yash ramayana",
+    "ind vs nz",
     "cricket records",
-    "bollywood news"
+    "bollywood updates"
   ],
   "topic_ideas": [
-    "Arshdeep Singh's unbelievable batting record at number 11 explained (trigger: shock; feeling: awe)",
-    "Inside Hardik Pandya's historic mega trade to Punjab Kings for IPL 2027 (trigger: status; feeling: shock)",
-    "How Yash's transformation for Ramayana set a new Bollywood box office day 1 benchmark (trigger: curiosity gap; feeling: awe)",
-    "The secret strategy behind India splitting its ODI squad against New Zealand (trigger: curiosity gap; feeling: intrigue)",
-    "Why Cristiano Ronaldo's number 7 jersey change shocked global football fans (trigger: status; feeling: shock)",
-    "The top 3 unbreakable IPL records that cost teams millions (trigger: forbidden knowledge; feeling: awe)",
-    "Why Rohit Sharma's aggressive opening style at age 39 defies sports science (trigger: status; feeling: pride)",
-    "How Ramayana movie's visual effects budget compares to top Hollywood releases (trigger: status; feeling: pride)"
+    "Why Arshdeep Singh's unbelievable number 11 batting record stunned international cricket (trigger: shock; feeling: awe)",
+    "Inside Hardik Pandya's unexpected IPL trade deal and what it means for Punjab (trigger: status; feeling: shock)",
+    "How Yash's intense transformation for Ramayana broke Bollywood box office buzz records (trigger: curiosity gap; feeling: awe)",
+    "The hidden strategy behind India splitting its ODI squad against New Zealand (trigger: curiosity gap; feeling: intrigue)",
+    "Why Cristiano Ronaldo's number 7 jersey legacy continues to trigger massive global debates (trigger: status; feeling: awe)",
+    "Top 3 impossible cricket records broken by Indian tail-enders in T20 history (trigger: forbidden knowledge; feeling: awe)",
+    "How Rohit Sharma's explosive batting performance at age 39 broke a 20-year record (trigger: status; feeling: pride)",
+    "Why Sai Pallavi's viral look in upcoming cinema is breaking the internet (trigger: curiosity gap; feeling: awe)"
   ],
   "search_phrases": [
     "cricket news hindi",
@@ -53,19 +52,21 @@
     "bollywood news hindi",
     "latest bollywood news hindi",
     "trending news hindi",
-    "cricket news short video"
+    "cricket news short video",
+    "cricket live news hindi",
+    "bollywood news latest today hindi"
   ],
   "gaps": [
-    "Detailed breakdown of tail-end batsman records in T20 international matches",
-    "Behind-the-scenes trade negotiations and contract rules in IPL history",
-    "Family-friendly Bollywood box office trends vs modern action cinema",
-    "Statistical comparison of senior Indian players' performance beyond age 35"
+    "In-depth statistical breakdowns of Indian tail-end bowlers outscoring top-order batsmen",
+    "Behind-the-scenes trade dynamics and auction price mechanics in IPL history",
+    "Nostalgic comparisons of 90s family Bollywood cinema versus modern CGI blockbusters",
+    "Detailed analysis of veteran Indian players setting world records past age 35"
   ],
   "best_formats": [
-    "Stat Breakdown Listicle: 3 rapid facts highlighting an impossible record or trade value to build high curiosity",
-    "Conflict vs Resolution Explainer: 40-second deep dive into a major cricket controversy or team split",
-    "Visual Comparison: Side-by-side stats comparing modern stars against historical records"
+    "Stat Breakdown Listicle: Rapid delivery of 3 shocking facts or record stats within 40 seconds",
+    "Controversy & Trade Explainer: 45-second deep dive detailing major player moves or squad splits",
+    "Then vs Now Comparison: Side-by-side performance stats contrasting current stars against past legends"
   ],
-  "milestones": "Reach 250 subscribers and 150,000 views within 30 days, scale to 600 subscribers and 2 million views within 60 days, and achieve 1,000 subscribers with 10 million total Shorts views within 90 days to meet monetization criteria.",
+  "milestones": "Reach 100 subscribers and 25,000 views within 30 days, scale to 300 subscribers and 100,000 views within 60 days, and achieve 600 subscribers with 250,000 views within 90 days.",
   "updated": "2026-11-25"
 }
