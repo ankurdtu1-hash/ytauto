@@ -226,10 +226,12 @@ or names (1-3 words each) of topics, people or events viewers want now or in the
 trends to the front. topic_ideas: 8-12 concrete, specific Short topics for the next week, inspired by the winners
 above but in this channel's own angle, each a well-documented fact, each written as
 "<topic> (trigger: curiosity gap/shock/forbidden knowledge/status/FOMO; feeling: shock/awe/pride/fear)".
-gaps: 3-6 topics viewers ask about in comments or search that the competitors never cover.
+gaps: 3-6 topics viewers ask about in comments or search that the competitors never cover; same rules as
+every video (no fights/controversy/gossip, no alcohol/tobacco/gambling brands, no tax or investment tips).
 best_formats: 2-4 formats that win in this niche right now (listicle, explainer, comparison, "X vs Y",
 myth-buster, countdown...), each with a one-line reason. milestones: one sentence with realistic subscriber
-and view targets for the next 30, 60 and 90 days from today's numbers. search_phrases: 8-15 phrases from the
+and view targets for the next 30, 60 and 90 days, extrapolated from the views per Short above (1 Short a day)
+with at most a 2-3x improvement; new small channels rarely reach monetisation in 90 days, so do not promise it. search_phrases: 8-15 phrases from the
 autocomplete list (or close to it) worth using in titles, descriptions and tags. "watched_pct" (share of the
 Short watched) matters most for Shorts: learn from the highest. Fixed by the channel owner, never suggest changing: titles and on-screen text are
 Hinglish in Roman letters (titles in Devanagari were older videos; switched on 2026-11-16, so do not blame
