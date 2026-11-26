@@ -1,0 +1,41 @@
+name: privacy
+
+# Change one video's privacy (e.g. hide a duplicate). Manual only.
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: "main, trending, cricket, animals, places or money"
+        required: true
+      video:
+        description: "video id"
+        required: true
+      privacy:
+        description: "private, unlisted or public"
+        default: private
+
+jobs:
+  privacy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - env:
+          T_main: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+          T_trending: ${{ secrets.YOUTUBE_TOKEN_JSON_TRENDING }}
+          T_cricket: ${{ secrets.YOUTUBE_TOKEN_JSON_CRICKET }}
+          T_animals: ${{ secrets.YOUTUBE_TOKEN_JSON_ANIMALS }}
+          T_places: ${{ secrets.YOUTUBE_TOKEN_JSON_PLACES }}
+          T_money: ${{ secrets.YOUTUBE_TOKEN_JSON_MONEY }}
+          CH: ${{ inputs.channel }}
+          VIDEO: ${{ inputs.video }}
+          PRIVACY: ${{ inputs.privacy }}
+        run: |
+          v="T_$CH"; [ -n "${!v}" ] || { echo "unknown channel $CH"; exit 1; }
+          printf '%s' "${!v}" > t.json
+          python tools/set_privacy.py t.json "$VIDEO" "$PRIVACY"
+          rm -f t.json
