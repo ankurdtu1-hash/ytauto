@@ -63,6 +63,8 @@ def _speak_omni(text, out_path):
     import soundfile as sf
     model, prompt = _load_omni()
     audio = model.generate(text=text, voice_clone_prompt=prompt, speed=OMNI_SPEED, num_step=OMNI_STEPS)[0]
+    if len(audio) < 24000 * 0.4:  # empty or broken clip: never let it reach the video
+        raise ValueError(f"OmniVoice returned {len(audio) / 24000:.2f}s of audio")
     sf.write(str(out_path), audio, 24000, format="WAV")
     return _estimate_words(text, len(audio) / 24000)
 
@@ -100,9 +102,14 @@ def speak(text, out_path):
     """Write audio to out_path and return [(start_s, end_s, word), ...]."""
     global ENGINE
     if ENGINE == "omnivoice":
-        try:
-            return _speak_omni(text, out_path)
-        except Exception as e:  # never lose a video over the voice: switch to the backup for the rest of the run
-            log.warning("OmniVoice failed (%s); using edge-tts for this video", e)
-            ENGINE = "edge"
-    return _speak_edge(text, out_path)
+        for attempt in range(2):  # a bad clip is usually a one-off: try once more with plain words
+            try:
+                return _speak_omni(text if attempt == 0 else re.sub(r"[^\w\s।,.?!-]", " ", text), out_path)
+            except Exception as e:
+                log.warning("OmniVoice attempt %d failed (%s)", attempt + 1, e)
+        log.warning("OmniVoice keeps failing; using edge-tts for the rest of this video")
+        ENGINE = "edge"  # never lose a video over the voice
+    words = _speak_edge(text, out_path)
+    if not out_path.exists() or out_path.stat().st_size < 2000:
+        raise RuntimeError(f"no usable audio for: {text[:60]}")
+    return words
