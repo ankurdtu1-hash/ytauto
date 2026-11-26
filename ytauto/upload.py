@@ -60,6 +60,10 @@ def upload(video_path, script, kind, thumbnail_path=None, publish_at=None):
         body["status"]["publishAt"] = publish_at
 
     youtube = _youtube()
+    # Safety: a login saved for the wrong channel must never post this channel's video somewhere else.
+    title = youtube.channels().list(part="snippet", mine=True).execute()["items"][0]["snippet"]["title"]
+    if title.strip().lower() != config.CHANNEL_NAME.strip().lower():
+        raise RuntimeError(f"Login belongs to channel '{title}', not '{config.CHANNEL_NAME}': not uploading")
     request = youtube.videos().insert(
         part="snippet,status",
         body=body,
