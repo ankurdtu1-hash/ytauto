@@ -66,7 +66,25 @@ def _final_text(response):
 
 
 def research(prompt, max_searches=3):
-    """Free-text answer grounded in live web search."""
+    """Free-text answer grounded in live web search: Gemini with Google Search (free) first, Claude as backup."""
+    for model in GEMINI_MODELS if GEMINI_KEY else []:
+        try:
+            r = requests.post(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+                              headers={"x-goog-api-key": GEMINI_KEY}, timeout=180,
+                              json={"contents": [{"role": "user", "parts": [{"text": prompt}]}],
+                                    "tools": [{"google_search": {}}]})
+            if r.status_code in (404, 429, 500, 503):
+                log.warning("Gemini research %s: HTTP %s", model, r.status_code)
+                time.sleep(15)
+                continue
+            r.raise_for_status()
+            parts = r.json()["candidates"][0]["content"]["parts"]
+            text = "".join(p.get("text", "") for p in parts if not p.get("thought")).strip()
+            if len(text) > 200:
+                log.info("Research by Gemini %s with Google Search (free)", model)
+                return text
+        except (requests.RequestException, KeyError, IndexError, ValueError) as e:
+            log.warning("Gemini research %s failed: %s", model, str(e)[:120])
     response = _call(
         [{"role": "user", "content": prompt}],
         tools=[{"type": "web_search_20260209", "name": "web_search", "max_uses": max_searches}],

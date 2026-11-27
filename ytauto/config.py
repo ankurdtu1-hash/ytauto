@@ -134,6 +134,9 @@ SUBTITLE_FONT = os.getenv("SUBTITLE_FONT", "Noto Sans Devanagari")
 FPS = 30
 
 # Per-format settings. Hindi narration runs at roughly 130-150 words per minute.
+# Each channel posts a long (7-8 min) video instead of its Short on these days (Mon=0 ... Sun=6), India time.
+LONG_DAYS = {int(d) for d in os.getenv("LONG_DAYS", "2,6").split(",") if d.strip()}
+
 FORMATS = {
     "short": {
         "width": 1080,

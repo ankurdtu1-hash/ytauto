@@ -275,6 +275,8 @@ def quality_check(path, kind):
     video = next((s for s in streams if s.get("codec_type") == "video"), None)
     if kind == "short" and not 25 <= seconds <= 180:
         problems.append(f"length {seconds:.0f}s (Shorts must be 25-180 s)")
+    if kind == "long" and not 180 <= seconds <= 1200:
+        problems.append(f"length {seconds:.0f}s (long videos should be 3-20 min)")
     if not video or (video.get("width"), video.get("height")) != (fmt["width"], fmt["height"]):
         problems.append(f"picture size {video and (video.get('width'), video.get('height'))}")
     if not any(s.get("codec_type") == "audio" for s in streams):

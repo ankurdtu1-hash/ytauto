@@ -5,7 +5,7 @@ import json
 import logging
 import re
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone
 
 from ytauto import config, footage, history, llm, picker, render, topics, upload, voice, writer
 
@@ -159,7 +159,8 @@ def make_video(kind, do_upload=True, script_only=False):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("kind", choices=["short", "long"])
+    parser.add_argument("kind", choices=["short", "long", "auto"],
+                        help="auto: a long video on the channel's long-video days (Wed, Sun), otherwise a Short")
     parser.add_argument("--no-upload", action="store_true", help="make the video but do not upload")
     parser.add_argument("--script-only", action="store_true", help="only research and write the script")
     parser.add_argument("--daily-limit", type=int, default=0, help="skip if this channel already uploaded this many today")
@@ -168,6 +169,12 @@ def main():
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+    if args.kind == "auto":
+        slot = history.next_slot()
+        day = (datetime.strptime(slot, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc) if slot
+               else datetime.now(timezone.utc)).astimezone(history.IST)
+        args.kind = "long" if day.weekday() in config.LONG_DAYS else "short"
+        log.info("Making a %s video for %s", args.kind, f"{day:%A %d %b}")
     today = datetime.now().date().isoformat()
     done_today = sum(1 for i in history.load() if i.get("video_id") and i["kind"] == args.kind and i["date"].startswith(today))
     if args.daily_limit and done_today >= args.daily_limit:

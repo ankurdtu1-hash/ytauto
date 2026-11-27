@@ -1,6 +1,6 @@
 name: shorts
 
-# Every channel: one Short a day. Every 2 hours each channel checks whether its daily publish slot is within
+# Every channel: one video a day, a Short, or a long video on Wednesdays and Sundays (config.LONG_DAYS). Every 2 hours each channel checks whether its daily publish slot is within
 # 10 hours and has no video yet; then it makes one and schedules it on YouTube (publishAt) for that slot.
 # A channel whose YouTube token secret is not set yet is skipped.
 on:
@@ -21,6 +21,11 @@ on:
         description: "public right away (untick: next free time slot)"
         type: boolean
         default: true
+      kind:
+        description: "auto = long video on Wed/Sun, Short otherwise"
+        type: choice
+        options: [auto, short, long]
+        default: auto
 
 permissions:
   contents: write
@@ -64,7 +69,7 @@ jobs:
     needs: plan
     if: needs.plan.outputs.channels != '[]'
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 330   # long videos: ~1000 words of CPU narration
     strategy:
       fail-fast: false
       max-parallel: 2   # free Gemini / Cloudflare limits
@@ -77,6 +82,8 @@ jobs:
       CHANNEL_PROFILE: ${{ matrix.profile }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main   # latest history, not the commit this run started from (avoids making a video twice)
 
       - uses: actions/setup-python@v5
         with:
@@ -106,7 +113,7 @@ jobs:
           path: ~/.cache/huggingface
           key: hf-omnivoice-v1
 
-      - name: Make and upload the Short
+      - name: Make and upload the video
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -124,7 +131,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.upload }}" = "false" ]; then
             flag="--no-upload"
           fi
-          python run.py short $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --ahead-hours $( [ "${{ matrix.profile }}" = trending ] && echo 12 || echo 24 ) )
+          python run.py ${{ inputs.kind || 'auto' }} $flag $( [ "${{ github.event_name }}" = "schedule" ] && echo --ahead-hours $( [ "${{ matrix.profile }}" = trending ] && echo 12 || echo 24 ) )
           rm -f token.json
 
       - name: Keep the finished video for 3 days
@@ -146,5 +153,5 @@ jobs:
           git config user.name "ytauto-bot"
           git config user.email "ytauto-bot@users.noreply.github.com"
           git add data/
-          git diff --cached --quiet || git commit -m "history: ${{ matrix.profile }} short"
+          git diff --cached --quiet || git commit -m "history: ${{ matrix.profile }} video"
           for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
