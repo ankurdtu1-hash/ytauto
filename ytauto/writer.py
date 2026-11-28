@@ -91,8 +91,7 @@ def write_script(kind, video_format, brief):
 {brief}
 
 Script rules:
-- Total narration: {fmt['words']}, split into {fmt['scenes']} scenes. Each scene is ONE short spoken sentence
-  (max ~12 words) so the picture changes every 2-4 seconds.
+- Total narration: {fmt['words']}, split into {fmt['scenes']} scenes. {fmt['scene_rule']}
 - {structure}
 - Narration is written exactly as it should be spoken by a Hindi text-to-speech voice: Devanagari only,
   numbers written as words where natural, no emojis, no stage directions, no brackets.
@@ -144,7 +143,7 @@ Metadata rules (optimise click-through rate):
         if history.similar_title(script["title"]):
             raise RuntimeError("Could not find a topic that is not a repeat; skipping today rather than duplicating")
     words = sum(len(s["narration"].split()) for s in script["scenes"])
-    if kind == "short" and words < MIN_SHORT_WORDS:
+    if words < MIN_WORDS[kind]:
         log.warning("Script has only %d words; asking for a longer one", words)
         longer = llm.structured(prompt + f"\n\nIMPORTANT: your last draft had only {words} words of narration. "
                                 f"Write {fmt['words']}, in {fmt['scenes']} scenes.", SCHEMA, system=SYSTEM, effort=effort)
@@ -153,4 +152,4 @@ Metadata rules (optimise click-through rate):
     return script
 
 
-MIN_SHORT_WORDS = 110
+MIN_WORDS = {"short": 110, "long": 800}

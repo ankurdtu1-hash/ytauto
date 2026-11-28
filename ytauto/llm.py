@@ -65,7 +65,7 @@ def _final_text(response):
     return "".join(b.text for b in blocks[last_switch + 1:] if b.type == "text").strip()
 
 
-def research(prompt, max_searches=3):
+def research(prompt, max_searches=3, paid_fallback=True):
     """Free-text answer grounded in live web search: Gemini with Google Search (free) first, Claude as backup."""
     for model in GEMINI_MODELS if GEMINI_KEY else []:
         try:
@@ -85,6 +85,8 @@ def research(prompt, max_searches=3):
                 return text
         except (requests.RequestException, KeyError, IndexError, ValueError) as e:
             log.warning("Gemini research %s failed: %s", model, str(e)[:120])
+    if not paid_fallback or not client:
+        return ""
     response = _call(
         [{"role": "user", "content": prompt}],
         tools=[{"type": "web_search_20260209", "name": "web_search", "max_uses": max_searches}],

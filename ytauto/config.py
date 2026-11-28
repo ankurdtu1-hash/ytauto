@@ -144,6 +144,7 @@ FORMATS = {
         "orientation": "portrait",
         "words": "125 to 145 words — never more than 155 (about 55-65 seconds)",
         "scenes": "12 to 15",
+        "scene_rule": "Each scene is ONE short spoken sentence (max ~12 words) so the picture changes every 2-4 seconds.",
         "font_size": 96,
         "words_per_caption": 3,
     },
@@ -152,7 +153,9 @@ FORMATS = {
         "height": 1080,
         "orientation": "landscape",
         "words": "900 to 1100 words (about 7-8 minutes)",
-        "scenes": "70 to 90",
+        "scenes": "60 to 75",
+        "scene_rule": ("Each scene is 1-2 spoken sentences (about 14-18 words, never more than 25) so the picture "
+                       "changes every 5-8 seconds. Count the words: the total MUST reach the target."),
         "font_size": 58,
         "words_per_caption": 6,
     },

@@ -1,6 +1,8 @@
 """Find a trending, fresh topic and gather verified facts for it."""
 import html
 import json
+import logging
+import os
 import random
 import re
 import xml.etree.ElementTree as ET
@@ -9,6 +11,8 @@ from datetime import date
 import requests
 
 from . import config, history, llm
+
+log = logging.getLogger("ytauto")
 
 TRENDS_RSS = "https://trends.google.com/trending/rss?geo=IN"
 
@@ -183,6 +187,9 @@ def _context():
     return trends, past
 
 
+PAID_RESEARCH = os.getenv("PAID_RESEARCH", "") == "1"  # Claude web search costs ~$0.25 a video: off by default
+
+
 def short_brief(video_format):
     """Shorts skip paid web search: Claude picks an evergreen, well-documented fact itself."""
     trends, past = _context()
@@ -227,4 +234,8 @@ TOPIC: <one line>
 WHY NOW: <one line on why it is timely or evergreen>
 FACTS: <8-15 verified bullet points with numbers, names and dates where relevant>
 SOURCES: <the URLs you relied on>"""
-    return llm.research(prompt)
+    found = llm.research(prompt, paid_fallback=PAID_RESEARCH)
+    if found:
+        return found
+    log.info("Free web research unavailable; choosing an evergreen topic from well-established facts")
+    return short_brief(video_format).replace("for this Short", "for this long video")
